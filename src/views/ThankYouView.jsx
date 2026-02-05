@@ -10,13 +10,13 @@ export default function ThankYouView({ fadeIn, transition }) {
     <div style={{
       fontFamily: "'Noto Sans KR', sans-serif", minHeight: "100vh",
       background: `linear-gradient(135deg, ${COLORS.bg}, ${COLORS.sagePale})`,
-      display: "flex", alignItems: "center", justifyContent: "center", padding: 24,
+      display: "flex", alignItems: "center", justifyContent: "center", padding: "clamp(16px, 4vw, 24px)", width: "100%", maxWidth: "100%",
       opacity: fadeIn ? 1 : 0, transition: "opacity 0.3s",
     }}>
       <style>{THANKYOU_STYLES}</style>
       <div style={{
-        background: COLORS.white, borderRadius: 28, padding: "60px 36px",
-        maxWidth: 480, width: "100%", textAlign: "center",
+        background: COLORS.white, borderRadius: 28, padding: "clamp(40px, 8vw, 60px) clamp(24px, 4vw, 36px)",
+        width: "100%", maxWidth: "min(100%, 600px)", textAlign: "center",
         boxShadow: "0 24px 80px rgba(0,0,0,0.08)",
         animation: "scaleIn 0.5s ease-out",
       }}>
@@ -33,8 +33,8 @@ export default function ThankYouView({ fadeIn, transition }) {
         <button
           onClick={() => transition("mini")}
           style={{
-            padding: "16px 40px", borderRadius: 30, border: "none",
-            background: COLORS.sage, color: "#fff", fontSize: 16,
+            padding: "clamp(14px, 2vw, 16px) clamp(32px, 5vw, 40px)", borderRadius: 30, border: "none",
+            background: COLORS.sage, color: "#fff", fontSize: "clamp(14px, 2vw, 16px)",
             fontWeight: 700, cursor: "pointer", marginBottom: 16,
           }}
         >
@@ -45,7 +45,7 @@ export default function ThankYouView({ fadeIn, transition }) {
             onClick={() => transition("landing")}
             style={{
               padding: "12px", border: "none", background: "transparent",
-              color: COLORS.warmGray, fontSize: 14, cursor: "pointer",
+              color: COLORS.warmGray, fontSize: "clamp(13px, 1.75vw, 14px)", cursor: "pointer",
             }}
           >
             홈으로 돌아가기

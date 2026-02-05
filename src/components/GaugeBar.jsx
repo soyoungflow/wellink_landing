@@ -22,12 +22,12 @@ export default function GaugeBar({ value, color, label, delay = 0 }) {
   return (
     <div style={{ marginBottom: 16 }}>
       <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 6, alignItems: "center" }}>
-        <span style={{ fontSize: 13, fontWeight: 600, color: COLORS.charcoal }}>{label}</span>
-        <span style={{ fontSize: 13, color: COLORS.warmGray }}>
+        <span style={{ fontSize: "clamp(12px, 1.625vw, 13px)", fontWeight: 600, color: COLORS.charcoal }}>{label}</span>
+        <span style={{ fontSize: "clamp(12px, 1.625vw, 13px)", color: COLORS.warmGray }}>
           {level.emoji} {value}점 · {level.text}
         </span>
       </div>
-      <div style={{ height: 10, background: "#E8E5DE", borderRadius: 5, overflow: "hidden" }}>
+      <div style={{ height: "clamp(8px, 1.25vw, 10px)", background: "#E8E5DE", borderRadius: 5, overflow: "hidden", width: "100%" }}>
         <div
           style={{
             height: "100%",

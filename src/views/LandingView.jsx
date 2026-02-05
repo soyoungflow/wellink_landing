@@ -45,25 +45,26 @@ export default function LandingView({ fadeIn, transition, scrollToRole, onSelect
       <nav style={{
         position: "fixed", top: 0, left: 0, right: 0, zIndex: 100,
         background: "rgba(247,245,240,0.92)", backdropFilter: "blur(20px)",
-        borderBottom: "1px solid rgba(0,0,0,0.06)", padding: "14px 32px",
+        borderBottom: "1px solid rgba(0,0,0,0.06)", padding: "clamp(12px, 2vw, 14px) clamp(16px, 4vw, 32px)",
         display: "flex", justifyContent: "space-between", alignItems: "center",
+        width: "100%", maxWidth: "100%",
       }}>
         <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
           <div style={{
-            width: 36, height: 36, borderRadius: 10,
+            width: "clamp(28px, 4.5vw, 36px)", height: "clamp(28px, 4.5vw, 36px)", borderRadius: 10,
             background: `linear-gradient(135deg, ${COLORS.sage}, ${COLORS.sageLight})`,
             display: "flex", alignItems: "center", justifyContent: "center",
-            fontSize: 18, color: "#fff", fontWeight: 700,
+            fontSize: "clamp(14px, 2.25vw, 18px)", color: "#fff", fontWeight: 700,
           }}>W</div>
-          <span style={{ fontSize: 20, fontWeight: 700, color: COLORS.charcoal, letterSpacing: -0.5 }}>WELLINK</span>
+          <span style={{ fontSize: "clamp(16px, 2.5vw, 20px)", fontWeight: 700, color: COLORS.charcoal, letterSpacing: -0.5 }}>WELLINK</span>
         </div>
         <div style={{ display: "flex", gap: 10, alignItems: "center" }}>
           <button
             onClick={scrollToRole}
             style={{
-              padding: "10px 20px", borderRadius: 24,
+              padding: "clamp(8px, 1.5vw, 10px) clamp(16px, 2.5vw, 20px)", borderRadius: 24,
               border: `1.5px solid ${COLORS.sage}`, background: "transparent",
-              color: COLORS.sage, fontSize: 13, fontWeight: 600, cursor: "pointer",
+              color: COLORS.sage, fontSize: "clamp(12px, 1.5vw, 13px)", fontWeight: 600, cursor: "pointer",
               transition: "all 0.2s",
             }}
             onMouseOver={(e) => { e.target.style.background = COLORS.sagePale; }}
@@ -74,8 +75,8 @@ export default function LandingView({ fadeIn, transition, scrollToRole, onSelect
           <button
             onClick={() => transition("mini")}
             style={{
-              padding: "10px 24px", borderRadius: 24, border: "none",
-              background: COLORS.sage, color: "#fff", fontSize: 14,
+              padding: "clamp(8px, 1.5vw, 10px) clamp(20px, 3vw, 24px)", borderRadius: 24, border: "none",
+              background: COLORS.sage, color: "#fff", fontSize: "clamp(13px, 1.75vw, 14px)",
               fontWeight: 600, cursor: "pointer", transition: "all 0.2s",
             }}
             onMouseOver={(e) => { e.target.style.background = COLORS.sageDark; e.target.style.transform = "translateY(-1px)"; }}
@@ -88,9 +89,9 @@ export default function LandingView({ fadeIn, transition, scrollToRole, onSelect
 
       {/* HERO */}
       <section style={{
-        paddingTop: 120, paddingBottom: 80, textAlign: "center",
+        paddingTop: "clamp(80px, 12vw, 120px)", paddingBottom: "clamp(40px, 8vw, 80px)", textAlign: "center",
         background: `linear-gradient(180deg, ${COLORS.bg} 0%, ${COLORS.sagePale} 100%)`,
-        position: "relative", overflow: "hidden",
+        position: "relative", overflow: "hidden", width: "100%", maxWidth: "100%",
       }}>
         <div style={{
           position: "absolute", top: 60, right: "10%",
@@ -105,7 +106,7 @@ export default function LandingView({ fadeIn, transition, scrollToRole, onSelect
           animation: "float 8s ease-in-out infinite 1s",
         }} />
 
-        <div style={{ position: "relative", zIndex: 2, maxWidth: 800, margin: "0 auto", padding: "0 24px" }}>
+        <div style={{ position: "relative", zIndex: 2, width: "100%", maxWidth: "min(100%, 1200px)", margin: "0 auto", padding: "clamp(16px, 4vw, 24px)" }}>
           <div style={{
             display: "inline-block", padding: "6px 18px", borderRadius: 20,
             background: `${COLORS.sage}15`, border: `1px solid ${COLORS.sage}30`,
@@ -129,8 +130,8 @@ export default function LandingView({ fadeIn, transition, scrollToRole, onSelect
           </h1>
 
           <p style={{
-            fontSize: 18, lineHeight: 1.7, color: COLORS.warmGray,
-            maxWidth: 560, margin: "0 auto 40px", fontWeight: 400,
+            fontSize: "clamp(16px, 2vw, 18px)", lineHeight: 1.7, color: COLORS.warmGray,
+            width: "100%", maxWidth: "min(100%, 700px)", margin: "0 auto 40px", fontWeight: 400,
             animation: "fadeUp 0.6s ease-out 0.2s both",
           }}>
             과학적 웰니스 지표 WCWI로 직원 건강을 측정하고,
@@ -144,9 +145,9 @@ export default function LandingView({ fadeIn, transition, scrollToRole, onSelect
             <button
               onClick={() => transition("mini")}
               style={{
-                padding: "16px 36px", borderRadius: 30, border: "none",
+                padding: "clamp(14px, 2vw, 16px) clamp(28px, 4.5vw, 36px)", borderRadius: 30, border: "none",
                 background: `linear-gradient(135deg, ${COLORS.sage}, ${COLORS.sageDark})`,
-                color: "#fff", fontSize: 16, fontWeight: 700, cursor: "pointer",
+                color: "#fff", fontSize: "clamp(14px, 2vw, 16px)", fontWeight: 700, cursor: "pointer",
                 boxShadow: `0 8px 30px ${COLORS.sage}40`,
                 transition: "all 0.3s ease",
               }}
@@ -158,10 +159,10 @@ export default function LandingView({ fadeIn, transition, scrollToRole, onSelect
             <button
               onClick={() => transition("full")}
               style={{
-                padding: "16px 36px", borderRadius: 30,
+                padding: "clamp(14px, 2vw, 16px) clamp(28px, 4.5vw, 36px)", borderRadius: 30,
                 border: `2px solid ${COLORS.sage}40`,
                 background: "transparent", color: COLORS.sage,
-                fontSize: 16, fontWeight: 600, cursor: "pointer",
+                fontSize: "clamp(14px, 2vw, 16px)", fontWeight: 600, cursor: "pointer",
                 transition: "all 0.2s",
               }}
               onMouseOver={(e) => { e.target.style.background = `${COLORS.sage}10`; }}
@@ -174,62 +175,62 @@ export default function LandingView({ fadeIn, transition, scrollToRole, onSelect
       </section>
 
       {/* WCWI OVERVIEW */}
-      <section style={{ padding: "80px 24px", maxWidth: 1000, margin: "0 auto" }}>
-        <h2 style={{ textAlign: "center", fontSize: 32, fontWeight: 800, color: COLORS.charcoal, marginBottom: 12 }}>
+      <section style={{ padding: "clamp(40px, 8vw, 80px) clamp(16px, 4vw, 24px)", width: "100%", maxWidth: "100%", margin: "0 auto" }}>
+        <h2 style={{ textAlign: "center", fontSize: "clamp(24px, 4vw, 32px)", fontWeight: 800, color: COLORS.charcoal, marginBottom: 12 }}>
           WCWI란?
         </h2>
-        <p style={{ textAlign: "center", fontSize: 16, color: COLORS.warmGray, marginBottom: 48, maxWidth: 600, margin: "0 auto 48px" }}>
+        <p style={{ textAlign: "center", fontSize: "clamp(14px, 2vw, 16px)", color: COLORS.warmGray, marginBottom: 48, width: "100%", maxWidth: "min(100%, 800px)", margin: "0 auto 48px" }}>
           WELLINK Corporate Wellness Index — 과학적으로 검증된 5개 도구를 재구성한 기업 맞춤형 웰니스 종합 지표
         </p>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(170px, 1fr))", gap: 16 }}>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 170px), 1fr))", gap: "clamp(12px, 2vw, 16px)", width: "100%" }}>
           {WCWI_ITEMS.map((item, i) => (
             <div
               key={i}
               style={{
-                background: COLORS.white, borderRadius: 20, padding: 24,
+                background: COLORS.white, borderRadius: 20, padding: "clamp(16px, 3vw, 24px)",
                 textAlign: "center", border: `1px solid ${item.color}20`,
                 transition: "all 0.3s ease", cursor: "default",
-                animation: `fadeUp 0.5s ease-out ${i * 0.1}s both`,
+                animation: `fadeUp 0.5s ease-out ${i * 0.1}s both`, width: "100%",
               }}
               onMouseOver={(e) => { e.currentTarget.style.transform = "translateY(-6px)"; e.currentTarget.style.boxShadow = `0 12px 30px ${item.color}20`; }}
               onMouseOut={(e) => { e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.boxShadow = "none"; }}
             >
-              <div style={{ fontSize: 36, marginBottom: 12 }}>{item.icon}</div>
-              <div style={{ fontSize: 15, fontWeight: 700, color: COLORS.charcoal, marginBottom: 4 }}>{item.title}</div>
+              <div style={{ fontSize: "clamp(28px, 4.5vw, 36px)", marginBottom: 12 }}>{item.icon}</div>
+              <div style={{ fontSize: "clamp(14px, 1.875vw, 15px)", fontWeight: 700, color: COLORS.charcoal, marginBottom: 4 }}>{item.title}</div>
               <div style={{
-                display: "inline-block", padding: "2px 10px", borderRadius: 10,
-                background: `${item.color}15`, fontSize: 11, fontWeight: 600,
+                display: "inline-block", padding: "2px clamp(8px, 1.25vw, 10px)", borderRadius: 10,
+                background: `${item.color}15`, fontSize: "clamp(10px, 1.375vw, 11px)", fontWeight: 600,
                 color: item.color, marginBottom: 8,
               }}>{item.tool}</div>
-              <div style={{ fontSize: 13, color: COLORS.warmGray }}>{item.desc}</div>
+              <div style={{ fontSize: "clamp(12px, 1.625vw, 13px)", color: COLORS.warmGray }}>{item.desc}</div>
             </div>
           ))}
         </div>
       </section>
 
       {/* WHY WELLINK */}
-      <section style={{ padding: "60px 24px 80px", background: COLORS.white }}>
-        <div style={{ maxWidth: 900, margin: "0 auto" }}>
-          <h2 style={{ textAlign: "center", fontSize: 28, fontWeight: 800, color: COLORS.charcoal, marginBottom: 48 }}>
+      <section style={{ padding: "clamp(40px, 8vw, 60px) clamp(16px, 4vw, 24px) clamp(60px, 10vw, 80px)", background: COLORS.white, width: "100%", maxWidth: "100%" }}>
+        <div style={{ width: "100%", maxWidth: "min(100%, 1400px)", margin: "0 auto" }}>
+          <h2 style={{ textAlign: "center", fontSize: "clamp(22px, 3.5vw, 28px)", fontWeight: 800, color: COLORS.charcoal, marginBottom: 48 }}>
             왜 WELLINK인가?
           </h2>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))", gap: 24 }}>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 250px), 1fr))", gap: "clamp(16px, 3vw, 24px)", width: "100%" }}>
             {WHY_ITEMS.map((item, i) => (
               <div
                 key={i}
                 style={{
-                  padding: 32, borderRadius: 20,
-                  background: `linear-gradient(135deg, ${COLORS.sagePale}, ${COLORS.cream})`,
-                  border: `1px solid ${COLORS.sage}15`,
+                padding: "clamp(24px, 4vw, 32px)", borderRadius: 20,
+                background: `linear-gradient(135deg, ${COLORS.sagePale}, ${COLORS.cream})`,
+                border: `1px solid ${COLORS.sage}15`, width: "100%",
                 }}
               >
-                <div style={{ fontSize: 28, marginBottom: 12 }}>{item.icon}</div>
+                <div style={{ fontSize: "clamp(22px, 3.5vw, 28px)", marginBottom: 12 }}>{item.icon}</div>
                 <div style={{
-                  fontSize: 36, fontWeight: 900, color: COLORS.sage,
+                  fontSize: "clamp(28px, 4.5vw, 36px)", fontWeight: 900, color: COLORS.sage,
                   fontFamily: "'Playfair Display', serif", marginBottom: 8,
                 }}>{item.num}</div>
-                <div style={{ fontSize: 16, fontWeight: 700, color: COLORS.charcoal, marginBottom: 8 }}>{item.title}</div>
-                <div style={{ fontSize: 14, color: COLORS.warmGray, lineHeight: 1.6 }}>{item.desc}</div>
+                <div style={{ fontSize: "clamp(14px, 2vw, 16px)", fontWeight: 700, color: COLORS.charcoal, marginBottom: 8 }}>{item.title}</div>
+                <div style={{ fontSize: "clamp(13px, 1.75vw, 14px)", color: COLORS.warmGray, lineHeight: 1.6 }}>{item.desc}</div>
               </div>
             ))}
           </div>
@@ -237,24 +238,24 @@ export default function LandingView({ fadeIn, transition, scrollToRole, onSelect
       </section>
 
       {/* FOR HR */}
-      <section style={{ padding: "80px 24px", background: COLORS.bg }}>
-        <div style={{ maxWidth: 800, margin: "0 auto", textAlign: "center" }}>
-          <h2 style={{ fontSize: 28, fontWeight: 800, color: COLORS.charcoal, marginBottom: 16 }}>
+      <section style={{ padding: "clamp(40px, 8vw, 80px) clamp(16px, 4vw, 24px)", background: COLORS.bg, width: "100%", maxWidth: "100%" }}>
+        <div style={{ width: "100%", maxWidth: "min(100%, 1200px)", margin: "0 auto", textAlign: "center" }}>
+          <h2 style={{ fontSize: "clamp(22px, 3.5vw, 28px)", fontWeight: 800, color: COLORS.charcoal, marginBottom: 16 }}>
             HR 담당자를 위한 대시보드
           </h2>
-          <p style={{ fontSize: 15, color: COLORS.warmGray, marginBottom: 40, lineHeight: 1.7 }}>
+          <p style={{ fontSize: "clamp(14px, 1.875vw, 15px)", color: COLORS.warmGray, marginBottom: 40, lineHeight: 1.7 }}>
             팀별 WCWI 평균, 프로그램 전후 개선율, 위험군 비율을
             <br />한눈에 파악하고 데이터 기반 의사결정을 내리세요.
           </p>
           <div style={{
-            background: COLORS.white, borderRadius: 24, padding: 32,
+            background: COLORS.white, borderRadius: 24, padding: "clamp(24px, 4vw, 32px)",
             border: "1px solid rgba(0,0,0,0.06)",
-            boxShadow: "0 20px 60px rgba(0,0,0,0.06)",
+            boxShadow: "0 20px 60px rgba(0,0,0,0.06)", width: "100%",
           }}>
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 24, flexWrap: "wrap", gap: 12 }}>
               <div>
-                <div style={{ fontSize: 13, color: COLORS.warmGray, marginBottom: 4 }}>회사 평균 WCWI</div>
-                <div style={{ fontSize: 42, fontWeight: 900, color: COLORS.sage }}>72.4</div>
+                <div style={{ fontSize: "clamp(12px, 1.625vw, 13px)", color: COLORS.warmGray, marginBottom: 4 }}>회사 평균 WCWI</div>
+                <div style={{ fontSize: "clamp(32px, 5.25vw, 42px)", fontWeight: 900, color: COLORS.sage }}>72.4</div>
               </div>
               <div style={{ display: "flex", gap: 16 }}>
                 {[
@@ -263,8 +264,8 @@ export default function LandingView({ fadeIn, transition, scrollToRole, onSelect
                   { label: "개선율", value: "+15%", color: COLORS.gold },
                 ].map((m, i) => (
                   <div key={i} style={{ textAlign: "center" }}>
-                    <div style={{ fontSize: 11, color: COLORS.warmGray, marginBottom: 2 }}>{m.label}</div>
-                    <div style={{ fontSize: 20, fontWeight: 800, color: m.color }}>{m.value}</div>
+                      <div style={{ fontSize: "clamp(10px, 1.375vw, 11px)", color: COLORS.warmGray, marginBottom: 2 }}>{m.label}</div>
+                      <div style={{ fontSize: "clamp(16px, 2.5vw, 20px)", fontWeight: 800, color: m.color }}>{m.value}</div>
                   </div>
                 ))}
               </div>
@@ -279,13 +280,13 @@ export default function LandingView({ fadeIn, transition, scrollToRole, onSelect
       </section>
 
       {/* ROLE SELECTION - 수요조사 */}
-      <section ref={roleRef} style={{ padding: "80px 24px", maxWidth: 680, margin: "0 auto" }}>
+      <section ref={roleRef} style={{ padding: "clamp(40px, 8vw, 80px) clamp(16px, 4vw, 24px)", width: "100%", maxWidth: "min(100%, 1000px)", margin: "0 auto" }}>
         <div style={{ textAlign: "center", marginBottom: 40 }}>
-          <div style={{ fontSize: 13, fontWeight: 600, color: COLORS.sage, letterSpacing: 1.5, textTransform: "uppercase", marginBottom: 8 }}>SURVEY</div>
-          <h2 style={{ fontSize: 32, fontWeight: 800, color: COLORS.charcoal, lineHeight: 1.3, marginBottom: 12 }}>
+          <div style={{ fontSize: "clamp(12px, 1.625vw, 13px)", fontWeight: 600, color: COLORS.sage, letterSpacing: 1.5, textTransform: "uppercase", marginBottom: 8 }}>SURVEY</div>
+          <h2 style={{ fontSize: "clamp(24px, 4vw, 32px)", fontWeight: 800, color: COLORS.charcoal, lineHeight: 1.3, marginBottom: 12 }}>
             수요조사 참여하기
           </h2>
-          <p style={{ fontSize: 15, color: COLORS.warmGray, lineHeight: 1.7 }}>
+          <p style={{ fontSize: "clamp(14px, 1.875vw, 15px)", color: COLORS.warmGray, lineHeight: 1.7 }}>
             더 나은 웰니스 서비스를 위해 소중한 의견을 들려주세요.<br />
             약 3~5분 소요되며, 응답은 익명으로 처리됩니다.
           </p>
@@ -296,7 +297,7 @@ export default function LandingView({ fadeIn, transition, scrollToRole, onSelect
               key={r.key}
               onClick={() => onSelectRole(r.key)}
               style={{
-                flex: "1 1 280px", maxWidth: 320, padding: "32px 24px", borderRadius: 20,
+                flex: "1 1 min(100%, 320px)", width: "100%", maxWidth: "100%", padding: "clamp(24px, 4vw, 32px) clamp(16px, 3vw, 24px)", borderRadius: 20,
                 border: `2px solid ${COLORS.sagePale}`, background: COLORS.white,
                 cursor: "pointer", textAlign: "left", transition: "all .3s ease",
               }}
@@ -308,7 +309,7 @@ export default function LandingView({ fadeIn, transition, scrollToRole, onSelect
               <div style={{ fontSize: 13, color: COLORS.warmGray, lineHeight: 1.6, marginBottom: 16 }}>{r.desc}</div>
               <span style={{
                 display: "inline-block", padding: "4px 12px", borderRadius: 20,
-                background: COLORS.sagePale, color: COLORS.sageDark, fontSize: 12, fontWeight: 600,
+                background: COLORS.sagePale, color: COLORS.sageDark, fontSize: "clamp(11px, 1.5vw, 12px)", fontWeight: 600,
               }}>{r.tag}</span>
             </button>
           ))}
@@ -317,13 +318,14 @@ export default function LandingView({ fadeIn, transition, scrollToRole, onSelect
 
       {/* CTA */}
       <section style={{
-        padding: "80px 24px", textAlign: "center",
+        padding: "clamp(40px, 8vw, 80px) clamp(16px, 4vw, 24px)", textAlign: "center",
         background: `linear-gradient(135deg, ${COLORS.charcoal}, #3A3A3A)`,
+        width: "100%", maxWidth: "100%",
       }}>
-        <h2 style={{ fontSize: 32, fontWeight: 800, color: COLORS.white, marginBottom: 16 }}>
+        <h2 style={{ fontSize: "clamp(24px, 4vw, 32px)", fontWeight: 800, color: COLORS.white, marginBottom: 16 }}>
           지금 바로 시작하세요
         </h2>
-        <p style={{ fontSize: 16, color: "rgba(255,255,255,0.6)", marginBottom: 32, lineHeight: 1.7 }}>
+        <p style={{ fontSize: "clamp(14px, 2vw, 16px)", color: "rgba(255,255,255,0.6)", marginBottom: 32, lineHeight: 1.7 }}>
           60초 미니 체크로 현재 상태를 확인하거나,
           <br />전체 WCWI 진단으로 깊이 있는 분석을 받아보세요.
         </p>
@@ -331,8 +333,8 @@ export default function LandingView({ fadeIn, transition, scrollToRole, onSelect
           <button
             onClick={() => transition("mini")}
             style={{
-              padding: "16px 40px", borderRadius: 30, border: "none",
-              background: COLORS.sage, color: "#fff", fontSize: 16,
+              padding: "clamp(14px, 2vw, 16px) clamp(32px, 5vw, 40px)", borderRadius: 30, border: "none",
+              background: COLORS.sage, color: "#fff", fontSize: "clamp(14px, 2vw, 16px)",
               fontWeight: 700, cursor: "pointer",
             }}
           >
@@ -341,9 +343,9 @@ export default function LandingView({ fadeIn, transition, scrollToRole, onSelect
           <button
             onClick={() => transition("full")}
             style={{
-              padding: "16px 40px", borderRadius: 30,
+              padding: "clamp(14px, 2vw, 16px) clamp(32px, 5vw, 40px)", borderRadius: 30,
               border: `2px solid rgba(255,255,255,0.3)`,
-              background: "transparent", color: "#fff", fontSize: 16,
+              background: "transparent", color: "#fff", fontSize: "clamp(14px, 2vw, 16px)",
               fontWeight: 600, cursor: "pointer",
             }}
           >
@@ -353,8 +355,8 @@ export default function LandingView({ fadeIn, transition, scrollToRole, onSelect
       </section>
 
       {/* FOOTER */}
-      <footer style={{ padding: "32px 24px", textAlign: "center", background: COLORS.bgDark }}>
-        <div style={{ fontSize: 13, color: "rgba(255,255,255,0.4)" }}>
+      <footer style={{ padding: "clamp(24px, 4vw, 32px) clamp(16px, 4vw, 24px)", textAlign: "center", background: COLORS.bgDark, width: "100%", maxWidth: "100%" }}>
+        <div style={{ fontSize: "clamp(12px, 1.5vw, 13px)", color: "rgba(255,255,255,0.4)" }}>
           © 2025 WELLINK. 과학 기반 기업 웰니스 플랫폼.
         </div>
       </footer>

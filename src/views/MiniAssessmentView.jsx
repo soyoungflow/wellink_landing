@@ -26,15 +26,15 @@ export function MiniResult({ score, transition, onGoFull, onGoLead, onGoSurvey, 
     }}>
       <style>{MINI_STYLES}</style>
       <div style={{
-        background: COLORS.white, borderRadius: 28, padding: "48px 36px",
-        maxWidth: 480, width: "100%", textAlign: "center",
+        background: COLORS.white, borderRadius: 28, padding: "clamp(32px, 6vw, 48px) clamp(24px, 4vw, 36px)",
+        width: "100%", maxWidth: "min(100%, 600px)", textAlign: "center",
         boxShadow: "0 24px 80px rgba(0,0,0,0.08)",
         animation: "scaleIn 0.5s ease-out",
       }}>
-        <div style={{ fontSize: 48, marginBottom: 16 }}>{level.emoji}</div>
-        <div style={{ fontSize: 13, color: COLORS.warmGray, marginBottom: 8 }}>당신의 웰니스 점수</div>
+        <div style={{ fontSize: "clamp(36px, 6vw, 48px)", marginBottom: 16 }}>{level.emoji}</div>
+        <div style={{ fontSize: "clamp(12px, 1.625vw, 13px)", color: COLORS.warmGray, marginBottom: 8 }}>당신의 웰니스 점수</div>
         <div style={{
-          fontSize: 72, fontWeight: 900, color: level.color,
+          fontSize: "clamp(56px, 9vw, 72px)", fontWeight: 900, color: level.color,
           fontFamily: "'Playfair Display', serif", lineHeight: 1,
         }}>
           <AnimatedNumber value={score} />
@@ -42,9 +42,9 @@ export function MiniResult({ score, transition, onGoFull, onGoLead, onGoSurvey, 
         <div style={{
           display: "inline-block", padding: "6px 20px", borderRadius: 20,
           background: `${level.color}15`, color: level.color,
-          fontSize: 14, fontWeight: 700, margin: "12px 0 20px",
+          fontSize: "clamp(13px, 1.75vw, 14px)", fontWeight: 700, margin: "12px 0 20px",
         }}>{level.text}</div>
-        <p style={{ fontSize: 14, color: COLORS.warmGray, lineHeight: 1.7, marginBottom: 32 }}>{level.desc}</p>
+        <p style={{ fontSize: "clamp(13px, 1.75vw, 14px)", color: COLORS.warmGray, lineHeight: 1.7, marginBottom: 32 }}>{level.desc}</p>
 
         <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
           <button
@@ -52,7 +52,7 @@ export function MiniResult({ score, transition, onGoFull, onGoLead, onGoSurvey, 
             style={{
               padding: "16px", borderRadius: 16, border: "none",
               background: `linear-gradient(135deg, ${COLORS.sage}, ${COLORS.sageDark})`,
-              color: "#fff", fontSize: 15, fontWeight: 700, cursor: "pointer",
+              color: "#fff", fontSize: "clamp(14px, 1.875vw, 15px)", fontWeight: 700, cursor: "pointer",
             }}
           >
             전체 WCWI 진단 받기 (24문항) →
@@ -63,7 +63,7 @@ export function MiniResult({ score, transition, onGoFull, onGoLead, onGoSurvey, 
               padding: "16px", borderRadius: 16,
               border: `2px solid ${COLORS.sage}30`,
               background: "transparent", color: COLORS.sage,
-              fontSize: 14, fontWeight: 600, cursor: "pointer",
+              fontSize: "clamp(13px, 1.75vw, 14px)", fontWeight: 600, cursor: "pointer",
             }}
           >
             기업용 웰니스 감사 문의하기
@@ -74,7 +74,7 @@ export function MiniResult({ score, transition, onGoFull, onGoLead, onGoSurvey, 
               padding: "14px", borderRadius: 16,
               border: `2px solid ${COLORS.gold}30`,
               background: "transparent", color: COLORS.gold,
-              fontSize: 14, fontWeight: 600, cursor: "pointer",
+              fontSize: "clamp(13px, 1.75vw, 14px)", fontWeight: 600, cursor: "pointer",
             }}
           >
             📋 수요조사 참여하기
@@ -83,7 +83,7 @@ export function MiniResult({ score, transition, onGoFull, onGoLead, onGoSurvey, 
             onClick={onGoHome}
             style={{
               padding: "12px", border: "none", background: "transparent",
-              color: COLORS.warmGray, fontSize: 13, cursor: "pointer",
+              color: COLORS.warmGray, fontSize: "clamp(12px, 1.625vw, 13px)", cursor: "pointer",
             }}
           >
             ← 메인으로 돌아가기
@@ -109,14 +109,14 @@ export function MiniQuestions({
     <div style={{
       fontFamily: "'Noto Sans KR', sans-serif", minHeight: "100vh",
       background: `linear-gradient(135deg, ${COLORS.bg}, ${COLORS.cream})`,
-      display: "flex", flexDirection: "column",
+      display: "flex", flexDirection: "column", width: "100%", maxWidth: "100%",
     }}>
       <style>{MINI_STYLES}</style>
-      <div style={{ padding: "20px 24px 0" }}>
+      <div style={{ padding: "clamp(16px, 2.5vw, 20px) clamp(16px, 3vw, 24px) 0", width: "100%" }}>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 8 }}>
           <button
             onClick={() => { if (miniStep > 0) setMiniStep(miniStep - 1); else transition("landing"); }}
-            style={{ border: "none", background: "none", fontSize: 14, color: COLORS.warmGray, cursor: "pointer" }}
+            style={{ border: "none", background: "none", fontSize: "clamp(13px, 1.75vw, 14px)", color: COLORS.warmGray, cursor: "pointer" }}
           >
             ← 뒤로
           </button>
@@ -131,14 +131,14 @@ export function MiniQuestions({
         </div>
       </div>
 
-      <div style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center", padding: 24 }}>
-        <div key={miniStep} style={{ maxWidth: 500, width: "100%", animation: "fadeUp 0.4s ease-out" }}>
+      <div style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center", padding: "clamp(16px, 4vw, 24px)", width: "100%" }}>
+        <div key={miniStep} style={{ width: "100%", maxWidth: "min(100%, 700px)", animation: "fadeUp 0.4s ease-out" }}>
           <div style={{
-            display: "inline-block", padding: "4px 14px", borderRadius: 12,
-            background: `${q.color}15`, fontSize: 12, fontWeight: 600,
+            display: "inline-block", padding: "4px clamp(12px, 1.75vw, 14px)", borderRadius: 12,
+            background: `${q.color}15`, fontSize: "clamp(11px, 1.5vw, 12px)", fontWeight: 600,
             color: q.color, marginBottom: 16,
           }}>{q.area}</div>
-          <h2 style={{ fontSize: 22, fontWeight: 700, color: COLORS.charcoal, lineHeight: 1.5, marginBottom: 32 }}>
+          <h2 style={{ fontSize: "clamp(18px, 2.75vw, 22px)", fontWeight: 700, color: COLORS.charcoal, lineHeight: 1.5, marginBottom: 32 }}>
             {q.text}
           </h2>
 
@@ -152,12 +152,12 @@ export function MiniQuestions({
                     setTimeout(() => setMiniStep(miniStep + 1), 300);
                   }}
                   style={{
-                    flex: 1, padding: "20px", borderRadius: 16,
+                    flex: 1, padding: "clamp(16px, 2.5vw, 20px)", borderRadius: 16,
                     border: `2px solid ${miniAnswers[q.id] === opt.val ? q.color : "#E8E5DE"}`,
                     background: miniAnswers[q.id] === opt.val ? `${q.color}10` : COLORS.white,
-                    fontSize: 16, fontWeight: 600, cursor: "pointer",
+                    fontSize: "clamp(14px, 2vw, 16px)", fontWeight: 600, cursor: "pointer",
                     color: miniAnswers[q.id] === opt.val ? q.color : COLORS.charcoal,
-                    transition: "all 0.2s",
+                    transition: "all 0.2s", width: "100%",
                   }}
                 >
                   {opt.label}
@@ -177,24 +177,24 @@ export function MiniQuestions({
                       setTimeout(() => setMiniStep(miniStep + 1), 400);
                     }}
                     style={{
-                      padding: "16px 20px", borderRadius: 14,
+                      padding: "clamp(14px, 2vw, 16px) clamp(16px, 2.5vw, 20px)", borderRadius: 14,
                       border: `2px solid ${isSelected ? q.color : "#E8E5DE"}`,
                       background: isSelected ? `${q.color}10` : COLORS.white,
                       textAlign: "left", cursor: "pointer",
-                      display: "flex", alignItems: "center", gap: 12,
-                      transition: "all 0.2s",
+                      display: "flex", alignItems: "center", gap: "clamp(10px, 1.5vw, 12px)",
+                      transition: "all 0.2s", width: "100%",
                     }}
                   >
                     <div style={{
-                      width: 28, height: 28, borderRadius: "50%",
+                      width: "clamp(24px, 3.5vw, 28px)", height: "clamp(24px, 3.5vw, 28px)", borderRadius: "50%",
                       border: `2px solid ${isSelected ? q.color : "#D0CDC5"}`,
                       background: isSelected ? q.color : "transparent",
                       display: "flex", alignItems: "center", justifyContent: "center",
-                      color: "#fff", fontSize: 12, fontWeight: 700, flexShrink: 0,
+                      color: "#fff", fontSize: "clamp(10px, 1.5vw, 12px)", fontWeight: 700, flexShrink: 0,
                     }}>
                       {isSelected && "✓"}
                     </div>
-                    <span style={{ fontSize: 14, color: isSelected ? q.color : COLORS.charcoal, fontWeight: isSelected ? 600 : 400 }}>
+                    <span style={{ fontSize: "clamp(13px, 1.75vw, 14px)", color: isSelected ? q.color : COLORS.charcoal, fontWeight: isSelected ? 600 : 400 }}>
                       {label}
                     </span>
                   </button>

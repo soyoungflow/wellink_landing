@@ -15,12 +15,12 @@ export function SurveyField({ field, value, onChange }) {
               key={v}
               onClick={() => onChange(key, v)}
               style={{
-                width: 52,
-                height: 52,
+                width: "clamp(44px, 6.5vw, 52px)",
+                height: "clamp(44px, 6.5vw, 52px)",
                 borderRadius: 14,
                 border: `2px solid ${value === v ? COLORS.sage : "#eee"}`,
                 background: value === v ? COLORS.sagePale : "#fff",
-                fontSize: 18,
+                fontSize: "clamp(16px, 2.25vw, 18px)",
                 fontWeight: 700,
                 color: value === v ? COLORS.sageDark : COLORS.warmGray,
                 cursor: "pointer",
@@ -47,12 +47,12 @@ export function SurveyField({ field, value, onChange }) {
             key={o}
             onClick={() => onChange(key, o)}
             style={{
-              padding: "10px 18px",
+              padding: "clamp(8px, 1.25vw, 10px) clamp(14px, 2.25vw, 18px)",
               borderRadius: 20,
               border: `2px solid ${value === o ? COLORS.sage : "#eee"}`,
               background: value === o ? COLORS.sagePale : "#fff",
               color: value === o ? COLORS.sageDark : COLORS.charcoal,
-              fontSize: 13,
+              fontSize: "clamp(12px, 1.625vw, 13px)",
               fontWeight: 600,
               cursor: "pointer",
               transition: "all .2s",
@@ -106,11 +106,11 @@ export function SurveyField({ field, value, onChange }) {
         placeholder={placeholder || "편하게 작성해주세요."}
         style={{
           width: "100%",
-          minHeight: 100,
-          padding: 16,
+          minHeight: "clamp(80px, 12.5vw, 100px)",
+          padding: "clamp(12px, 2vw, 16px)",
           borderRadius: 12,
           border: "2px solid #eee",
-          fontSize: 14,
+          fontSize: "clamp(13px, 1.75vw, 14px)",
           resize: "vertical",
           fontFamily: "inherit",
           marginTop: 12,

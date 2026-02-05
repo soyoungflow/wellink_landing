@@ -19,11 +19,14 @@ const CATEGORY_COLORS = {
 /**
  * WCWI 5개 영역 레이더 차트
  */
-export default function RadarChart({ scores, size = 280 }) {
+export default function RadarChart({ scores, size }) {
+  // 반응형 크기: 모바일 작게, 데스크탑 크게
+  const responsiveSize = size || "clamp(240px, 35vw, 280px)";
+  const numericSize = typeof responsiveSize === "string" ? 280 : responsiveSize;
   const categories = Object.keys(scores);
   const n = categories.length;
-  const center = size / 2;
-  const radius = size / 2 - 40;
+  const center = numericSize / 2;
+  const radius = numericSize / 2 - 40;
 
   const getPoint = (i, val) => {
     const angle = (Math.PI * 2 * i) / n - Math.PI / 2;
@@ -34,7 +37,7 @@ export default function RadarChart({ scores, size = 280 }) {
   const gridLevels = [20, 40, 60, 80, 100];
 
   return (
-    <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`}>
+    <svg width="100%" height="auto" viewBox={`0 0 ${numericSize} ${numericSize}`} style={{ maxWidth: responsiveSize, maxHeight: responsiveSize }}>
       {gridLevels.map((level) => {
         const pts = categories.map((_, i) => getPoint(i, level));
         return (

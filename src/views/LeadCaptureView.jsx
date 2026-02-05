@@ -9,21 +9,21 @@ export default function LeadCaptureView({ email, setEmail, company, setCompany, 
     <div style={{
       fontFamily: "'Noto Sans KR', sans-serif", minHeight: "100vh",
       background: `linear-gradient(135deg, ${COLORS.bg}, ${COLORS.sagePale})`,
-      display: "flex", alignItems: "center", justifyContent: "center", padding: 24,
+      display: "flex", alignItems: "center", justifyContent: "center", padding: "clamp(16px, 4vw, 24px)", width: "100%", maxWidth: "100%",
     }}>
       <style>{LEAD_STYLES}</style>
       <div style={{
-        background: COLORS.white, borderRadius: 28, padding: "48px 36px",
-        maxWidth: 460, width: "100%",
+        background: COLORS.white, borderRadius: 28, padding: "clamp(32px, 6vw, 48px) clamp(24px, 4vw, 36px)",
+        width: "100%", maxWidth: "min(100%, 600px)",
         boxShadow: "0 24px 80px rgba(0,0,0,0.08)",
         animation: "fadeUp 0.5s ease-out",
       }}>
         <div style={{ textAlign: "center", marginBottom: 32 }}>
-          <div style={{ fontSize: 36, marginBottom: 12 }}>🏢</div>
-          <h2 style={{ fontSize: 24, fontWeight: 800, color: COLORS.charcoal, marginBottom: 8 }}>
+          <div style={{ fontSize: "clamp(28px, 4.5vw, 36px)", marginBottom: 12 }}>🏢</div>
+          <h2 style={{ fontSize: "clamp(20px, 3vw, 24px)", fontWeight: 800, color: COLORS.charcoal, marginBottom: 8 }}>
             기업용 무료 웰니스 감사
           </h2>
-          <p style={{ fontSize: 14, color: COLORS.warmGray, lineHeight: 1.6 }}>
+          <p style={{ fontSize: "clamp(13px, 1.75vw, 14px)", color: COLORS.warmGray, lineHeight: 1.6 }}>
             귀사 직원 대상 WCWI 진단과 분석 리포트를
             <br />무료로 제공합니다.
           </p>
@@ -31,14 +31,14 @@ export default function LeadCaptureView({ email, setEmail, company, setCompany, 
 
         <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
           <div>
-            <label style={{ fontSize: 13, fontWeight: 600, color: COLORS.charcoal, marginBottom: 6, display: "block" }}>이메일 *</label>
+            <label style={{ fontSize: "clamp(12px, 1.625vw, 13px)", fontWeight: 600, color: COLORS.charcoal, marginBottom: 6, display: "block" }}>이메일 *</label>
             <input
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="work@company.com"
               style={{
                 width: "100%", padding: "14px 16px", borderRadius: 12,
-                border: "2px solid #E8E5DE", fontSize: 14, outline: "none",
+                border: "2px solid #E8E5DE", fontSize: "clamp(13px, 1.75vw, 14px)", outline: "none",
                 transition: "border 0.2s",
               }}
               onFocus={(e) => (e.target.style.borderColor = COLORS.sage)}
@@ -46,14 +46,14 @@ export default function LeadCaptureView({ email, setEmail, company, setCompany, 
             />
           </div>
           <div>
-            <label style={{ fontSize: 13, fontWeight: 600, color: COLORS.charcoal, marginBottom: 6, display: "block" }}>회사명</label>
+            <label style={{ fontSize: "clamp(12px, 1.625vw, 13px)", fontWeight: 600, color: COLORS.charcoal, marginBottom: 6, display: "block" }}>회사명</label>
             <input
               value={company}
               onChange={(e) => setCompany(e.target.value)}
               placeholder="회사명을 입력하세요"
               style={{
                 width: "100%", padding: "14px 16px", borderRadius: 12,
-                border: "2px solid #E8E5DE", fontSize: 14, outline: "none",
+                border: "2px solid #E8E5DE", fontSize: "clamp(13px, 1.75vw, 14px)", outline: "none",
                 transition: "border 0.2s",
               }}
               onFocus={(e) => (e.target.style.borderColor = COLORS.sage)}
@@ -61,13 +61,13 @@ export default function LeadCaptureView({ email, setEmail, company, setCompany, 
             />
           </div>
           <div>
-            <label style={{ fontSize: 13, fontWeight: 600, color: COLORS.charcoal, marginBottom: 6, display: "block" }}>직책/역할</label>
+            <label style={{ fontSize: "clamp(12px, 1.625vw, 13px)", fontWeight: 600, color: COLORS.charcoal, marginBottom: 6, display: "block" }}>직책/역할</label>
             <select
               value={role}
               onChange={(e) => setRole(e.target.value)}
               style={{
                 width: "100%", padding: "14px 16px", borderRadius: 12,
-                border: "2px solid #E8E5DE", fontSize: 14, outline: "none",
+                border: "2px solid #E8E5DE", fontSize: "clamp(13px, 1.75vw, 14px)", outline: "none",
                 background: COLORS.white, color: role ? COLORS.charcoal : COLORS.warmGray,
               }}
             >
@@ -88,7 +88,7 @@ export default function LeadCaptureView({ email, setEmail, company, setCompany, 
             style={{
               padding: "16px", borderRadius: 16, border: "none",
               background: `linear-gradient(135deg, ${COLORS.sage}, ${COLORS.sageDark})`,
-              color: "#fff", fontSize: 15, fontWeight: 700, cursor: "pointer",
+              color: "#fff", fontSize: "clamp(14px, 1.875vw, 15px)", fontWeight: 700, cursor: "pointer",
               marginTop: 8, boxShadow: `0 8px 24px ${COLORS.sage}30`,
             }}
           >
@@ -100,7 +100,7 @@ export default function LeadCaptureView({ email, setEmail, company, setCompany, 
               onClick={() => transition("landing")}
               style={{
                 padding: "12px", border: "none", background: "transparent",
-                color: COLORS.warmGray, fontSize: 13, cursor: "pointer",
+                color: COLORS.warmGray, fontSize: "clamp(12px, 1.625vw, 13px)", cursor: "pointer",
               }}
             >
               ← 메인으로 돌아가기
@@ -110,7 +110,7 @@ export default function LeadCaptureView({ email, setEmail, company, setCompany, 
 
         <div style={{
           marginTop: 24, padding: "16px", borderRadius: 12,
-          background: COLORS.sagePale, fontSize: 12, color: COLORS.warmGray,
+          background: COLORS.sagePale, fontSize: "clamp(11px, 1.5vw, 12px)", color: COLORS.warmGray,
           lineHeight: 1.6, textAlign: "center",
         }}>
           🔒 입력하신 정보는 서비스 안내 목적으로만 사용되며,

@@ -47,7 +47,7 @@ export default function ManagerSurveyView({
       display: "flex",
       alignItems: "flex-start",
       justifyContent: "center",
-      padding: "40px 16px",
+      padding: "clamp(24px, 5vw, 40px) clamp(12px, 2vw, 16px)", width: "100%", maxWidth: "100%",
       opacity: fadeIn ? 1 : 0,
       transition: "opacity 0.3s",
     }}>
@@ -63,7 +63,7 @@ export default function ManagerSurveyView({
           color: "#fff",
           padding: "14px 28px",
           borderRadius: 12,
-          fontSize: 14,
+          fontSize: "clamp(13px, 1.75vw, 14px)",
           fontWeight: 600,
           zIndex: 9999,
           boxShadow: "0 8px 30px rgba(0,0,0,0.2)",
@@ -72,12 +72,12 @@ export default function ManagerSurveyView({
         </div>
       )}
 
-      <div style={{ maxWidth: 560, width: "100%", animation: "fadeUp .5s ease-out" }}>
+      <div style={{ width: "100%", maxWidth: "min(100%, 800px)", animation: "fadeUp .5s ease-out", padding: "0 clamp(16px, 4vw, 24px)" }}>
         <div style={{ marginBottom: 24 }}>
           <div style={{ height: 6, borderRadius: 3, background: "#e0e0e0", overflow: "hidden" }}>
             <div style={{ height: "100%", width: `${progress}%`, background: COLORS.sage, borderRadius: 3, transition: "width .4s" }} />
           </div>
-          <div style={{ fontSize: 12, color: COLORS.warmGray, marginTop: 8, textAlign: "center" }}>
+          <div style={{ fontSize: "clamp(11px, 1.5vw, 12px)", color: COLORS.warmGray, marginTop: 8, textAlign: "center" }}>
             🏢 기업 웰니스 인식 및 수요 조사 — {mgrPage + 1}/{totalPages}
           </div>
         </div>
@@ -97,7 +97,7 @@ export default function ManagerSurveyView({
               <strong>개인정보 수집 안내</strong><br />
               수집 목적: 설문 보상 / 서비스 안내 | 항목: 이메일 | 보유: 6개월 | 수집자: WELLINK
             </div>
-            <label style={{ display: "flex", gap: 10, alignItems: "center", fontSize: 14, marginBottom: 20, cursor: "pointer" }}>
+            <label style={{ display: "flex", gap: 10, alignItems: "center", fontSize: "clamp(13px, 1.75vw, 14px)", marginBottom: 20, cursor: "pointer" }}>
               <input
                 type="checkbox"
                 checked={mgrConsent}
@@ -116,7 +116,7 @@ export default function ManagerSurveyView({
                 padding: 14,
                 borderRadius: 12,
                 border: "2px solid #eee",
-                fontSize: 15,
+                fontSize: "clamp(14px, 1.875vw, 15px)",
                 outline: "none",
               }}
               onFocus={(e) => { e.target.style.borderColor = COLORS.sage; }}
@@ -124,11 +124,11 @@ export default function ManagerSurveyView({
             />
           </div>
         ) : (
-          <div style={{ background: COLORS.white, borderRadius: 20, padding: "32px 24px", boxShadow: "0 4px 24px rgba(0,0,0,0.06)" }}>
-            <div style={{ fontSize: 13, fontWeight: 600, color: COLORS.sage, marginBottom: 4 }}>{page.icon} {page.title}</div>
+          <div style={{ background: COLORS.white, borderRadius: 20, padding: "clamp(24px, 4vw, 32px) clamp(16px, 3vw, 24px)", boxShadow: "0 4px 24px rgba(0,0,0,0.06)", width: "100%" }}>
+            <div style={{ fontSize: "clamp(12px, 1.625vw, 13px)", fontWeight: 600, color: COLORS.sage, marginBottom: 4 }}>{page.icon} {page.title}</div>
             {page.fields.map((f, i) => (
               <div key={f.key} style={{ marginTop: i > 0 ? 28 : 16 }}>
-                <div style={{ fontSize: 15, fontWeight: 600, color: COLORS.charcoal, marginBottom: 4 }}>{f.q}</div>
+                <div style={{ fontSize: "clamp(14px, 1.875vw, 15px)", fontWeight: 600, color: COLORS.charcoal, marginBottom: 4 }}>{f.q}</div>
                 <SurveyField field={f} value={mgrAnswers[f.key]} onChange={handleFieldChange} />
               </div>
             ))}
