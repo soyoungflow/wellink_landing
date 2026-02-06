@@ -244,6 +244,9 @@ export default function WellinkMVP() {
       });
       mappedFields["created_time"] = new Date().toISOString();
       mappedFields["source"] = "employee_survey";
+      if (empEmail) {
+        mappedFields["Email"] = empEmail; // 실제 테이블에 Email 필드 존재 확인됨
+      }
       try {
         await saveToAirtable("employee", mappedFields);
         showToast("제출 완료! 감사합니다.", "success");
