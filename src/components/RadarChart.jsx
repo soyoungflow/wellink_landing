@@ -23,12 +23,16 @@ export default function RadarChart({ scores, size }) {
   // 반응형 크기: 모바일 작게, 데스크탑 크게
   const responsiveSize = size || "clamp(240px, 35vw, 280px)";
   const numericSize = typeof responsiveSize === "string" ? 280 : responsiveSize;
-  const categories = Object.keys(scores);
+  
+  // 카테고리 순서를 명시적으로 정의 (오각형을 위해 5개 고정)
+  const categoryOrder = ["mental", "psychological", "burnout", "physical", "satisfaction"];
+  const categories = categoryOrder.filter(cat => scores.hasOwnProperty(cat));
   const n = categories.length;
   const center = numericSize / 2;
   const radius = numericSize / 2 - 40;
 
   const getPoint = (i, val) => {
+    // 5개 카테고리를 오각형으로 배치: 각도 간격 72도 (360/5), 시작 각도 -90도 (위쪽부터)
     const angle = (Math.PI * 2 * i) / n - Math.PI / 2;
     const r = (val / 100) * radius;
     return { x: center + r * Math.cos(angle), y: center + r * Math.sin(angle) };

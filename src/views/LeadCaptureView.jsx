@@ -15,10 +15,10 @@ export default function LeadCaptureView({ email, setEmail, company, setCompany, 
       응답일시: new Date().toISOString(),
       진단유형: "기업감사신청",
     };
-    const payload = { table: "employee", fields };
+    const payload = { table: "mini", fields };
     console.log("SUBMIT", payload);
     try {
-      await saveToAirtable("employee", fields);
+      await saveToAirtable("mini", fields);
       alert("감사합니다! 입력하신 정보로 곧 연락드리겠습니다. 🌿");
       transition("landing");
     } catch (err) {
