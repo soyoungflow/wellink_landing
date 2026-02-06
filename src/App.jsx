@@ -215,10 +215,37 @@ export default function WellinkMVP() {
   if (currentView === "employee") {
     const submitEmp = async () => {
       setLoading(true);
-      const fields = { ...empAnswers, 이메일: empEmail, 응답일시: new Date().toISOString() };
-      if (Array.isArray(fields["관심프로그램"])) fields["관심프로그램"] = fields["관심프로그램"].join(", ");
+      // 한글 필드명을 실제 Airtable 영문 필드명으로 매핑
+      const fieldMapping = {
+        "회사규모": "company_size",
+        "직종": "job_type",
+        "업무스타일": "work_style",
+        "신체불편": "physical_discomfort_level",
+        "정신스트레스": "mental_stress_level",
+        "번아웃경험": "burnout_experience",
+        "참여의향": "need_for_wellness_service",
+        "관심프로그램": "preferred_program_type",
+        "유료지불의향": "interest_in_short_program",
+        "월지불금액": "willingness_to_use_service",
+        "서비스사용의향": "willingness_to_use_service",
+        "기업투자필요": "company_support_expectation",
+        "기대우려": "overall_wellness_need_score",
+      };
+      const mappedFields = {};
+      Object.keys(empAnswers).forEach((key) => {
+        const airtableKey = fieldMapping[key];
+        if (airtableKey) {
+          let value = empAnswers[key];
+          if (key === "관심프로그램" && Array.isArray(value)) {
+            value = value;
+          }
+          mappedFields[airtableKey] = value;
+        }
+      });
+      mappedFields["created_time"] = new Date().toISOString();
+      mappedFields["source"] = "employee_survey";
       try {
-        await saveToAirtable("employee", fields);
+        await saveToAirtable("employee", mappedFields);
         showToast("제출 완료! 감사합니다.", "success");
         transition("thankyou");
       } catch {
@@ -249,10 +276,27 @@ export default function WellinkMVP() {
   if (currentView === "manager") {
     const submitMgr = async () => {
       setLoading(true);
-      const fields = { ...mgrAnswers, 이메일: mgrEmail, 응답일시: new Date().toISOString() };
-      if (Array.isArray(fields["필요기능"])) fields["필요기능"] = fields["필요기능"].join(", ");
+      // 한글 필드명을 실제 Airtable 영문 필드명으로 매핑
+      const fieldMapping = {
+        "기업인원": "Company_size",
+        "필요기능": "Required_features",
+        "합리적가격": "Reasonable_price",
+        "디지털웰니스관심": "Adoption_interest",
+      };
+      const mappedFields = {};
+      Object.keys(mgrAnswers).forEach((key) => {
+        const airtableKey = fieldMapping[key];
+        if (airtableKey) {
+          let value = mgrAnswers[key];
+          if (key === "필요기능" && Array.isArray(value)) {
+            value = value;
+          }
+          mappedFields[airtableKey] = value;
+        }
+      });
+      mappedFields["Created_time"] = new Date().toISOString();
       try {
-        await saveToAirtable("manager", fields);
+        await saveToAirtable("manager", mappedFields);
         showToast("제출 완료! 감사합니다.", "success");
         transition("thankyou");
       } catch {

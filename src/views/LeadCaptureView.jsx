@@ -8,12 +8,16 @@ const LEAD_STYLES = `@import url('https://fonts.googleapis.com/css2?family=Noto+
 export default function LeadCaptureView({ email, setEmail, company, setCompany, role, setRole, transition }) {
   const handleSubmit = async (e) => {
     if (e && e.preventDefault) e.preventDefault();
+    // 실제 mini 테이블 필드명에 맞춰 저장
+    // email, company, role 정보는 answers_json에 포함하거나 별도 필드로 저장
     const fields = {
-      이메일: email || "",
-      회사명: company || "",
-      직책역할: role || "",
-      응답일시: new Date().toISOString(),
-      진단유형: "기업감사신청",
+      created_at: new Date().toISOString(),
+      source: "기업감사신청",
+      answers_json: JSON.stringify({
+        email: email || "",
+        company: company || "",
+        role: role || "",
+      }),
     };
     const payload = { table: "mini", fields };
     console.log("SUBMIT", payload);
