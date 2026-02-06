@@ -107,8 +107,15 @@ export default async function handler(req, res) {
   const BASE_ID = process.env.AIRTABLE_BASE_ID;
 
   if (!PAT || !BASE_ID) {
-    console.error("AIRTABLE_PAT 또는 AIRTABLE_BASE_ID 환경변수가 설정되지 않았습니다.");
-    return res.status(500).json({ error: { message: "서버 설정 오류" } });
+    console.error("환경변수 누락:", {
+      hasPAT: !!PAT,
+      hasBASE_ID: !!BASE_ID,
+    });
+    return res.status(500).json({ 
+      error: { 
+        message: "서버 설정 오류: AIRTABLE_PAT 또는 AIRTABLE_BASE_ID가 설정되지 않았습니다. Vercel 환경변수를 확인하세요." 
+      } 
+    });
   }
 
   try {
@@ -157,13 +164,41 @@ export default async function handler(req, res) {
       const errorData = await response.json().catch(() => ({ 
         error: { message: "Airtable API 오류 (응답 파싱 실패)" } 
       }));
-      console.error(`Airtable API 오류 (${normalizedTable}):`, {
-        status: response.status,
-        statusText: response.statusText,
-        error: errorData,
-      });
+      
+      // 401 Unauthorized 또는 403 Forbidden 에러 상세 로깅
+      if (response.status === 401 || response.status === 403) {
+        console.error(`Airtable 인증 오류 (${normalizedTable}):`, {
+          status: response.status,
+          statusText: response.statusText,
+          error: errorData,
+          hasPAT: !!PAT,
+          PATLength: PAT ? PAT.length : 0,
+          hasBASE_ID: !!BASE_ID,
+          BASE_ID: BASE_ID ? BASE_ID.substring(0, 10) + "..." : "없음",
+          tableId: tableId ? tableId.substring(0, 10) + "..." : "없음",
+        });
+      } else {
+        console.error(`Airtable API 오류 (${normalizedTable}):`, {
+          status: response.status,
+          statusText: response.statusText,
+          error: errorData,
+        });
+      }
+      
+      // 사용자에게 더 명확한 에러 메시지 제공
+      let errorMessage = "Airtable 저장 실패";
+      if (response.status === 401) {
+        errorMessage = "인증 오류: Airtable Personal Access Token이 유효하지 않거나 만료되었습니다. Vercel 환경변수를 확인하세요.";
+      } else if (response.status === 403) {
+        errorMessage = "권한 오류: Base ID 또는 Table ID가 잘못되었거나 접근 권한이 없습니다. Vercel 환경변수를 확인하세요.";
+      } else if (response.status === 404) {
+        errorMessage = "테이블을 찾을 수 없습니다: Table ID가 잘못되었습니다. Vercel 환경변수 AIRTABLE_TABLE_MINI를 확인하세요.";
+      } else if (errorData.error?.message) {
+        errorMessage = errorData.error.message;
+      }
+      
       return res.status(response.status).json({
-        error: errorData.error || { message: "Airtable 저장 실패" },
+        error: { message: errorMessage },
       });
     }
 
