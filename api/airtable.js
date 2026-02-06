@@ -7,10 +7,11 @@
  * - AIRTABLE_TABLE_EMPLOYEE: Employee 테이블 ID (필수)
  * - AIRTABLE_TABLE_MANAGER: Manager 테이블 ID (필수)
  * - AIRTABLE_TABLE_WCWI: WCWI 테이블 ID (필수)
+ * - AIRTABLE_TABLE_MINI: Mini 결과 테이블 ID (필수)
  */
 
 // 허용된 테이블 화이트리스트
-const ALLOWED_TABLES = ["employee", "manager", "wcwi"];
+const ALLOWED_TABLES = ["employee", "manager", "wcwi", "mini"];
 
 // 최대 요청 본문 크기 (10KB)
 const MAX_BODY_SIZE = 10 * 1024;

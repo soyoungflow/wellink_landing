@@ -1,10 +1,31 @@
 import { COLORS } from "../constants/theme";
+import { saveToAirtable } from "../api/airtable";
 
 const LEAD_STYLES = `@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;900&display=swap');
   @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 `;
 
 export default function LeadCaptureView({ email, setEmail, company, setCompany, role, setRole, transition }) {
+  const handleSubmit = async (e) => {
+    if (e && e.preventDefault) e.preventDefault();
+    const fields = {
+      이메일: email || "",
+      회사명: company || "",
+      직책역할: role || "",
+      응답일시: new Date().toISOString(),
+      진단유형: "기업감사신청",
+    };
+    const payload = { table: "employee", fields };
+    console.log("SUBMIT", payload);
+    try {
+      await saveToAirtable("employee", fields);
+      alert("감사합니다! 입력하신 정보로 곧 연락드리겠습니다. 🌿");
+      transition("landing");
+    } catch (err) {
+      alert(err.message || "제출에 실패했습니다.");
+    }
+  };
+
   return (
     <div style={{
       fontFamily: "'Noto Sans KR', sans-serif", minHeight: "100vh",
@@ -29,7 +50,7 @@ export default function LeadCaptureView({ email, setEmail, company, setCompany, 
           </p>
         </div>
 
-        <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+        <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: 16 }}>
           <div>
             <label style={{ fontSize: "clamp(12px, 1.625vw, 13px)", fontWeight: 600, color: COLORS.charcoal, marginBottom: 6, display: "block" }}>이메일 *</label>
             <input
@@ -81,10 +102,7 @@ export default function LeadCaptureView({ email, setEmail, company, setCompany, 
           </div>
 
           <button
-            onClick={() => {
-              alert("감사합니다! 입력하신 정보로 곧 연락드리겠습니다. 🌿");
-              transition("landing");
-            }}
+            type="submit"
             style={{
               padding: "16px", borderRadius: 16, border: "none",
               background: `linear-gradient(135deg, ${COLORS.sage}, ${COLORS.sageDark})`,
@@ -97,6 +115,7 @@ export default function LeadCaptureView({ email, setEmail, company, setCompany, 
 
           <div style={{ textAlign: "center" }}>
             <button
+              type="button"
               onClick={() => transition("landing")}
               style={{
                 padding: "12px", border: "none", background: "transparent",
@@ -106,7 +125,7 @@ export default function LeadCaptureView({ email, setEmail, company, setCompany, 
               ← 메인으로 돌아가기
             </button>
           </div>
-        </div>
+        </form>
 
         <div style={{
           marginTop: 24, padding: "16px", borderRadius: 12,

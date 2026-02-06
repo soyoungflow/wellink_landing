@@ -1,6 +1,7 @@
 import { MINI_QUESTIONS } from "../constants/questions";
 import { COLORS } from "../constants/theme";
 import { AnimatedNumber } from "../components";
+import { saveToAirtable } from "../api/airtable";
 
 const MINI_STYLES = `@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;900&family=Playfair+Display:wght@400;700&display=swap');
   @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
@@ -11,12 +12,28 @@ const LABELS_5 = ["전혀 아님", "드물게", "가끔", "자주", "항상"];
 const LABELS_7 = ["매우 동의하지 않음", "동의하지 않음", "약간 동의하지 않음", "보통", "약간 동의", "동의", "매우 동의"];
 
 /** 미니 체크 결과 화면 */
-export function MiniResult({ score, transition, onGoFull, onGoLead, onGoSurvey, onGoHome }) {
+export function MiniResult({ score, miniAnswers, transition, onGoFull, onGoLead, onGoSurvey, onGoHome }) {
   const level = score >= 75
     ? { text: "양호", color: COLORS.sage, emoji: "🌿", desc: "전반적으로 건강한 상태입니다. 지속적인 관리로 유지하세요." }
     : score >= 50
       ? { text: "보통", color: COLORS.gold, emoji: "⚡", desc: "일부 영역에서 개선이 필요합니다. 맞춤형 프로그램을 확인해보세요." }
       : { text: "주의", color: COLORS.coral, emoji: "🔴", desc: "여러 영역에서 관리가 필요합니다. 전체 진단을 통해 정확한 분석을 받아보세요." };
+
+  const handleLeadClick = async () => {
+    const payload = {
+      score,
+      level: level.text,
+      answers_json: JSON.stringify(miniAnswers ?? {}),
+      created_at: new Date().toISOString(),
+    };
+    try {
+      console.log("[MINI SAVE]", payload);
+      await saveToAirtable("mini", payload);
+    } catch (e) {
+      console.error("mini save failed", e);
+    }
+    transition("lead");
+  };
 
   return (
     <div style={{
@@ -55,10 +72,10 @@ export function MiniResult({ score, transition, onGoFull, onGoLead, onGoSurvey, 
               color: "#fff", fontSize: "clamp(14px, 1.875vw, 15px)", fontWeight: 700, cursor: "pointer",
             }}
           >
-            전체 WCWI 진단 받기 (24문항) →
+            전체 WCWI 진단 받기  →
           </button>
           <button
-            onClick={() => transition("lead")}
+            onClick={handleLeadClick}
             style={{
               padding: "16px", borderRadius: 16,
               border: `2px solid ${COLORS.sage}30`,

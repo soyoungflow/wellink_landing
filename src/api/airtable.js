@@ -7,10 +7,11 @@
 
 /**
  * 서버 API를 통해 Airtable에 레코드 저장
- * @param {string} table - 테이블 이름 ('employee' | 'manager' | 'wcwi')
+ * @param {string} table - 테이블 이름 ('employee' | 'manager' | 'wcwi' | 'mini')
  * @param {object} fields - 저장할 필드 객체
  */
 export async function saveToAirtable(table, fields) {
+  console.log("FETCH /api/airtable");
   const r = await fetch("/api/airtable", {
     method: "POST",
     headers: { "Content-Type": "application/json" },

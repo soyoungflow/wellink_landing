@@ -168,7 +168,7 @@ export default function LandingView({ fadeIn, transition, scrollToRole, onSelect
               onMouseOver={(e) => { e.target.style.background = `${COLORS.sage}10`; }}
               onMouseOut={(e) => { e.target.style.background = "transparent"; }}
             >
-              전체 WCWI 진단 (24문항)
+              전체 WCWI 진단
             </button>
           </div>
         </div>
@@ -338,7 +338,7 @@ export default function LandingView({ fadeIn, transition, scrollToRole, onSelect
               fontWeight: 700, cursor: "pointer",
             }}
           >
-            60초 미니 체크
+            60초 미니 웰니스 체크
           </button>
           <button
             onClick={() => transition("full")}
@@ -357,7 +357,7 @@ export default function LandingView({ fadeIn, transition, scrollToRole, onSelect
       {/* FOOTER */}
       <footer style={{ padding: "clamp(24px, 4vw, 32px) clamp(16px, 4vw, 24px)", textAlign: "center", background: COLORS.bgDark, width: "100%", maxWidth: "100%" }}>
         <div style={{ fontSize: "clamp(12px, 1.5vw, 13px)", color: "rgba(255,255,255,0.4)" }}>
-          © 2025 WELLINK. 과학 기반 기업 웰니스 플랫폼.
+          © 2026 WELLINK. 과학 기반 기업 웰니스 플랫폼.
         </div>
       </footer>
     </div>

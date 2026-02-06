@@ -127,6 +127,7 @@ export default function WellinkMVP() {
       return (
         <MiniResult
           score={score}
+          miniAnswers={miniAnswers}
           transition={transition}
           onGoFull={() => {
             setMiniStep(0);
