@@ -2,6 +2,7 @@ import { MINI_QUESTIONS } from "../constants/questions";
 import { COLORS } from "../constants/theme";
 import { AnimatedNumber } from "../components";
 import { saveToAirtable } from "../api/airtable";
+import { normalizePayload } from "../api/airtableNormalize";
 
 const MINI_STYLES = `@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;900&family=Playfair+Display:wght@400;700&display=swap');
   @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
@@ -27,8 +28,9 @@ export function MiniResult({ score, miniAnswers, transition, onGoFull, onGoLead,
       created_at: new Date().toISOString(),
     };
     try {
-      console.log("[MINI SAVE]", payload);
-      await saveToAirtable("mini", payload);
+      const normalized = normalizePayload("mini", payload);
+      console.log("[MINI SAVE]", normalized);
+      await saveToAirtable("mini", normalized);
     } catch (e) {
       console.error("mini save failed", e);
     }

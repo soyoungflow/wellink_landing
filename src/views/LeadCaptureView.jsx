@@ -1,5 +1,6 @@
 import { COLORS } from "../constants/theme";
 import { saveToAirtable } from "../api/airtable";
+import { normalizePayload } from "../api/airtableNormalize";
 
 const LEAD_STYLES = `@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;900&display=swap');
   @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
@@ -8,21 +9,22 @@ const LEAD_STYLES = `@import url('https://fonts.googleapis.com/css2?family=Noto+
 export default function LeadCaptureView({ email, setEmail, company, setCompany, role, setRole, transition }) {
   const handleSubmit = async (e) => {
     if (e && e.preventDefault) e.preventDefault();
-    // 실제 mini 테이블 필드명에 맞춰 저장
-    // email, company, role 정보는 answers_json에 포함하거나 별도 필드로 저장
+    // mini 테이블 스키마에 맞춰 저장 (email 필드 있으면 최상위에도 전송)
     const fields = {
       created_at: new Date().toISOString(),
-      source: "기업감사신청",
+      source: "app",
+      email: email || "",
       answers_json: JSON.stringify({
         email: email || "",
         company: company || "",
         role: role || "",
+        source_type: "기업감사신청",
       }),
     };
     const payload = { table: "mini", fields };
     console.log("SUBMIT", payload);
     try {
-      await saveToAirtable("mini", fields);
+      await saveToAirtable("mini", normalizePayload("mini", fields));
       alert("감사합니다! 입력하신 정보로 곧 연락드리겠습니다. 🌿");
       transition("landing");
     } catch (err) {

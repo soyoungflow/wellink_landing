@@ -1,5 +1,6 @@
 import { useState, useRef } from "react";
 import { saveToAirtable } from "./api/airtable";
+import { normalizePayload } from "./api/airtableNormalize";
 import { WCWI_QUESTIONS, MINI_QUESTIONS } from "./constants/questions";
 import { calculateMiniScore, calculateFullScores } from "./utils/scoreUtils";
 import {
@@ -107,23 +108,6 @@ export default function WellinkMVP() {
   if (currentView === "mini") {
     if (miniStep >= MINI_QUESTIONS.length) {
       const score = calculateMiniScore(miniAnswers);
-      const miniFields = {};
-      MINI_QUESTIONS.forEach((q) => {
-        if (q.type === "yesno") {
-          const v = miniAnswers[q.id];
-          miniFields[q.area] = v === "no" ? 100 : 30;
-          return;
-        }
-        const raw = miniAnswers[q.id] ?? 3;
-        const scale = q.scale || 5;
-        const val = q.reversed ? scale + 1 - raw : raw;
-        miniFields[q.area] = Math.round(((val - 1) / (scale - 1)) * 100);
-      });
-      miniFields["종합점수"] = score;
-      miniFields["진단유형"] = "미니체크";
-      miniFields["진단일시"] = new Date().toISOString();
-      saveToAirtable("wcwi", miniFields).catch(() => {});
-
       return (
         <MiniResult
           score={score}
@@ -213,9 +197,25 @@ export default function WellinkMVP() {
   }
 
   if (currentView === "employee") {
+    // Airtable Single select 옵션 문자열 (5점 리커트: 전혀 아니다 ~ 매우 그렇다)
+    const LIKERT_5 = {
+      1: "1 (전혀 아니다)",
+      2: "2 (아니다)",
+      3: "3 (보통이다)",
+      4: "4 (그렇다)",
+      5: "5 (매우 그렇다)",
+    };
+    const LIKERT_KEYS = [
+      "신체불편",
+      "정신스트레스",
+      "번아웃경험",
+      "참여의향",
+      "유료지불의향",
+      "서비스사용의향",
+      "기업투자필요",
+    ];
     const submitEmp = async () => {
       setLoading(true);
-      // 한글 필드명을 실제 Airtable 영문 필드명으로 매핑
       const fieldMapping = {
         "회사규모": "company_size",
         "직종": "job_type",
@@ -226,10 +226,10 @@ export default function WellinkMVP() {
         "참여의향": "need_for_wellness_service",
         "관심프로그램": "preferred_program_type",
         "유료지불의향": "interest_in_short_program",
-        "월지불금액": "willingness_to_use_service",
+        "월지불금액": "payment_amount",
         "서비스사용의향": "willingness_to_use_service",
         "기업투자필요": "company_support_expectation",
-        "기대우려": "overall_wellness_need_score",
+        "기대우려": "open_feedback",
       };
       const mappedFields = {};
       Object.keys(empAnswers).forEach((key) => {
@@ -238,17 +238,19 @@ export default function WellinkMVP() {
           let value = empAnswers[key];
           if (key === "관심프로그램" && Array.isArray(value)) {
             value = value;
+          } else if (LIKERT_KEYS.includes(key) && typeof value === "number" && LIKERT_5[value]) {
+            value = LIKERT_5[value];
           }
           mappedFields[airtableKey] = value;
         }
       });
       mappedFields["created_time"] = new Date().toISOString();
-      mappedFields["source"] = "employee_survey";
+      mappedFields["source"] = "웹 사이트";
       if (empEmail) {
-        mappedFields["Email"] = empEmail; // 실제 테이블에 Email 필드 존재 확인됨
+        mappedFields["Email"] = empEmail;
       }
       try {
-        await saveToAirtable("employee", mappedFields);
+        await saveToAirtable("employee", normalizePayload("employee", mappedFields));
         showToast("제출 완료! 감사합니다.", "success");
         transition("thankyou");
       } catch {
@@ -277,9 +279,14 @@ export default function WellinkMVP() {
   }
 
   if (currentView === "manager") {
+    // Airtable Company_size 옵션: 10-50명, 50-200명 (물결 아님)
+    const companySizeToAirtable = (v) => {
+      if (v === "10~50명") return "10-50명";
+      if (v === "50~200명") return "50-200명";
+      return v;
+    };
     const submitMgr = async () => {
       setLoading(true);
-      // 한글 필드명을 실제 Airtable 영문 필드명으로 매핑
       const fieldMapping = {
         "기업인원": "Company_size",
         "필요기능": "Required_features",
@@ -293,13 +300,17 @@ export default function WellinkMVP() {
           let value = mgrAnswers[key];
           if (key === "필요기능" && Array.isArray(value)) {
             value = value;
+          } else if (key === "기업인원" && typeof value === "string") {
+            value = companySizeToAirtable(value);
           }
           mappedFields[airtableKey] = value;
         }
       });
-      mappedFields["Created_time"] = new Date().toISOString();
+      if (mgrEmail) {
+        mappedFields["Email"] = mgrEmail;
+      }
       try {
-        await saveToAirtable("manager", mappedFields);
+        await saveToAirtable("manager", normalizePayload("manager", mappedFields));
         showToast("제출 완료! 감사합니다.", "success");
         transition("thankyou");
       } catch {
