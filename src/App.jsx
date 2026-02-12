@@ -202,9 +202,16 @@ export default function WellinkMVP() {
   }
 
   if (currentView === "employee") {
-    // Airtable Single select 옵션 문자열 (5점 리커트: 전혀 아니다 ~ 매우 그렇다)
+    // Airtable Single select 옵션 문자열
     const LIKERT_5 = {
       1: "1 (전혀 아니다)",
+      2: "2 (아니다)",
+      3: "3 (보통이다)",
+      4: "4 (그렇다)",
+      5: "5 (매우 그렇다)",
+    };
+    const LIKERT_5_WILLINGNESS = {
+      1: "1 (매우 아니다)",
       2: "2 (아니다)",
       3: "3 (보통이다)",
       4: "4 (그렇다)",
@@ -216,7 +223,6 @@ export default function WellinkMVP() {
       "번아웃경험",
       "참여의향",
       "유료지불의향",
-      "서비스사용의향",
       "기업투자필요",
     ];
     const submitEmp = async () => {
@@ -243,6 +249,8 @@ export default function WellinkMVP() {
           let value = empAnswers[key];
           if (key === "관심프로그램" && Array.isArray(value)) {
             value = value;
+          } else if (key === "서비스사용의향" && typeof value === "number" && LIKERT_5_WILLINGNESS[value]) {
+            value = LIKERT_5_WILLINGNESS[value];
           } else if (LIKERT_KEYS.includes(key) && typeof value === "number" && LIKERT_5[value]) {
             value = LIKERT_5[value];
           }
@@ -258,8 +266,9 @@ export default function WellinkMVP() {
         await saveToAirtable("employee", normalizePayload("employee", mappedFields));
         showToast("제출 완료! 감사합니다.", "success");
         transition("thankyou");
-      } catch {
-        showToast("오류가 발생했습니다. 다시 시도해주세요.", "error");
+      } catch (err) {
+        const msg = err?.message || "오류가 발생했습니다. 다시 시도해주세요.";
+        showToast(msg, "error");
       } finally {
         setLoading(false);
       }
@@ -319,8 +328,9 @@ export default function WellinkMVP() {
         await saveToAirtable("manager", normalizePayload("manager", mappedFields));
         showToast("제출 완료! 감사합니다.", "success");
         transition("thankyou");
-      } catch {
-        showToast("오류가 발생했습니다. 다시 시도해주세요.", "error");
+      } catch (err) {
+        const msg = err?.message || "오류가 발생했습니다. 다시 시도해주세요.";
+        showToast(msg, "error");
       } finally {
         setLoading(false);
       }

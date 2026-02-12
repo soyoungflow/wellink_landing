@@ -14,6 +14,14 @@ const LIKERT_5 = [
   "4 (그렇다)",
   "5 (매우 그렇다)",
 ];
+/** employee 테이블 willingness_to_use_service 전용 (1=매우 아니다) */
+const LIKERT_5_WILLINGNESS = [
+  "1 (매우 아니다)",
+  "2 (아니다)",
+  "3 (보통이다)",
+  "4 (그렇다)",
+  "5 (매우 그렇다)",
+];
 
 const SCHEMA = {
   mini: {
@@ -46,7 +54,7 @@ const SCHEMA = {
       burnout_experience: { options: LIKERT_5, default: "3 (보통이다)" },
       need_for_wellness_service: { options: LIKERT_5, default: "3 (보통이다)" },
       interest_in_short_program: { options: LIKERT_5, default: "3 (보통이다)" },
-      willingness_to_use_service: { options: LIKERT_5, default: "3 (보통이다)" },
+      willingness_to_use_service: { options: LIKERT_5_WILLINGNESS, default: "3 (보통이다)" },
       company_support_expectation: { options: LIKERT_5, default: "3 (보통이다)" },
       source: {
         options: ["웹 사이트", "이메일 캠페인", "직접 방문", "기타"],
