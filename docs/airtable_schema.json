@@ -1,0 +1,80 @@
+{
+  "baseId": "appNDMLyj5VngPHdU",
+  "baseName": "WELLINK",
+  "tables": {
+    "employee": {
+      "tableId": "tblGRjbxzVL6E4wUc",
+      "tableName": "Employee_Wellness_Market_Survey",
+      "fields": [
+        { "fieldName": "response_id", "fieldId": "fldCZwQ0D0OrXxHdd", "fieldType": "formula", "required": false, "readOnly": true },
+        { "fieldName": "Email", "fieldId": "fld9YPwyEUNwouwMy", "fieldType": "singleLineText", "required": false },
+        { "fieldName": "company_size", "fieldId": "fld5XMIaEcmBrAMFU", "fieldType": "singleSelect", "options": ["10명 미만", "10~49명", "50~200명", "200명 이상"], "required": false },
+        { "fieldName": "job_type", "fieldId": "fldnhhgCtR13eYztS", "fieldType": "singleSelect", "options": ["사무직", "연구/개발", "영업/마케팅", "생산/현장직", "기타"], "required": false },
+        { "fieldName": "work_style", "fieldId": "fldPTUW9gy1L2WLxY", "fieldType": "singleSelect", "options": ["전일 출근", "재택근무", "혼합형(출근+재택)"], "required": false },
+        { "fieldName": "physical_discomfort_level", "fieldId": "fldNtoGzGNI71qAHK", "fieldType": "singleSelect", "options": ["5 (매우 그렇다)", "4 (그렇다)", "3 (보통이다)", "2 (아니다)", "1 (전혀 아니다)"], "required": false },
+        { "fieldName": "mental_stress_level", "fieldId": "fldSQkfUcepciBCRl", "fieldType": "singleSelect", "options": ["5 (매우 그렇다)", "4 (그렇다)", "3 (보통이다)", "2 (아니다)", "1 (전혀 아니다)"], "required": false },
+        { "fieldName": "burnout_experience", "fieldId": "fldYG3LdqFLsEHQXV", "fieldType": "singleSelect", "options": ["5 (매우 그렇다)", "4 (그렇다)", "3 (보통이다)", "2 (아니다)", "1 (전혀 아니다)"], "required": false },
+        { "fieldName": "need_for_wellness_service", "fieldId": "fldHOb9Dy9E3BuSgX", "fieldType": "singleSelect", "options": ["5 (매우 그렇다)", "4 (그렇다)", "3 (보통이다)", "2 (아니다)", "1 (전혀 아니다)"], "required": false },
+        { "fieldName": "interest_in_short_program", "fieldId": "fld8WdQcHrNtkxPcd", "fieldType": "singleSelect", "options": ["5 (매우 그렇다)", "4 (그렇다)", "3 (보통이다)", "2 (아니다)", "1 (전혀 아니다)"], "required": false },
+        { "fieldName": "willingness_to_use_service", "fieldId": "fldd1qMIuZf5lwEIF", "fieldType": "singleSelect", "options": ["1 (매우있다)", "2 (있다)", "3 (보통이다)", "4 (별로없다)", "5 (전혀없다)"], "required": false },
+        { "fieldName": "preferred_program_type", "fieldId": "fld0YburJmcDlUFKO", "fieldType": "multipleSelects", "options": ["근골격계 스트레칭", "명상/호흡", "번아웃 관리", "수면/회복", "감정 관리", "기타"], "required": false },
+        { "fieldName": "company_support_expectation", "fieldId": "fldCFN182M9EBopg6", "fieldType": "singleSelect", "options": ["5 (매우 그렇다)", "4 (그렇다)", "3 (보통이다)", "2 (아니다)", "1 (전혀 아니다)"], "required": false },
+        { "fieldName": "open_feedback", "fieldId": "fldA6O1OlgCTbgWV1", "fieldType": "multilineText", "required": false },
+        { "fieldName": "overall_wellness_need_score", "fieldId": "fldykEGAeCejUWZwF", "fieldType": "formula", "required": false, "readOnly": true },
+        { "fieldName": "payment_amount", "fieldId": "fldAobZto4HShKELJ", "fieldType": "multipleSelects", "options": ["10,000원 미만", "10,000~30,000원", "30,000~50,000원", "50,000원 이상", "가격에 따라 결정할 의향이 있습니다"], "required": false },
+        { "fieldName": "created_time", "fieldId": "fldR0JYXilQmDAOuF", "fieldType": "createdTime", "required": false, "readOnly": true },
+        { "fieldName": "source", "fieldId": "fldotPAGfsAFkXDmD", "fieldType": "singleSelect", "options": ["내부 링크", "외부 캠페인", "직접 방문", "기타"], "required": false },
+        { "fieldName": "AI_Feedback_Summary", "fieldId": "fldayRaTo9pUYkb4Q", "fieldType": "aiText", "required": false, "readOnly": true },
+        { "fieldName": "AI_Need_Category", "fieldId": "fldeNUN5uAAKJeZwA", "fieldType": "aiText", "required": false, "readOnly": true },
+        { "fieldName": "Agreement", "fieldId": "fldUghbQIEgJzoRMY", "fieldType": "singleSelect", "options": ["예,동의합니다."], "required": false },
+    { "fieldName": "Created time", "fieldId": "fldTq5sfiEyr8uDWZ", "fieldType": "createdTime", "required": false, "readOnly": true }
+      ]
+    },
+    "manager": {
+      "tableId": "tbl35QbAamOCRvaPk",
+      "tableName": "Wellness Survey Company Responses",
+      "fields": [
+        { "fieldName": "Email", "fieldId": "fldhtBwLt62iOF2nM", "fieldType": "email", "required": false },
+        { "fieldName": "Company", "fieldId": "fld7wkPlkf785F1q3", "fieldType": "multipleRecordLinks", "linkedTableId": "tblimni6my2OAdOi8", "required": false },
+        { "fieldName": "Company_size", "fieldId": "fldyJwqjFsqVgUQPN", "fieldType": "singleSelect", "options": ["10명 이하", "10-50명", "50-200명", "200명 이상"], "required": false },
+        { "fieldName": "Current_programs", "fieldId": "fldPka9AJFk4J8osa", "fieldType": "multilineText", "required": false },
+        { "fieldName": "Wellness_importance", "fieldId": "fldYHgiPj50BcSyde", "fieldType": "multipleSelects", "options": ["5 매우그렇다", "4 그렇다", "3 보통이다", "2 아니다", "1 전혀 아니다"], "required": false },
+        { "fieldName": "Needed_services", "fieldId": "fldA550dWEG1ThiuH", "fieldType": "multilineText", "required": false },
+        { "fieldName": "Pain_points", "fieldId": "fldN02HQpcgxy1oI0", "fieldType": "multilineText", "required": false },
+        { "fieldName": "Adoption_interest", "fieldId": "fldXWrduSw1Xrqv5G", "fieldType": "singleSelect", "options": ["있음", "없음"], "required": false },
+        { "fieldName": "Required_features", "fieldId": "fld7MJL75o9wlHaHR", "fieldType": "multipleSelects", "options": ["정신건강 콘텐츠", "요가, 필라테스 등 운동 콘텐츠", "번아웃 평가 및 리포트", "데이터 분석 및 대시보드", "기타"], "required": false },
+        { "fieldName": "Other_features", "fieldId": "fldVUrjnEMzV5wx07", "fieldType": "multilineText", "required": false },
+        { "fieldName": "Cheap_price_range", "fieldId": "fldkyJMTU1iknAUx4", "fieldType": "singleSelect", "options": ["인당 5천원 ~1만원", "인당 1~2만원", "인당 2~3만원"], "required": false },
+        { "fieldName": "Reasonable_price", "fieldId": "fldRn89yzO4Rerd1S", "fieldType": "multilineText", "required": false },
+        { "fieldName": "Additional_comments", "fieldId": "fldCU0eH26UGHaMfx", "fieldType": "multilineText", "required": false },
+        { "fieldName": "Created_time", "fieldId": "fldQjaLRrlrbqPQTF", "fieldType": "createdTime", "required": false, "readOnly": true },
+        { "fieldName": "Agreement", "fieldId": "fldadpR5XZQtavfBR", "fieldType": "singleSelect", "options": ["예,동의합니다."], "required": false },
+        { "fieldName": "Service_Demand", "fieldId": "fldic1nV9mSlrGvwc", "fieldType": "singleSelect", "options": ["의향이 있다.", "의향이 없다. "], "required": false },
+        { "fieldName": "Attachments", "fieldId": "fldoxPG8BLCdf0Cai", "fieldType": "multipleAttachments", "required": false }
+      ]
+    },
+    "mini": {
+      "tableId": "tblyZs4j4JY11Sfg8",
+      "tableName": "mini_responses",
+      "fields": [
+        { "fieldName": "score", "fieldId": "fldxhpjb5uxaWEEtA", "fieldType": "number", "required": false },
+        { "fieldName": "created_at", "fieldId": "fldZ2VkVQibgvcFAP", "fieldType": "dateTime", "required": false },
+        { "fieldName": "email", "fieldId": "fld5AdBN1G69JgENn", "fieldType": "singleLineText", "required": false },
+        { "fieldName": "level", "fieldId": "fld2cMPErFKbKvI1Q", "fieldType": "singleSelect", "options": ["양호", "보통", "주의"], "required": false },
+        { "fieldName": "answers_json", "fieldId": "fldDxNOqOONZigtpw", "fieldType": "multilineText", "required": false },
+        { "fieldName": "source", "fieldId": "fld5sosIYxFU2Jy3s", "fieldType": "singleSelect", "options": ["web", "app"], "required": false },
+        { "fieldName": "utm", "fieldId": "fld1kVqqIRvDr2str", "fieldType": "singleLineText", "required": false }
+      ]
+    },
+    "wcwi": {
+      "tableId": "tbl8skWY7TdWU0de8",
+      "tableName": "Assessments",
+      "fields": [
+        { "fieldName": "Assessment_ID", "fieldId": "fldOAP3WHTB6oHkoP", "fieldType": "autoNumber", "required": false, "readOnly": true },
+        { "fieldName": "Participant_ID", "fieldId": "fldsuG2dFtkk0rFEz", "fieldType": "multipleRecordLinks", "linkedTableId": "tblOmUHjXLZ8GXstO", "required": false },
+        { "fieldName": "Program_ID", "fieldId": "fldhG2h3NauFf66Db", "fieldType": "multipleRecordLinks", "linkedTableId": "tblAK75NtrsufVhyK", "required": false },
+        { "fieldName": "WHO1_PositiveMood", "fieldId": "fldne4LTzXtyY3dPP", "fieldType": "singleSelect", "options": ["1: 전혀 아니다", "2: 아니다", "3: 보통이다", "4: 그렇다", "5: 매우 그렇다"], "required": false }
+      ]
+    }
+  }
+}

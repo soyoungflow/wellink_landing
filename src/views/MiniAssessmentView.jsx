@@ -2,7 +2,7 @@ import { MINI_QUESTIONS } from "../constants/questions";
 import { COLORS } from "../constants/theme";
 import { AnimatedNumber } from "../components";
 import { saveToAirtable } from "../api/airtable";
-import { normalizePayload } from "../api/airtableNormalize";
+import { normalizePayload, validatePayload } from "../api/airtableNormalize";
 
 const MINI_STYLES = `@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;900&family=Playfair+Display:wght@400;700&display=swap');
   @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
@@ -36,10 +36,15 @@ export function MiniResult({ score, miniAnswers, transition, onGoFull, onGoLead,
     };
     try {
       const normalized = normalizePayload("mini", payload);
+      const validation = validatePayload("mini", normalized);
+      if (!validation.valid) {
+        console.error("[Airtable 검증 실패] mini", validation.errors);
+        return;
+      }
       console.log("[MINI SAVE]", normalized);
       await saveToAirtable("mini", normalized);
     } catch (e) {
-      console.error("mini save failed", e);
+      console.error("[Airtable 제출 오류] mini", e);
     }
     transition("lead");
   };

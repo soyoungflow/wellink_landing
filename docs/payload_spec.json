@@ -1,0 +1,108 @@
+{
+  "description": "앱에서 Airtable로 전송하는 payload 스펙 (테이블별·진입경로별)",
+  "flows": [
+    {
+      "id": "lead_mini",
+      "label": "무료감사신청하기 (리드캡처 → mini)",
+      "screen": "LeadCaptureView",
+      "trigger": "무료 감사 신청하기 버튼",
+      "table": "mini",
+      "payloadFields": [
+        { "key": "created_at", "type": "string (ISO8601)", "source": "new Date().toISOString()" },
+        { "key": "source", "type": "string", "source": "\"app\"" },
+        { "key": "email", "type": "string", "source": "email state" },
+        { "key": "answers_json", "type": "string (JSON)", "source": "JSON.stringify({ email, company, role, source_type })" }
+      ],
+      "note": "score, level 없음 (리드캡처만)"
+    },
+    {
+      "id": "lead_employee",
+      "label": "무료감사신청하기 (리드캡처 → employee)",
+      "screen": "LeadCaptureView",
+      "trigger": "무료 감사 신청하기 (진입: employee)",
+      "table": "employee",
+      "payloadFields": [
+        { "key": "Email", "type": "string", "source": "email state" },
+        { "key": "source", "type": "string", "source": "\"웹 사이트\"" },
+        { "key": "open_feedback", "type": "string", "source": "Lead capture 텍스트 (회사, 직책, 진입경로)" }
+      ]
+    },
+    {
+      "id": "lead_manager",
+      "label": "무료감사신청하기 (리드캡처 → manager)",
+      "screen": "LeadCaptureView",
+      "trigger": "무료 감사 신청하기 (진입: manager)",
+      "table": "manager",
+      "payloadFields": [
+        { "key": "Email", "type": "string", "source": "email state" },
+        { "key": "Additional_comments", "type": "string", "source": "Lead capture 텍스트 (회사, 직책, 진입경로)" }
+      ]
+    },
+    {
+      "id": "employee_survey",
+      "label": "직원 설문 제출",
+      "screen": "App.jsx → EmployeeSurveyView",
+      "trigger": "제출 버튼 (submitEmp)",
+      "table": "employee",
+      "payloadFields": [
+        { "key": "company_size", "type": "singleSelect", "source": "empAnswers.회사규모 → fieldMapping" },
+        { "key": "job_type", "type": "singleSelect", "source": "empAnswers.직종" },
+        { "key": "work_style", "type": "singleSelect", "source": "empAnswers.업무스타일 (혼합형→혼합형(출근+재택))" },
+        { "key": "physical_discomfort_level", "type": "singleSelect", "source": "LIKERT_5[숫자]" },
+        { "key": "mental_stress_level", "type": "singleSelect", "source": "LIKERT_5[숫자]" },
+        { "key": "burnout_experience", "type": "singleSelect", "source": "LIKERT_5[숫자]" },
+        { "key": "need_for_wellness_service", "type": "singleSelect", "source": "LIKERT_5[숫자]" },
+        { "key": "preferred_program_type", "type": "multipleSelects", "source": "empAnswers.관심프로그램" },
+        { "key": "interest_in_short_program", "type": "singleSelect", "source": "LIKERT_5[숫자]" },
+        { "key": "payment_amount", "type": "multipleSelects", "source": "empAnswers.월지불금액" },
+        { "key": "willingness_to_use_service", "type": "singleSelect", "source": "LIKERT_5_WILLINGNESS[숫자]" },
+        { "key": "company_support_expectation", "type": "singleSelect", "source": "LIKERT_5[숫자]" },
+        { "key": "open_feedback", "type": "string", "source": "empAnswers.기대우려" },
+        { "key": "created_time", "type": "string (ISO8601)", "source": "new Date().toISOString()" },
+        { "key": "source", "type": "string", "source": "\"웹 사이트\"" },
+        { "key": "Email", "type": "string", "source": "empEmail" }
+      ]
+    },
+    {
+      "id": "manager_survey",
+      "label": "관리자 설문 제출",
+      "screen": "App.jsx → ManagerSurveyView",
+      "trigger": "제출 버튼 (submitMgr)",
+      "table": "manager",
+      "payloadFields": [
+        { "key": "Company_size", "type": "singleSelect", "source": "mgrAnswers.기업인원 (10~50명→10-50명)" },
+        { "key": "Current_programs", "type": "string", "source": "mgrAnswers.현재프로그램" },
+        { "key": "Wellness_importance", "type": "multipleSelects", "source": "숫자 1–5 → 옵션 문자열 1개" },
+        { "key": "Needed_services", "type": "string", "source": "mgrAnswers.필요서비스" },
+        { "key": "Pain_points", "type": "string", "source": "mgrAnswers.애로사항" },
+        { "key": "Adoption_interest", "type": "singleSelect", "source": "mgrAnswers.디지털웰니스관심" },
+        { "key": "Required_features", "type": "multipleSelects", "source": "mgrAnswers.필요기능 (요가/필라테스→매핑)" },
+        { "key": "Cheap_price_range", "type": "singleSelect", "source": "mgrAnswers.저렴의심가격 (normalizeCheapPriceRange)" },
+        { "key": "Reasonable_price", "type": "string", "source": "mgrAnswers.합리적가격" },
+        { "key": "Additional_comments", "type": "string", "source": "mgrAnswers.추가의견" },
+        { "key": "Email", "type": "string", "source": "mgrEmail" }
+      ]
+    },
+    {
+      "id": "mini_result",
+      "label": "미니 진단 후 리드캡처 이동 시 저장",
+      "screen": "MiniAssessmentView → MiniResult",
+      "trigger": "이 결과를 HR팀에 공유하기 (handleLeadClick)",
+      "table": "mini",
+      "payloadFields": [
+        { "key": "score", "type": "number", "source": "미니 점수" },
+        { "key": "level", "type": "singleSelect", "source": "양호|보통|주의" },
+        { "key": "answers_json", "type": "string (JSON)", "source": "JSON.stringify(miniAnswers)" },
+        { "key": "created_at", "type": "string (ISO8601)", "source": "new Date().toISOString()" }
+      ],
+      "note": "email, source, utm 없을 수 있음 (정규화에서 기본값 처리)"
+    }
+  ],
+  "tableToFlows": {
+    "employee": ["lead_employee", "employee_survey"],
+    "manager": ["lead_manager", "manager_survey"],
+    "mini": ["lead_mini", "mini_result"],
+    "wcwi": []
+  },
+  "wcwiNote": "전체 WCWI 결과는 현재 앱에서 saveToAirtable('wcwi', ...) 호출 없음. Assessments 테이블은 추후 연동 시 사용."
+}

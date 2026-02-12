@@ -14,13 +14,13 @@ const LIKERT_5 = [
   "4 (그렇다)",
   "5 (매우 그렇다)",
 ];
-/** employee 테이블 willingness_to_use_service 전용 (1=매우 아니다) */
+/** employee 테이블 willingness_to_use_service 전용 (1=매우 있다, 5=전혀 없다) */
 const LIKERT_5_WILLINGNESS = [
-  "1 (매우 아니다)",
-  "2 (아니다)",
+  "1 (매우있다)",
+  "2 (있다)",
   "3 (보통이다)",
-  "4 (그렇다)",
-  "5 (매우 그렇다)",
+  "4 (별로없다)",
+  "5 (전혀없다)",
 ];
 
 const SCHEMA = {
@@ -46,7 +46,7 @@ const SCHEMA = {
         default: "기타",
       },
       work_style: {
-        options: ["전일 출근", "재택 근무", "혼합형(출근+재택)"],
+        options: ["전일 출근", "재택근무", "혼합형(출근+재택)"],
         default: "전일 출근",
       },
       physical_discomfort_level: { options: LIKERT_5, default: "3 (보통이다)" },
@@ -57,10 +57,10 @@ const SCHEMA = {
       willingness_to_use_service: { options: LIKERT_5_WILLINGNESS, default: "3 (보통이다)" },
       company_support_expectation: { options: LIKERT_5, default: "3 (보통이다)" },
       source: {
-        options: ["웹 사이트", "이메일 캠페인", "직접 방문", "기타"],
-        default: "웹 사이트",
+        options: ["내부 링크", "외부 캠페인", "직접 방문", "기타"],
+        default: "기타",
       },
-      Agreement: { options: ["예, 동의합니다."], default: "예, 동의합니다." },
+      Agreement: { options: ["예,동의합니다."], default: "예,동의합니다." },
     },
     multipleSelects: {
       preferred_program_type: [
@@ -72,11 +72,11 @@ const SCHEMA = {
         "기타",
       ],
       payment_amount: [
-        "1만원 미만",
-        "1만원~3만원",
-        "3만원~5만원",
-        "5만원 이상",
-        "가격에 따라 결정",
+        "10,000원 미만",
+        "10,000~30,000원",
+        "30,000~50,000원",
+        "50,000원 이상",
+        "가격에 따라 결정할 의향이 있습니다",
       ],
     },
     readOnly: ["response_id", "overall_wellness_need_score", "created_time", "Created time", "AI_Feedback_Summary", "AI_Need_Category"],
@@ -90,14 +90,25 @@ const SCHEMA = {
         default: "10-50명",
       },
       Adoption_interest: { options: ["있음", "없음"], default: "있음" },
+      Cheap_price_range: {
+        options: ["인당 5천원 ~1만원", "인당 1~2만원", "인당 2~3만원"],
+        default: "인당 1~2만원",
+      },
     },
     multipleSelects: {
       Required_features: [
         "정신건강 콘텐츠",
-        "요가, 필라테스 등",
+        "요가, 필라테스 등 운동 콘텐츠",
         "번아웃 평가 및 리포트",
-        "분석 대시보드",
+        "데이터 분석 및 대시보드",
         "기타",
+      ],
+      Wellness_importance: [
+        "1 전혀 아니다",
+        "2 아니다",
+        "3 보통이다",
+        "4 그렇다",
+        "5 매우그렇다",
       ],
     },
     readOnly: ["Company", "Created_time", "Attachments"],
@@ -106,9 +117,10 @@ const SCHEMA = {
   },
 };
 
-/** work_style 프론트 값 → Airtable 옵션 (혼합형 → 혼합형(출근+재택)) */
+/** work_style 프론트 값 → Airtable 옵션 (혼합형 → 혼합형(출근+재택), 재택 공백 통일) */
 function normalizeWorkStyle(v) {
   if (v === "혼합형") return "혼합형(출근+재택)";
+  if (v === "재택 근무") return "재택근무";
   return v;
 }
 
@@ -119,13 +131,56 @@ function normalizeCompanySizeManager(v) {
   return v;
 }
 
-/** manager Required_features 프론트 라벨 → Airtable 옵션 */
+/** manager Required_features 프론트 라벨 → Airtable 옵션 (정확 문자열 일치) */
 const MANAGER_REQUIRED_FEATURES_MAP = {
-  "요가/필라테스": "요가, 필라테스 등",
+  "요가/필라테스": "요가, 필라테스 등 운동 콘텐츠",
+  "분석 대시보드": "데이터 분석 및 대시보드",
 };
 function normalizeRequiredFeature(v) {
   const s = String(v).trim();
   return MANAGER_REQUIRED_FEATURES_MAP[s] ?? s;
+}
+
+/** employee payment_amount 프론트 라벨 → Airtable 옵션 */
+const EMPLOYEE_PAYMENT_AMOUNT_MAP = {
+  "1만원 미만": "10,000원 미만",
+  "1만원~3만원": "10,000~30,000원",
+  "3만원~5만원": "30,000~50,000원",
+  "5만원 이상": "50,000원 이상",
+  "가격에 따라 결정": "가격에 따라 결정할 의향이 있습니다",
+};
+function normalizePaymentAmount(v) {
+  if (v == null) return v;
+  const s = String(v).trim();
+  return EMPLOYEE_PAYMENT_AMOUNT_MAP[s] ?? s;
+}
+
+/** manager Cheap_price_range 프론트 값 → Airtable 옵션 (문구 정확 일치) */
+const MANAGER_CHEAP_PRICE_MAP = {
+  "인당 5천원~1만원": "인당 5천원 ~1만원",
+  "인당 1만원~2만원": "인당 1~2만원",
+  "인당 2만원~3만원": "인당 2~3만원",
+};
+function normalizeCheapPriceRange(v) {
+  if (v == null) return v;
+  const s = String(v).trim();
+  return MANAGER_CHEAP_PRICE_MAP[s] ?? s;
+}
+
+/** manager Wellness_importance: 숫자 1–5 → Airtable 옵션 문자열 */
+const MANAGER_WELLNESS_IMPORTANCE_OPTIONS = {
+  1: "1 전혀 아니다",
+  2: "2 아니다",
+  3: "3 보통이다",
+  4: "4 그렇다",
+  5: "5 매우그렇다",
+};
+function normalizeWellnessImportance(value) {
+  if (value == null) return [];
+  const n = Number(value);
+  if (!Number.isFinite(n) || n < 1 || n > 5) return Array.isArray(value) ? value : [];
+  const opt = MANAGER_WELLNESS_IMPORTANCE_OPTIONS[Math.round(n)];
+  return opt ? [opt] : [];
 }
 
 /**
@@ -248,7 +303,12 @@ function normalizeEmployee(raw) {
     }
 
     if (schema.multipleSelects[key]) {
-      const { value: arr, fallbackOriginals: fo } = applyMultipleSelects(key, value, schema);
+      let val = value;
+      if (key === "payment_amount" && (Array.isArray(val) || typeof val === "string")) {
+        const arr = Array.isArray(val) ? val : [val];
+        val = arr.map(normalizePaymentAmount);
+      }
+      const { value: arr, fallbackOriginals: fo } = applyMultipleSelects(key, val, schema);
       out[key] = arr;
       if (fo.length) fallbackOriginals[key] = fo;
       continue;
@@ -283,6 +343,7 @@ function normalizeManager(raw) {
     if (schema.singleSelect[key]) {
       let v = value;
       if (key === "Company_size" && typeof v === "string") v = normalizeCompanySizeManager(v);
+      if (key === "Cheap_price_range" && v != null) v = normalizeCheapPriceRange(v);
       const res = applySingleSelect(key, v, schema);
       out[key] = res.value;
       if (res.fallbackUsed && res.original != null) {
@@ -295,6 +356,9 @@ function normalizeManager(raw) {
       let val = value;
       if (key === "Required_features" && Array.isArray(val)) {
         val = val.map(normalizeRequiredFeature);
+      }
+      if (key === "Wellness_importance" && (typeof val === "number" || (typeof val === "string" && /^[1-5]$/.test(String(val).trim())))) {
+        val = normalizeWellnessImportance(val);
       }
       const { value: arr, fallbackOriginals: fo } = applyMultipleSelects(key, val, schema);
       out[key] = arr;
@@ -335,4 +399,41 @@ export function normalizePayload(table, raw) {
     default:
       return cleanPayload(r, SCHEMA.mini);
   }
+}
+
+/**
+ * 정규화된 payload 검증 (전송 직전 호출)
+ * - read-only 필드 포함 여부, select 값 허용 여부 등 간단 검사
+ * @param {string} table - 'mini' | 'employee' | 'manager'
+ * @param {object} payload - normalizePayload() 결과
+ * @returns {{ valid: boolean, errors: Array<{ table: string, field: string, value: unknown, reason: string }> }}
+ */
+export function validatePayload(table, payload) {
+  const errors = [];
+  const schema = SCHEMA[table];
+  if (!schema) {
+    errors.push({ table, field: "", value: null, reason: "알 수 없는 테이블입니다." });
+    return { valid: false, errors };
+  }
+  const readOnly = new Set(schema.readOnly || []);
+  for (const [key, value] of Object.entries(payload)) {
+    if (readOnly.has(key)) {
+      errors.push({ table, field: key, value, reason: "읽기 전용 필드는 전송할 수 없습니다." });
+      continue;
+    }
+    if (schema.singleSelect[key]) {
+      const opts = schema.singleSelect[key].options;
+      if (value != null && value !== "" && !opts.includes(value)) {
+        errors.push({ table, field: key, value, reason: `허용 옵션이 아닙니다. 허용: ${opts.join(", ")}` });
+      }
+    }
+    if (schema.multipleSelects[key] && Array.isArray(value)) {
+      const allowed = new Set(schema.multipleSelects[key]);
+      const invalid = value.filter((v) => !allowed.has(v));
+      if (invalid.length) {
+        errors.push({ table, field: key, value: invalid, reason: `허용 옵션이 아닌 값이 포함되어 있습니다. 허용: ${schema.multipleSelects[key].join(", ")}` });
+      }
+    }
+  }
+  return { valid: errors.length === 0, errors };
 }

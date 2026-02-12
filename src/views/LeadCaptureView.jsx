@@ -1,6 +1,6 @@
 import { COLORS } from "../constants/theme";
 import { saveToAirtable } from "../api/airtable";
-import { normalizePayload } from "../api/airtableNormalize";
+import { normalizePayload, validatePayload } from "../api/airtableNormalize";
 
 const LEAD_STYLES = `@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;900&display=swap');
   @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
@@ -44,7 +44,7 @@ export default function LeadCaptureView({ leadCaptureSource = "mini", email, set
     } else if (table === "employee") {
       raw = {
         Email: email || "",
-        source: "웹 사이트",
+        source: "기타",
         open_feedback: `Lead capture (기업 문의)\n회사: ${company || ""}\n직책/역할: ${roleLabel || role || ""}\n진입경로: ${sourceTypeLabel}`,
       };
     } else if (table === "manager") {
@@ -57,10 +57,17 @@ export default function LeadCaptureView({ leadCaptureSource = "mini", email, set
     console.log("SUBMIT", { leadCaptureSource, table, raw });
     try {
       const fields = normalizePayload(table, raw);
+      const validation = validatePayload(table, fields);
+      if (!validation.valid) {
+        console.error("[Airtable 검증 실패]", table, validation.errors);
+        alert("제출 데이터 검증에 실패했습니다. 다시 시도해주세요.");
+        return;
+      }
       await saveToAirtable(table, fields);
       alert("감사합니다! 입력하신 정보로 곧 연락드리겠습니다. 🌿");
       transition("landing");
     } catch (err) {
+      console.error("[Airtable 제출 오류]", table, err);
       alert(err.message || "제출에 실패했습니다.");
     }
   };

@@ -1,6 +1,6 @@
 import { useState, useRef } from "react";
 import { saveToAirtable } from "./api/airtable";
-import { normalizePayload } from "./api/airtableNormalize";
+import { normalizePayload, validatePayload } from "./api/airtableNormalize";
 import { WCWI_QUESTIONS, MINI_QUESTIONS } from "./constants/questions";
 import { calculateMiniScore, calculateFullScores } from "./utils/scoreUtils";
 import {
@@ -258,17 +258,27 @@ export default function WellinkMVP() {
         }
       });
       mappedFields["created_time"] = new Date().toISOString();
-      mappedFields["source"] = "웹 사이트";
+      mappedFields["source"] = "기타";
       if (empEmail) {
         mappedFields["Email"] = empEmail;
       }
       try {
-        await saveToAirtable("employee", normalizePayload("employee", mappedFields));
+        const normalized = normalizePayload("employee", mappedFields);
+        const validation = validatePayload("employee", normalized);
+        if (!validation.valid) {
+          const msg = "제출 데이터 검증에 실패했습니다. 다시 시도해주세요.";
+          showToast(msg, "error");
+          console.error("[Airtable 검증 실패] employee", validation.errors);
+          setLoading(false);
+          return;
+        }
+        await saveToAirtable("employee", normalized);
         showToast("제출 완료! 감사합니다.", "success");
         transition("thankyou");
       } catch (err) {
         const msg = err?.message || "오류가 발생했습니다. 다시 시도해주세요.";
         showToast(msg, "error");
+        console.error("[Airtable 제출 오류] employee", err);
       } finally {
         setLoading(false);
       }
@@ -304,9 +314,15 @@ export default function WellinkMVP() {
       setLoading(true);
       const fieldMapping = {
         "기업인원": "Company_size",
-        "필요기능": "Required_features",
-        "합리적가격": "Reasonable_price",
+        "현재프로그램": "Current_programs",
+        "건강중요도": "Wellness_importance",
+        "필요서비스": "Needed_services",
+        "애로사항": "Pain_points",
         "디지털웰니스관심": "Adoption_interest",
+        "필요기능": "Required_features",
+        "저렴의심가격": "Cheap_price_range",
+        "합리적가격": "Reasonable_price",
+        "추가의견": "Additional_comments",
       };
       const mappedFields = {};
       Object.keys(mgrAnswers).forEach((key) => {
@@ -325,12 +341,22 @@ export default function WellinkMVP() {
         mappedFields["Email"] = mgrEmail;
       }
       try {
-        await saveToAirtable("manager", normalizePayload("manager", mappedFields));
+        const normalized = normalizePayload("manager", mappedFields);
+        const validation = validatePayload("manager", normalized);
+        if (!validation.valid) {
+          const msg = "제출 데이터 검증에 실패했습니다. 다시 시도해주세요.";
+          showToast(msg, "error");
+          console.error("[Airtable 검증 실패] manager", validation.errors);
+          setLoading(false);
+          return;
+        }
+        await saveToAirtable("manager", normalized);
         showToast("제출 완료! 감사합니다.", "success");
         transition("thankyou");
       } catch (err) {
         const msg = err?.message || "오류가 발생했습니다. 다시 시도해주세요.";
         showToast(msg, "error");
+        console.error("[Airtable 제출 오류] manager", err);
       } finally {
         setLoading(false);
       }

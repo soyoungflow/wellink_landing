@@ -7,7 +7,9 @@
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "dump-airtable-schema": "node scripts/dump-airtable-schema.js",
+    "test:airtable": "node scripts/validate-airtable-payloads.test.js"
   },
   "dependencies": {
     "@vercel/speed-insights": "^1.3.1",
