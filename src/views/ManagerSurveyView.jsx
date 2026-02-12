@@ -21,6 +21,7 @@ export default function ManagerSurveyView({
   loading,
   transition,
   onSubmit,
+  onGoLeadCapture,
 }) {
   const page = MGR_PAGES[mgrPage];
   const isLastPage = mgrPage === MGR_PAGES.length;
@@ -169,6 +170,25 @@ export default function ManagerSurveyView({
             {loading ? "저장 중..." : isLastPage ? "제출하기 ✓" : "다음 →"}
           </button>
         </div>
+        {onGoLeadCapture && (
+          <div style={{ textAlign: "center", marginTop: 16 }}>
+            <button
+              type="button"
+              onClick={onGoLeadCapture}
+              style={{
+                padding: 8,
+                border: "none",
+                background: "transparent",
+                color: COLORS.sage,
+                fontSize: "clamp(12px, 1.625vw, 13px)",
+                cursor: "pointer",
+                textDecoration: "underline",
+              }}
+            >
+              무료 감사 신청하기 →
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );

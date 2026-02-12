@@ -12,18 +12,25 @@ const MINI_STYLES = `@import url('https://fonts.googleapis.com/css2?family=Noto+
 const LABELS_5 = ["전혀 아님", "드물게", "가끔", "자주", "항상"];
 const LABELS_7 = ["매우 동의하지 않음", "동의하지 않음", "약간 동의하지 않음", "보통", "약간 동의", "동의", "매우 동의"];
 
+/** Airtable mini 테이블 level 필드에 매핑되는 값 (singleSelect 옵션과 동일) */
+const MINI_LEVEL_FOR_AIRTABLE = Object.freeze({
+  GOOD: "양호",
+  NORMAL: "보통",
+  CAUTION: "주의",
+});
+
 /** 미니 체크 결과 화면 */
 export function MiniResult({ score, miniAnswers, transition, onGoFull, onGoLead, onGoSurvey, onGoHome }) {
   const level = score >= 75
-    ? { text: "양호", color: COLORS.sage, emoji: "🌿", desc: "전반적으로 건강한 상태입니다. 지속적인 관리로 유지하세요." }
+    ? { text: MINI_LEVEL_FOR_AIRTABLE.GOOD, color: COLORS.sage, emoji: "🌿", desc: "전반적으로 건강한 상태입니다. 지속적인 관리로 유지하세요." }
     : score >= 50
-      ? { text: "보통", color: COLORS.gold, emoji: "⚡", desc: "일부 영역에서 개선이 필요합니다. 맞춤형 프로그램을 확인해보세요." }
-      : { text: "주의", color: COLORS.coral, emoji: "🔴", desc: "여러 영역에서 관리가 필요합니다. 전체 진단을 통해 정확한 분석을 받아보세요." };
+      ? { text: MINI_LEVEL_FOR_AIRTABLE.NORMAL, color: COLORS.gold, emoji: "⚡", desc: "일부 영역에서 개선이 필요합니다. 맞춤형 프로그램을 확인해보세요." }
+      : { text: MINI_LEVEL_FOR_AIRTABLE.CAUTION, color: COLORS.coral, emoji: "🔴", desc: "여러 영역에서 관리가 필요합니다. 전체 진단을 통해 정확한 분석을 받아보세요." };
 
   const handleLeadClick = async () => {
     const payload = {
       score,
-      level: level.text,
+      level: level.text, // Airtable mini table level 필드와 1:1 매핑 (양호 | 보통 | 주의)
       answers_json: JSON.stringify(miniAnswers ?? {}),
       created_at: new Date().toISOString(),
     };

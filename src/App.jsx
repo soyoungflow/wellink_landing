@@ -34,7 +34,8 @@ export default function WellinkMVP() {
   const [bodyParts, setBodyParts] = useState([]);
   const [showResults, setShowResults] = useState(false);
 
-  // 리드 캡처
+  // 리드 캡처 (진입 경로: mini | full | employee | manager)
+  const [leadCaptureSource, setLeadCaptureSource] = useState("mini");
   const [email, setEmail] = useState("");
   const [company, setCompany] = useState("");
   const [role, setRole] = useState("");
@@ -61,7 +62,10 @@ export default function WellinkMVP() {
     setTimeout(() => roleRef.current?.scrollIntoView({ behavior: "smooth" }), 200);
   };
 
-  const transition = (view) => {
+  const transition = (view, options) => {
+    if (view === "lead" && options?.leadCaptureSource) {
+      setLeadCaptureSource(options.leadCaptureSource);
+    }
     setFadeIn(false);
     setTimeout(() => {
       setCurrentView(view);
@@ -118,7 +122,7 @@ export default function WellinkMVP() {
             setMiniAnswers({});
             transition("full");
           }}
-          onGoLead={() => transition("lead")}
+          onGoLead={() => transition("lead", { leadCaptureSource: "mini" })}
           onGoSurvey={() => {
             setMiniStep(0);
             setMiniAnswers({});
@@ -185,6 +189,7 @@ export default function WellinkMVP() {
   if (currentView === "lead") {
     return (
       <LeadCaptureView
+        leadCaptureSource={leadCaptureSource}
         email={email}
         setEmail={setEmail}
         company={company}
@@ -274,6 +279,7 @@ export default function WellinkMVP() {
         loading={loading}
         transition={transition}
         onSubmit={submitEmp}
+        onGoLeadCapture={() => transition("lead", { leadCaptureSource: "employee" })}
       />
     );
   }
@@ -334,6 +340,7 @@ export default function WellinkMVP() {
         loading={loading}
         transition={transition}
         onSubmit={submitMgr}
+        onGoLeadCapture={() => transition("lead", { leadCaptureSource: "manager" })}
       />
     );
   }

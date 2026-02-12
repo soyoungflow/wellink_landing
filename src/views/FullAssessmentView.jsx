@@ -85,7 +85,7 @@ export function FullResult({ scores, transition, onGoHome }) {
 
         <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
           <button
-            onClick={() => transition("lead")}
+            onClick={() => transition("lead", { leadCaptureSource: "full" })}
             style={{
               padding: "16px", borderRadius: 16, border: "none",
               background: `linear-gradient(135deg, ${COLORS.sage}, ${COLORS.sageDark})`,

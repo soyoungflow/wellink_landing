@@ -90,6 +90,20 @@ Meta API로 조회한 4개 테이블 스키마 및 React 코드와의 1:1 매핑
 
 ## 2. React Payload ↔ Airtable 1:1 매핑 및 불일치
 
+### 2.0 LeadCaptureView.jsx 제출 시 진입 경로별 테이블 전송
+
+| 진입 경로 (leadCaptureSource) | Airtable 테이블 | 전송 필드 |
+|-------------------------------|-----------------|-----------|
+| **mini** | mini | created_at, source, email, answers_json (email, company, role, source_type: 기업감사신청) |
+| **full** | mini | 동일, answers_json.source_type: full_result |
+| **employee** | employee | Email, source, open_feedback (회사/직책/진입경로 텍스트) |
+| **manager** | manager | Email, Additional_comments (회사/직책/진입경로 텍스트) |
+
+- employee/manager 테이블에는 Lead 전용 컬럼(회사명, 직책)이 없어 **open_feedback** / **Additional_comments** 에 "Lead capture" 문구와 함께 회사·직책을 저장합니다.
+- mini 테이블은 email, answers_json 등으로 이미 매핑 가능하므로 스키마 추가 없음.
+
+---
+
 ### 2.1 LeadCaptureView.jsx → mini (mini_responses)
 
 | React 필드 (payload) | Airtable 필드 | 타입 일치 | 비고 |

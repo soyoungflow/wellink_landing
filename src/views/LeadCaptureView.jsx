@@ -6,25 +6,58 @@ const LEAD_STYLES = `@import url('https://fonts.googleapis.com/css2?family=Noto+
   @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 `;
 
-export default function LeadCaptureView({ email, setEmail, company, setCompany, role, setRole, transition }) {
+/** LeadCapture 진입 경로 → Airtable 테이블 */
+const LEAD_SOURCE_TABLE = Object.freeze({
+  mini: "mini",
+  full: "mini",
+  employee: "employee",
+  manager: "manager",
+});
+
+const ROLE_LABELS = { hr: "HR 담당자", ceo: "경영진/CEO", welfare: "복지 담당자", employee: "일반 직원", other: "기타" };
+
+export default function LeadCaptureView({ leadCaptureSource = "mini", email, setEmail, company, setCompany, role, setRole, transition }) {
   const handleSubmit = async (e) => {
     if (e && e.preventDefault) e.preventDefault();
-    // mini 테이블 스키마에 맞춰 저장 (email 필드 있으면 최상위에도 전송)
-    const fields = {
-      created_at: new Date().toISOString(),
-      source: "app",
-      email: email || "",
-      answers_json: JSON.stringify({
+    const table = LEAD_SOURCE_TABLE[leadCaptureSource] || "mini";
+    const sourceTypeLabel = {
+      mini: "기업감사신청",
+      full: "full_result",
+      employee: "lead_from_employee",
+      manager: "lead_from_manager",
+    }[leadCaptureSource] || "기업감사신청";
+    const roleLabel = role ? (ROLE_LABELS[role] || role) : "";
+
+    let raw = {};
+    if (table === "mini") {
+      raw = {
+        created_at: new Date().toISOString(),
+        source: "app",
         email: email || "",
-        company: company || "",
-        role: role || "",
-        source_type: "기업감사신청",
-      }),
-    };
-    const payload = { table: "mini", fields };
-    console.log("SUBMIT", payload);
+        answers_json: JSON.stringify({
+          email: email || "",
+          company: company || "",
+          role: roleLabel || role || "",
+          source_type: sourceTypeLabel,
+        }),
+      };
+    } else if (table === "employee") {
+      raw = {
+        Email: email || "",
+        source: "웹 사이트",
+        open_feedback: `Lead capture (기업 문의)\n회사: ${company || ""}\n직책/역할: ${roleLabel || role || ""}\n진입경로: ${sourceTypeLabel}`,
+      };
+    } else if (table === "manager") {
+      raw = {
+        Email: email || "",
+        Additional_comments: `Lead capture (기업 문의)\n회사: ${company || ""}\n직책/역할: ${roleLabel || role || ""}\n진입경로: ${sourceTypeLabel}`,
+      };
+    }
+
+    console.log("SUBMIT", { leadCaptureSource, table, raw });
     try {
-      await saveToAirtable("mini", normalizePayload("mini", fields));
+      const fields = normalizePayload(table, raw);
+      await saveToAirtable(table, fields);
       alert("감사합니다! 입력하신 정보로 곧 연락드리겠습니다. 🌿");
       transition("landing");
     } catch (err) {
