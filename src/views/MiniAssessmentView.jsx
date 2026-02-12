@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { MINI_QUESTIONS } from "../constants/questions";
 import { COLORS } from "../constants/theme";
 import { AnimatedNumber } from "../components";
@@ -19,8 +20,71 @@ const MINI_LEVEL_FOR_AIRTABLE = Object.freeze({
   CAUTION: "주의",
 });
 
+/** 링크 공유 팝업 (공통 스타일) */
+function ShareLinkModal({ onClose }) {
+  const shareUrl = typeof window !== "undefined" ? window.location.href : "";
+  const [copied, setCopied] = useState(false);
+  const handleCopy = () => {
+    if (!shareUrl) return;
+    navigator.clipboard.writeText(shareUrl).then(() => {
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    }).catch(() => {});
+  };
+  return (
+    <div
+      onClick={onClose}
+      style={{
+        position: "fixed", inset: 0, background: "rgba(0,0,0,0.4)", zIndex: 9999,
+        display: "flex", alignItems: "center", justifyContent: "center", padding: 24,
+      }}
+    >
+      <div
+        onClick={(e) => e.stopPropagation()}
+        style={{
+          background: COLORS.white, borderRadius: 24, padding: "clamp(24px, 4vw, 32px)",
+          width: "100%", maxWidth: 440, boxShadow: "0 24px 80px rgba(0,0,0,0.15)",
+        }}
+      >
+        <h3 style={{ fontSize: "clamp(16px, 2vw, 18px)", fontWeight: 700, color: COLORS.charcoal, marginBottom: 16 }}>친구에게 공유하기</h3>
+        <p style={{ fontSize: "clamp(12px, 1.5vw, 13px)", color: COLORS.warmGray, marginBottom: 12 }}>아래 링크를 복사해서 공유하세요.</p>
+        <div style={{ display: "flex", gap: 8, marginBottom: 20 }}>
+          <input
+            readOnly
+            value={shareUrl}
+            style={{
+              flex: 1, padding: "12px 14px", borderRadius: 12, border: `2px solid #E8E5DE`,
+              fontSize: "clamp(12px, 1.5vw, 13px)", color: COLORS.charcoal, background: COLORS.cream,
+            }}
+          />
+          <button
+            onClick={handleCopy}
+            style={{
+              padding: "12px 20px", borderRadius: 12, border: "none",
+              background: copied ? COLORS.sage : `linear-gradient(135deg, ${COLORS.sage}, ${COLORS.sageDark})`,
+              color: "#fff", fontSize: "clamp(13px, 1.75vw, 14px)", fontWeight: 600, cursor: "pointer", whiteSpace: "nowrap",
+            }}
+          >
+            {copied ? "복사됨 ✓" : "복사하기"}
+          </button>
+        </div>
+        <button
+          onClick={onClose}
+          style={{
+            width: "100%", padding: "14px", borderRadius: 16, border: `2px solid ${COLORS.warmGray}40`,
+            background: "transparent", color: COLORS.warmGray, fontSize: "clamp(13px, 1.75vw, 14px)", fontWeight: 600, cursor: "pointer",
+          }}
+        >
+          닫기
+        </button>
+      </div>
+    </div>
+  );
+}
+
 /** 미니 체크 결과 화면 */
 export function MiniResult({ score, miniAnswers, transition, onGoFull, onGoLead, onGoSurvey, onGoHome }) {
+  const [showShareModal, setShowShareModal] = useState(false);
   const level = score >= 75
     ? { text: MINI_LEVEL_FOR_AIRTABLE.GOOD, color: COLORS.sage, emoji: "🌿", desc: "전반적으로 건강한 상태입니다. 지속적인 관리로 유지하세요." }
     : score >= 50
@@ -100,6 +164,17 @@ export function MiniResult({ score, miniAnswers, transition, onGoFull, onGoLead,
             기업용 웰니스 감사 문의하기
           </button>
           <button
+            onClick={() => setShowShareModal(true)}
+            style={{
+              padding: "16px", borderRadius: 16,
+              border: `2px solid ${COLORS.gold}30`,
+              background: "transparent", color: COLORS.gold,
+              fontSize: "clamp(13px, 1.75vw, 14px)", fontWeight: 600, cursor: "pointer",
+            }}
+          >
+            친구에게 공유하기
+          </button>
+          <button
             onClick={onGoSurvey}
             style={{
               padding: "14px", borderRadius: 16,
@@ -121,6 +196,7 @@ export function MiniResult({ score, miniAnswers, transition, onGoFull, onGoLead,
           </button>
         </div>
       </div>
+      {showShareModal && <ShareLinkModal onClose={() => setShowShareModal(false)} />}
     </div>
   );
 }
