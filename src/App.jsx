@@ -58,8 +58,12 @@ export default function WellinkMVP() {
   };
 
   const scrollToRole = () => {
-    if (currentView !== "landing") transition("landing");
-    setTimeout(() => roleRef.current?.scrollIntoView({ behavior: "smooth" }), 200);
+    if (currentView !== "landing") {
+      transition("landing");
+      setTimeout(() => roleRef.current?.scrollIntoView({ behavior: "smooth" }), 400);
+    } else {
+      setTimeout(() => roleRef.current?.scrollIntoView({ behavior: "smooth" }), 200);
+    }
   };
 
   const transition = (view, options) => {
