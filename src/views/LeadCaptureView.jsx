@@ -1,9 +1,13 @@
+import { useState } from "react";
 import { COLORS } from "../constants/theme";
 import { saveToAirtable } from "../api/airtable";
 import { normalizePayload, validatePayload } from "../api/airtableNormalize";
 
 const LEAD_STYLES = `@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;900&display=swap');
   @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+  .lead-form-field { width: 100%; padding: 12px 16px; border-radius: 12px; border: 2px solid #E8E5DE; font-size: clamp(13px, 1.75vw, 14px); outline: none; transition: border 0.2s; box-sizing: border-box; height: 48px; display: block; }
+  .lead-form-field:focus { border-color: #7B9E87; }
+  select.lead-form-field { -webkit-appearance: none; -moz-appearance: none; appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%23333' d='M6 8L0 0h12z'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 16px center; padding-right: 40px; cursor: pointer; }
 `;
 
 /** LeadCapture 진입 경로 → Airtable 테이블 */
@@ -16,9 +20,32 @@ const LEAD_SOURCE_TABLE = Object.freeze({
 
 const ROLE_LABELS = { hr: "HR 담당자", ceo: "경영진/CEO", welfare: "복지 담당자", employee: "일반 직원", other: "기타" };
 
+const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
 export default function LeadCaptureView({ leadCaptureSource = "mini", email, setEmail, company, setCompany, role, setRole, transition }) {
+  const [emailError, setEmailError] = useState("");
+
+  const validateEmail = (emailValue) => {
+    if (!emailValue || emailValue.trim() === "") {
+      setEmailError("이메일을 입력해주세요.");
+      return false;
+    }
+    if (!EMAIL_REGEX.test(emailValue)) {
+      setEmailError("올바른 이메일 형식을 입력해주세요.");
+      return false;
+    }
+    setEmailError("");
+    return true;
+  };
+
   const handleSubmit = async (e) => {
     if (e && e.preventDefault) e.preventDefault();
+    
+    // 이메일 검증
+    if (!validateEmail(email)) {
+      alert("올바른 이메일을 입력해주세요.");
+      return;
+    }
     const table = LEAD_SOURCE_TABLE[leadCaptureSource] || "mini";
     const sourceTypeLabel = {
       mini: "기업감사신청",
@@ -97,45 +124,50 @@ export default function LeadCaptureView({ leadCaptureSource = "mini", email, set
         </div>
 
         <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: 16 }}>
-          <div>
+          <div style={{ width: "100%" }}>
             <label style={{ fontSize: "clamp(12px, 1.625vw, 13px)", fontWeight: 600, color: COLORS.charcoal, marginBottom: 6, display: "block" }}>이메일 *</label>
             <input
+              type="email"
               value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={(e) => {
+                setEmail(e.target.value);
+                if (emailError) setEmailError("");
+              }}
+              onBlur={(e) => {
+                if (e.target.value) validateEmail(e.target.value);
+                e.target.style.borderColor = emailError ? COLORS.coral : "#E8E5DE";
+              }}
               placeholder="work@company.com"
+              className="lead-form-field"
               style={{
-                width: "100%", padding: "14px 16px", borderRadius: 12,
-                border: "2px solid #E8E5DE", fontSize: "clamp(13px, 1.75vw, 14px)", outline: "none",
-                transition: "border 0.2s",
+                border: `2px solid ${emailError ? COLORS.coral : "#E8E5DE"}`,
               }}
               onFocus={(e) => (e.target.style.borderColor = COLORS.sage)}
-              onBlur={(e) => (e.target.style.borderColor = "#E8E5DE")}
             />
+            {emailError && (
+              <div style={{ marginTop: 6, fontSize: "clamp(11px, 1.5vw, 12px)", color: COLORS.coral }}>
+                {emailError}
+              </div>
+            )}
           </div>
-          <div>
+          <div style={{ width: "100%" }}>
             <label style={{ fontSize: "clamp(12px, 1.625vw, 13px)", fontWeight: 600, color: COLORS.charcoal, marginBottom: 6, display: "block" }}>회사명</label>
             <input
               value={company}
               onChange={(e) => setCompany(e.target.value)}
               placeholder="회사명을 입력하세요"
-              style={{
-                width: "100%", padding: "14px 16px", borderRadius: 12,
-                border: "2px solid #E8E5DE", fontSize: "clamp(13px, 1.75vw, 14px)", outline: "none",
-                transition: "border 0.2s",
-              }}
-              onFocus={(e) => (e.target.style.borderColor = COLORS.sage)}
-              onBlur={(e) => (e.target.style.borderColor = "#E8E5DE")}
+              className="lead-form-field"
             />
           </div>
-          <div>
+          <div style={{ width: "100%" }}>
             <label style={{ fontSize: "clamp(12px, 1.625vw, 13px)", fontWeight: 600, color: COLORS.charcoal, marginBottom: 6, display: "block" }}>직책/역할</label>
             <select
               value={role}
               onChange={(e) => setRole(e.target.value)}
+              className="lead-form-field"
               style={{
-                width: "100%", padding: "14px 16px", borderRadius: 12,
-                border: "2px solid #E8E5DE", fontSize: "clamp(13px, 1.75vw, 14px)", outline: "none",
-                background: COLORS.white, color: role ? COLORS.charcoal : COLORS.warmGray,
+                background: COLORS.white,
+                color: role ? COLORS.charcoal : COLORS.warmGray,
               }}
             >
               <option value="">선택하세요</option>
