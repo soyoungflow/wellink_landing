@@ -250,11 +250,9 @@ export default function LandingView({ fadeIn, transition, scrollToRole, onSelect
           marginTop: 32, lineHeight: 1.7, width: "100%", maxWidth: "min(100%, 700px)", margin: "32px auto 0",
           fontStyle: "italic",
         }}>
-          저희 WELLINK가 개발한 WCWI v1.0 (Beta)
+          저희 WELLINK가 개발한 WCWI v1.0 (Beta)는
           <br />
-          WHO-5, Ryff PWB, CBI, NMQ, SWLS 등 국제 검증 도구를
-          <br />
-          한국 직장인들의 상황에 맞게 재구성한 웰니스 측정 지표입니다.
+          WHO-5, Ryff PWB, CBI, NMQ, SWLS 등 국제 검증 도구를 한국 직장인들의 업무환경에 맞게, 재구성한 웰니스 측정 지표입니다.
         </p>
       </section>
 
