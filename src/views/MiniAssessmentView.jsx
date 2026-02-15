@@ -83,7 +83,7 @@ function ShareLinkModal({ onClose }) {
 }
 
 /** 미니 체크 결과 화면 */
-export function MiniResult({ score, miniAnswers, transition, onGoFull, onGoLead, onGoSurvey, onGoHome }) {
+export function MiniResult({ score, miniAnswers, transition, onGoFull, onGoSurvey, onGoHome }) {
   const [showShareModal, setShowShareModal] = useState(false);
   const level = score >= 75
     ? { text: MINI_LEVEL_FOR_AIRTABLE.GOOD, color: COLORS.sage, emoji: "🌿", desc: "전반적으로 건강한 상태입니다. 지속적인 관리로 유지하세요." }
@@ -105,7 +105,6 @@ export function MiniResult({ score, miniAnswers, transition, onGoFull, onGoLead,
         console.error("[Airtable 검증 실패] mini", validation.errors);
         return;
       }
-      console.log("[MINI SAVE]", normalized);
       await saveToAirtable("mini", normalized);
     } catch (e) {
       console.error("[Airtable 제출 오류] mini", e);

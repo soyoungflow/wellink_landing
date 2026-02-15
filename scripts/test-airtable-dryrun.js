@@ -1,3 +1,4 @@
+/* global process */
 /**
  * Airtable API dryRun 모드 테스트
  *
@@ -32,7 +33,9 @@ try {
       }
     });
   }
-} catch (_) {}
+} catch {
+  // optional .env.local parse/load failure
+}
 
 const BASE_URL = process.env.VITE_API_BASE_URL || "http://localhost:3000";
 

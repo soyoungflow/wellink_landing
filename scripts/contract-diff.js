@@ -1,3 +1,4 @@
+/* global process */
 /**
  * form_contract vs airtable_contract 비교 → contract_diff.json
  *
@@ -50,13 +51,6 @@ const diff = {
 
 const LIKERT_SEMANTIC_FIELDS = ["willingness_to_use_service"];
 const SEMANTIC_WARNING_FIELDS = ["willingness_to_use_service"];
-
-function getAirtableChoices(tableKey, fieldName) {
-  const t = airtable.tables[tableKey];
-  if (!t) return [];
-  const f = t.fields.find((x) => x.fieldName === fieldName);
-  return (f?.choices || []).filter(Boolean);
-}
 
 function getFormValues(tableKey, fieldName) {
   const mapping = form.fieldMapping[tableKey] || {};

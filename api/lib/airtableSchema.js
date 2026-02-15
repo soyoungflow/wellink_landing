@@ -1,3 +1,4 @@
+/* global process */
 /**
  * Airtable Metadata API로 Base 스키마 수집
  * - 10분 메모리 캐시 (매 요청마다 호출 방지)
@@ -86,12 +87,14 @@ export async function getTableSchema(tableKey) {
 
   const fields = table.fields.map(fieldToSpec);
   const byName = Object.fromEntries(fields.map((f) => [f.fieldName, f]));
+  const byId = Object.fromEntries(fields.map((f) => [f.fieldId, f]));
 
   const schema = {
     tableId,
     tableName: table.name,
     fields,
     byName,
+    byId,
   };
 
   cache.set(cacheKey, { schema, expiresAt: Date.now() + CACHE_TTL_MS });

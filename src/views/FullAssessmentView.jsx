@@ -2,6 +2,8 @@ import { useState } from "react";
 import { WCWI_QUESTIONS, BODY_PARTS } from "../constants/questions";
 import { COLORS } from "../constants/theme";
 import { AnimatedNumber, RadarChart, GaugeBar } from "../components";
+import { saveToAirtable } from "../api/airtable";
+import { buildAssessmentFields, clamp0to100, toInt } from "../../contracts/wcwiFieldMap.js";
 
 const FULL_STYLES = `@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;900&family=Playfair+Display:wght@400;700&display=swap');
   @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
@@ -72,9 +74,146 @@ function ShareLinkModal({ onClose }) {
   );
 }
 
-/** 전체 WCWI 결과 화면 */
+/** 설문 마지막: 개인정보 동의 + 이메일 + 제출 (점수 확인 전 게이트) */
+export function FullConsentForm({ scores, fullAnswers, bodyParts, onSubmitDone }) {
+  const [wcwiEmail, setWcwiEmail] = useState("");
+  const [wcwiConsent, setWcwiConsent] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState("");
+
+  const validEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(wcwiEmail);
+  const canSubmit = wcwiConsent && validEmail && !submitting;
+
+  const handleSubmit = async () => {
+    if (!canSubmit) return;
+    if (!validEmail) {
+      setSubmitError("이메일 형식이 올바르지 않습니다.");
+      return;
+    }
+    setSubmitting(true);
+    setSubmitError("");
+    try {
+      const { fieldsById, validationErrors } = buildAssessmentFields({
+        answers: fullAnswers,
+        bodyParts,
+        scores,
+        email: wcwiEmail,
+      });
+      if (validationErrors.length > 0) {
+        const first = validationErrors[0];
+        throw new Error(first?.reason || "제출 데이터 검증에 실패했습니다.");
+      }
+      await saveToAirtable("wcwi", fieldsById);
+      onSubmitDone();
+    } catch (err) {
+      console.error("[WCWI submit error]", err);
+      setSubmitError(err?.message || "제출에 실패했습니다. 다시 시도해주세요.");
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
+  return (
+    <div style={{
+      fontFamily: "'Noto Sans KR', sans-serif", minHeight: "100vh",
+      background: `linear-gradient(135deg, ${COLORS.bg}, ${COLORS.cream})`,
+      display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center",
+      padding: "clamp(16px, 4vw, 24px)", width: "100%",
+    }}>
+      <style>{FULL_STYLES}</style>
+      <div style={{ width: "100%", maxWidth: "min(100%, 600px)", animation: "fadeUp 0.5s ease-out" }}>
+
+        <div style={{ textAlign: "center", marginBottom: 32 }}>
+          <div style={{ fontSize: "clamp(32px, 6vw, 48px)", marginBottom: 12 }}>✅</div>
+          <h2 style={{ fontSize: "clamp(18px, 2.5vw, 22px)", fontWeight: 700, color: COLORS.charcoal, marginBottom: 8 }}>
+            설문이 완료되었습니다!
+          </h2>
+          <p style={{ fontSize: "clamp(13px, 1.75vw, 14px)", color: COLORS.warmGray, lineHeight: 1.6 }}>
+            결과를 확인하려면 아래 개인정보 동의 후 이메일을 제출해주세요.
+          </p>
+        </div>
+
+        <div style={{
+          background: COLORS.white, borderRadius: 24, padding: "clamp(24px, 4vw, 32px)",
+          boxShadow: "0 8px 30px rgba(0,0,0,0.04)",
+        }}>
+          <h3 style={{ fontSize: "clamp(14px, 2vw, 16px)", fontWeight: 700, color: COLORS.charcoal, marginBottom: 16 }}>개인정보</h3>
+          <div style={{ fontSize: "clamp(12px, 1.625vw, 13px)", color: COLORS.warmGray, lineHeight: 1.8, marginBottom: 20, whiteSpace: "pre-line" }}>
+{`설문 참여 보상과 관련하여, 이메일 수집 이용에 관한 동의를 받고자 합니다. 동의하지 않을 경우 설문 보상 참여에서 제외됨을 알려드립니다.
+
+개인정보 수집 및 이용목적: 설문 참여 보상 / 서비스 안내
+
+개인 정보 및 이용기간: 6개월
+
+수집하는 자 : WELLINK`}
+          </div>
+
+          <label style={{ display: "flex", alignItems: "flex-start", gap: 10, marginBottom: 16, cursor: "pointer" }}>
+            <input
+              type="checkbox"
+              checked={wcwiConsent}
+              onChange={(e) => setWcwiConsent(e.target.checked)}
+              style={{ marginTop: 3, width: 18, height: 18, accentColor: COLORS.sage, cursor: "pointer" }}
+            />
+            <span style={{ fontSize: "clamp(13px, 1.75vw, 14px)", color: COLORS.charcoal, fontWeight: 500 }}>
+              개인정보 수집 및 이용에 동의합니다. <span style={{ color: COLORS.coral }}>(필수)</span>
+            </span>
+          </label>
+
+          <div style={{ marginBottom: 20 }}>
+            <label style={{ fontSize: "clamp(12px, 1.625vw, 13px)", color: COLORS.warmGray, marginBottom: 6, display: "block" }}>이메일</label>
+            <input
+              type="email"
+              placeholder="example@email.com"
+              value={wcwiEmail}
+              onChange={(e) => setWcwiEmail(e.target.value)}
+              style={{
+                width: "100%", padding: "14px 16px", borderRadius: 14,
+                border: `2px solid ${wcwiEmail && !validEmail ? COLORS.coral : "#E8E5DE"}`,
+                fontSize: "clamp(13px, 1.75vw, 14px)", color: COLORS.charcoal, background: COLORS.cream,
+                outline: "none", boxSizing: "border-box",
+              }}
+            />
+          </div>
+
+          {submitError && (
+            <div style={{ padding: 12, background: "#FFF5F3", borderRadius: 12, marginBottom: 12, fontSize: "clamp(12px, 1.625vw, 13px)", color: COLORS.coral }}>
+              {submitError}
+            </div>
+          )}
+
+          <button
+            onClick={handleSubmit}
+            disabled={!canSubmit}
+            style={{
+              width: "100%", padding: "16px", borderRadius: 16, border: "none",
+              background: canSubmit
+                ? `linear-gradient(135deg, ${COLORS.sage}, ${COLORS.sageDark})`
+                : "#ccc",
+              color: "#fff", fontSize: "clamp(14px, 1.875vw, 15px)", fontWeight: 700,
+              cursor: canSubmit ? "pointer" : "not-allowed",
+              opacity: submitting ? 0.7 : 1,
+            }}
+          >
+            {submitting ? "제출 중..." : "제출하고 결과 확인하기"}
+          </button>
+          {/* TODO: Airtable Assessments 테이블에 consent 체크박스 필드 추가 후 fieldId 매핑.
+              현재 스키마에 동의용 필드가 없으므로, 동의는 UI에서만 필수 체크하고 저장하지 않음. */}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/** 전체 WCWI 결과 화면 (제출 완료 후에만 표시) */
 export function FullResult({ scores, transition, onGoHome }) {
   const [showShareModal, setShowShareModal] = useState(false);
+  const burnoutHealth = toInt(clamp0to100(100 - (scores?.burnout ?? 0)));
+  const chartScores = {
+    ...scores,
+    burnout: burnoutHealth,
+  };
+
   return (
     <div style={{
       fontFamily: "'Noto Sans KR', sans-serif", minHeight: "100vh",
@@ -99,7 +238,9 @@ export function FullResult({ scores, transition, onGoHome }) {
           boxShadow: "0 8px 30px rgba(0,0,0,0.04)",
           animation: "fadeUp 0.5s ease-out 0.1s both",
         }}>
-          <RadarChart scores={scores} />
+          {/* 차트는 모든 축이 높을수록 좋도록 burnout을 건강값(100-risk)으로 전달 */}
+          {/* 라벨은 필요 시 "번아웃(회복)" 또는 "번아웃(건강)"으로 변경 가능 */}
+          <RadarChart scores={chartScores} />
         </div>
 
         <div style={{
@@ -110,7 +251,7 @@ export function FullResult({ scores, transition, onGoHome }) {
           <h3 style={{ fontSize: "clamp(14px, 2vw, 16px)", fontWeight: 700, color: COLORS.charcoal, marginBottom: 20 }}>영역별 상세</h3>
           <GaugeBar value={scores.mental} color="#7B9E87" label="🧠 정신적 웰빙" delay={300} />
           <GaugeBar value={scores.psychological} color="#9B7EC8" label="💜 심리적 웰빙" delay={500} />
-          <GaugeBar value={scores.burnout} color="#E8725C" label="🔥 번아웃" delay={700} />
+          <GaugeBar value={burnoutHealth} color="#E8725C" label="🔥 번아웃(회복)" delay={700} />
           <GaugeBar value={scores.physical} color="#5BAEB7" label="🏃 신체 건강" delay={900} />
           <GaugeBar value={scores.satisfaction} color="#C4A265" label="⭐ 삶의 만족도" delay={1100} />
         </div>
@@ -121,7 +262,7 @@ export function FullResult({ scores, transition, onGoHome }) {
           animation: "fadeUp 0.5s ease-out 0.3s both",
         }}>
           <h3 style={{ fontSize: "clamp(14px, 2vw, 16px)", fontWeight: 700, color: COLORS.charcoal, marginBottom: 16 }}>💡 맞춤 추천</h3>
-          {scores.burnout < 60 && (
+          {scores.burnout > 40 && (
             <div style={{ padding: 16, background: "#FFF5F3", borderRadius: 14, marginBottom: 10, borderLeft: `4px solid ${COLORS.coral}` }}>
               <div style={{ fontSize: "clamp(13px, 1.75vw, 14px)", fontWeight: 600, color: COLORS.coral, marginBottom: 4 }}>번아웃 관리 필요</div>
               <div style={{ fontSize: "clamp(12px, 1.625vw, 13px)", color: COLORS.warmGray }}>2분 호흡법과 마음챙김 명상으로 정서적 에너지를 회복하세요.</div>
@@ -193,7 +334,6 @@ export function FullQuestions({
   fullAnswers,
   bodyParts,
   totalQuestions,
-  answeredCount,
   currentSection,
   currentQ,
   setFullAnswers,
@@ -203,6 +343,10 @@ export function FullQuestions({
   setShowResults,
   transition,
 }) {
+  const currentQuestionNumber = sectionKeys
+    .slice(0, fullSection)
+    .reduce((sum, key) => sum + WCWI_QUESTIONS[key].questions.length, 0) + fullStep + 1;
+
   const handleFullAnswer = (val) => {
     const newAnswers = { ...fullAnswers, [currentQ.id]: val };
     setFullAnswers(newAnswers);
@@ -240,11 +384,11 @@ export function FullQuestions({
           >
             ← 뒤로
           </button>
-          <span style={{ fontSize: "clamp(12px, 1.625vw, 13px)", color: COLORS.warmGray }}>{answeredCount} / {totalQuestions}</span>
+          <span style={{ fontSize: "clamp(12px, 1.625vw, 13px)", color: COLORS.warmGray }}>{currentQuestionNumber} / {totalQuestions}</span>
         </div>
         <div style={{ height: 4, background: "#E8E5DE", borderRadius: 2, overflow: "hidden" }}>
           <div style={{
-            height: "100%", width: `${(answeredCount / totalQuestions) * 100}%`,
+            height: "100%", width: `${(currentQuestionNumber / totalQuestions) * 100}%`,
             background: `linear-gradient(90deg, ${currentSection.color}88, ${currentSection.color})`,
             borderRadius: 2, transition: "width 0.5s ease",
           }} />

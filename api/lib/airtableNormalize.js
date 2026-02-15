@@ -5,7 +5,7 @@
  */
 
 /** @typedef { { fieldName: string, fieldId: string, fieldType: string, readOnly?: boolean, choices?: string[], linkedTableId?: string } } FieldSpec */
-/** @typedef { { tableId: string, tableName: string, fields: FieldSpec[], byName: Record<string, FieldSpec> } } TableSchema */
+/** @typedef { { tableId: string, tableName: string, fields: FieldSpec[], byName: Record<string, FieldSpec>, byId?: Record<string, FieldSpec> } } TableSchema */
 
 /**
  * @typedef {'ERROR'|'SYNONYM_MAP'|'OTHER_FALLBACK'} SelectInvalidHandling
@@ -303,18 +303,19 @@ export function normalizePayloadWithSchema(schema, payload, config = {}) {
 
   const keys = Object.keys(payload || {});
   for (const key of keys) {
-    const spec = schema.byName[key];
+    const spec = schema.byName[key] || schema.byId?.[key];
     const value = payload[key];
 
     if (!spec) {
       continue;
     }
 
-    const result = normalizeField(key, value, spec, cfg);
+    const normalizedFieldName = spec.fieldName || key;
+    const result = normalizeField(normalizedFieldName, value, spec, cfg);
     if (result.error) {
       errors.push({ ...result.error, fieldId: spec.fieldId });
     } else if (result.value !== undefined) {
-      fields[key] = result.value;
+      fields[normalizedFieldName] = result.value;
       if (spec.fieldId) fieldsById[spec.fieldId] = result.value;
     }
   }

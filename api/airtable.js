@@ -1,3 +1,4 @@
+/* global process, Buffer */
 /**
  * Vercel Serverless Function: Airtable API 프록시
  *
@@ -20,9 +21,39 @@ import {
   DEFAULT_SYNONYM_MAP,
   TABLE_SYNONYM_OVERRIDE,
 } from "./lib/airtableNormalize.js";
+import { WCWI_SCORE_FIELD_IDS } from "../contracts/wcwiFieldMap.js";
 
 const ALLOWED_TABLES = ["employee", "manager", "wcwi", "mini"];
 const MAX_BODY_SIZE = 10 * 1024;
+
+function getWcwiScoreFieldIdReport(fieldsById = {}) {
+  const requiredIds = Object.values(WCWI_SCORE_FIELD_IDS);
+  const presentIds = requiredIds.filter((fieldId) => typeof fieldsById[fieldId] === "number");
+  const cbiRisk = fieldsById[WCWI_SCORE_FIELD_IDS.S_CBI_0_100];
+  const cbiHealth = fieldsById[WCWI_SCORE_FIELD_IDS.S_CBI_Health_0_100];
+  const nmqRisk = fieldsById[WCWI_SCORE_FIELD_IDS.S_NMQ_Risk_0_100];
+  const nmqHealth = fieldsById[WCWI_SCORE_FIELD_IDS.S_NMQ_Health_0_100];
+  const cbiHealthInversePass =
+    typeof cbiRisk === "number" &&
+    typeof cbiHealth === "number" &&
+    cbiHealth === 100 - cbiRisk;
+  const nmqRiskInversePass =
+    typeof nmqRisk === "number" &&
+    typeof nmqHealth === "number" &&
+    nmqRisk === 100 - nmqHealth;
+  return {
+    requiredCount: requiredIds.length,
+    presentCount: presentIds.length,
+    presentFieldIds: presentIds,
+    missingFieldIds: requiredIds.filter((fieldId) => !presentIds.includes(fieldId)),
+    allPresent: presentIds.length === requiredIds.length,
+    policyChecks: {
+      cbiHealthEquals100MinusCbiRisk: cbiHealthInversePass,
+      nmqRiskEquals100MinusNmqHealth: nmqRiskInversePass,
+      radarBurnoutConvertedForDisplay: true,
+    },
+  };
+}
 
 function getTableId(table) {
   const id = process.env[`AIRTABLE_TABLE_${table.toUpperCase()}`];
@@ -106,7 +137,9 @@ export default async function handler(req, res) {
     try {
       const url = new URL(req.url, "http://localhost");
       dryRun = url.searchParams.get("dryRun") === "1" || url.searchParams.get("dryRun") === "true";
-    } catch (_) {}
+    } catch {
+      // ignore malformed URL in non-standard runtimes
+    }
   }
 
   try {
@@ -164,21 +197,31 @@ export default async function handler(req, res) {
 
     if (validationErrors.length > 0) {
       const errorId = generateErrorId();
+      const safeValidationErrors = (validationErrors || []).map((e) => ({
+        fieldId: e.fieldId,
+        fieldName: e.fieldName,
+        reason: e.reason,
+        expectedType: e.expectedType,
+      }));
       console.error(
         JSON.stringify({
           type: "AIRTABLE_VALIDATION_ERROR",
           errorId,
           table: normalizedTable,
-          validationErrors,
+          validationErrors: safeValidationErrors,
         })
       );
       if (dryRun) {
+        const wcwiScoreFieldIdReport = normalizedTable === "wcwi"
+          ? getWcwiScoreFieldIdReport(fieldsById || {})
+          : undefined;
         return res.status(200).json({
           dryRun: true,
           valid: false,
           targetTable: schema ? { table: normalizedTable, tableId: schema.tableId, tableName: schema.tableName } : { table: normalizedTable },
           fields,
           normalizedFields: fieldsById || {},
+          wcwiScoreFieldIdReport,
           validationErrors: validationErrors.map((e) => ({
             fieldId: e.fieldId,
             fieldName: e.fieldName,
@@ -192,8 +235,12 @@ export default async function handler(req, res) {
           errorId,
         });
       }
+      const emailErr = validationErrors.find((e) => e.reason?.startsWith("email:"));
+      const userMessage = emailErr
+        ? "이메일 형식이 올바르지 않습니다."
+        : `제출 실패: ${validationErrors.map((e) => e.reason).join("; ")}`;
       return res.status(400).json({
-        error: { message: "제출 실패" },
+        error: { message: userMessage, validationErrors },
         errorId,
       });
     }
@@ -245,8 +292,13 @@ export default async function handler(req, res) {
         const tableC = autoList.filter((x) => x.table === normalizedTable);
         suggestedFixes.autoFixable = tableC;
         suggestedFixes.manualRequired = tableD;
-      } catch (_) {}
+      } catch {
+        // optional contract diff read failed
+      }
 
+      const wcwiScoreFieldIdReport = normalizedTable === "wcwi"
+        ? getWcwiScoreFieldIdReport(fieldsById || {})
+        : undefined;
       return res.status(200).json({
         dryRun: true,
         valid: true,
@@ -257,6 +309,7 @@ export default async function handler(req, res) {
         },
         fields,
         normalizedFields: fieldsById || {},
+        wcwiScoreFieldIdReport,
         validationErrors: [],
         contractDiffSummary: diffSummary,
         autoFixApplied: (suggestedFixes?.autoFixable || []).length
@@ -271,13 +324,14 @@ export default async function handler(req, res) {
     }
 
     const tableId = getTableId(normalizedTable);
+    const airtableFields = normalizedTable === "wcwi" ? (fieldsById || {}) : fields;
     const response = await fetch(`https://api.airtable.com/v0/${BASE_ID}/${tableId}`, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${PAT}`,
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ records: [{ fields }] }),
+      body: JSON.stringify({ records: [{ fields: airtableFields }] }),
     });
 
     if (!response.ok) {
@@ -293,7 +347,7 @@ export default async function handler(req, res) {
           table: normalizedTable,
           status: response.status,
           airtableError: errorData.error,
-          attemptedFields: Object.keys(fields),
+          attemptedFields: Object.keys(airtableFields || {}),
         })
       );
 
@@ -317,9 +371,9 @@ export default async function handler(req, res) {
     }
 
     const data = await response.json();
-    console.log(`Airtable 저장 성공 (${normalizedTable}):`, {
-      recordId: data.records?.[0]?.id,
-      fieldsCount: Object.keys(fields).length,
+    console.log(`Airtable 저장 성공 (${normalizedTable})`, {
+      fieldsCount: Object.keys(airtableFields || {}).length,
+      status: "ok",
     });
     return res.status(200).json(data);
   } catch (error) {

@@ -26,7 +26,7 @@ export default function RadarChart({ scores, size }) {
   
   // 카테고리 순서를 명시적으로 정의 (오각형을 위해 5개 고정)
   const categoryOrder = ["mental", "psychological", "burnout", "physical", "satisfaction"];
-  const categories = categoryOrder.filter(cat => scores.hasOwnProperty(cat));
+  const categories = categoryOrder.filter((cat) => Object.prototype.hasOwnProperty.call(scores, cat));
   const n = categories.length;
   const center = numericSize / 2;
   const radius = numericSize / 2 - 40;

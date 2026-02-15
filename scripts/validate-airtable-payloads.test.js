@@ -1,3 +1,4 @@
+/* global process */
 /**
  * Airtable 정규화/검증 레이어 단위 검증
  * 실행: node scripts/validate-airtable-payloads.test.js (프로젝트 루트에서)

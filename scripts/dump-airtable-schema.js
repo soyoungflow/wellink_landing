@@ -1,3 +1,4 @@
+/* global process */
 /**
  * Airtable 스키마 덤프 (MCP 또는 API로 조회한 결과와 동일한 형식으로 저장)
  *
@@ -36,7 +37,9 @@ try {
       }
     });
   }
-} catch (_) {}
+} catch {
+  // optional .env.local parse/load failure
+}
 
 const PAT = process.env.AIRTABLE_PAT || process.env.AIRTABLE_API_KEY;
 const BASE_ID = process.env.AIRTABLE_BASE_ID;

@@ -81,7 +81,6 @@ export default function LeadCaptureView({ leadCaptureSource = "mini", email, set
       };
     }
 
-    console.log("SUBMIT", { leadCaptureSource, table, raw });
     try {
       const fields = normalizePayload(table, raw);
       const validation = validatePayload(table, fields);

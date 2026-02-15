@@ -1,3 +1,4 @@
+/* global process */
 /**
  * 로컬 개발용 서버 예시 (Express.js)
  *

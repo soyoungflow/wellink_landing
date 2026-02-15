@@ -8,6 +8,7 @@ import {
   MiniResult,
   MiniQuestions,
   FullResult,
+  FullConsentForm,
   FullQuestions,
   LeadCaptureView,
   EmployeeSurveyView,
@@ -20,7 +21,6 @@ export default function WellinkMVP() {
   const [fadeIn, setFadeIn] = useState(true);
   const [toast, setToast] = useState({ message: "", type: "", visible: false });
   const [loading, setLoading] = useState(false);
-  const scrollRef = useRef(null);
   const roleRef = useRef(null);
 
   // 미니 체크
@@ -33,6 +33,7 @@ export default function WellinkMVP() {
   const [fullStep, setFullStep] = useState(0);
   const [bodyParts, setBodyParts] = useState([]);
   const [showResults, setShowResults] = useState(false);
+  const [wcwiSubmitted, setWcwiSubmitted] = useState(false);
 
   // 리드 캡처 (진입 경로: mini | full | employee | manager)
   const [leadCaptureSource, setLeadCaptureSource] = useState("mini");
@@ -97,7 +98,6 @@ export default function WellinkMVP() {
   const currentSection = WCWI_QUESTIONS[sectionKeys[fullSection]];
   const currentQ = currentSection ? currentSection.questions[fullStep] : null;
   const totalQuestions = Object.values(WCWI_QUESTIONS).reduce((a, s) => a + s.questions.length, 0);
-  const answeredCount = Object.keys(fullAnswers).length;
 
   // ---------- 뷰 라우팅 ----------
 
@@ -154,12 +154,23 @@ export default function WellinkMVP() {
   if (currentView === "full") {
     if (showResults) {
       const scores = calculateFullScores(fullAnswers, bodyParts);
+      if (!wcwiSubmitted) {
+        return (
+          <FullConsentForm
+            scores={scores}
+            fullAnswers={fullAnswers}
+            bodyParts={bodyParts}
+            onSubmitDone={() => setWcwiSubmitted(true)}
+          />
+        );
+      }
       return (
         <FullResult
           scores={scores}
           transition={transition}
           onGoHome={() => {
             setShowResults(false);
+            setWcwiSubmitted(false);
             setFullAnswers({});
             setFullSection(0);
             setFullStep(0);
@@ -177,7 +188,6 @@ export default function WellinkMVP() {
         fullAnswers={fullAnswers}
         bodyParts={bodyParts}
         totalQuestions={totalQuestions}
-        answeredCount={answeredCount}
         currentSection={currentSection}
         currentQ={currentQ}
         setFullAnswers={setFullAnswers}
@@ -252,9 +262,7 @@ export default function WellinkMVP() {
         const airtableKey = fieldMapping[key];
         if (airtableKey) {
           let value = empAnswers[key];
-          if (key === "관심프로그램" && Array.isArray(value)) {
-            value = value;
-          } else if (key === "서비스사용의향" && typeof value === "number" && LIKERT_5_WILLINGNESS[value]) {
+          if (key === "서비스사용의향" && typeof value === "number" && LIKERT_5_WILLINGNESS[value]) {
             value = LIKERT_5_WILLINGNESS[value];
           } else if (LIKERT_KEYS.includes(key) && typeof value === "number" && LIKERT_5[value]) {
             value = LIKERT_5[value];
@@ -265,6 +273,11 @@ export default function WellinkMVP() {
       mappedFields["created_time"] = new Date().toISOString();
       mappedFields["source"] = "기타";
       if (empEmail) {
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(empEmail)) {
+          showToast("이메일 형식이 올바르지 않습니다.", "error");
+          setLoading(false);
+          return;
+        }
         mappedFields["Email"] = empEmail;
       }
       try {
@@ -334,15 +347,18 @@ export default function WellinkMVP() {
         const airtableKey = fieldMapping[key];
         if (airtableKey) {
           let value = mgrAnswers[key];
-          if (key === "필요기능" && Array.isArray(value)) {
-            value = value;
-          } else if (key === "기업인원" && typeof value === "string") {
+          if (key === "기업인원" && typeof value === "string") {
             value = companySizeToAirtable(value);
           }
           mappedFields[airtableKey] = value;
         }
       });
       if (mgrEmail) {
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(mgrEmail)) {
+          showToast("이메일 형식이 올바르지 않습니다.", "error");
+          setLoading(false);
+          return;
+        }
         mappedFields["Email"] = mgrEmail;
       }
       try {
