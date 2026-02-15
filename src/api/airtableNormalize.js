@@ -14,7 +14,7 @@ const LIKERT_5 = [
   "4 (그렇다)",
   "5 (매우 그렇다)",
 ];
-/** employee 테이블 willingness_to_use_service 전용 (1=매우 있다, 5=전혀 없다) */
+/** employee 테이블 willingness_to_use_service 전용 (Airtable choices와 동일: 1=매우있다 ~ 5=전혀없다) */
 const LIKERT_5_WILLINGNESS = [
   "1 (매우있다)",
   "2 (있다)",

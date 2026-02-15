@@ -102,6 +102,26 @@ async function main() {
   fs.mkdirSync(path.dirname(outPath), { recursive: true });
   fs.writeFileSync(outPath, JSON.stringify(out, null, 2), "utf8");
   console.log("저장됨:", outPath);
+
+  const contractOut = { baseId: BASE_ID, baseName: "WELLINK", tables: {} };
+  for (const [key, tbl] of Object.entries(out.tables)) {
+    const fields = (tbl.fields || []).map((f) => ({
+      fieldId: f.fieldId,
+      fieldName: f.fieldName,
+      type: f.fieldType,
+      choices: f.options || null,
+      readOnly: f.readOnly || undefined,
+    }));
+    const byId = {};
+    fields.forEach((f) => {
+      if (f.fieldId) byId[f.fieldId] = f.fieldName;
+    });
+    contractOut.tables[key] = { ...tbl, fields, byId };
+  }
+  const contractPath = path.join(root, "contracts", "airtable_contract.json");
+  fs.mkdirSync(path.dirname(contractPath), { recursive: true });
+  fs.writeFileSync(contractPath, JSON.stringify(contractOut, null, 2), "utf8");
+  console.log("저장됨:", contractPath);
 }
 
 main().catch((e) => {

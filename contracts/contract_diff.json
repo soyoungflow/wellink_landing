@@ -1,0 +1,925 @@
+{
+  "generatedAt": "2026-02-15T03:20:53.045Z",
+  "A_formOnlyNotInAirtable": [],
+  "B_airtableOnlyNotInForm": [
+    {
+      "table": "employee",
+      "fieldName": "Agreement",
+      "airtableValue": "네, 동의합니다.",
+      "formKey": "Agreement"
+    },
+    {
+      "table": "manager",
+      "fieldName": "Agreement",
+      "airtableValue": "네,동의합니다.",
+      "formKey": "Agreement"
+    },
+    {
+      "table": "manager",
+      "fieldName": "Service_Demand",
+      "airtableValue": "의향이 있다.",
+      "formKey": "Service_Demand"
+    },
+    {
+      "table": "manager",
+      "fieldName": "Service_Demand",
+      "airtableValue": "의향이 없다. ",
+      "formKey": "Service_Demand"
+    },
+    {
+      "table": "wcwi",
+      "fieldName": "WHO1_PositiveMood",
+      "airtableValue": "1: 전혀 아니다",
+      "formKey": "WHO1_PositiveMood"
+    },
+    {
+      "table": "wcwi",
+      "fieldName": "WHO1_PositiveMood",
+      "airtableValue": "2: 아니다",
+      "formKey": "WHO1_PositiveMood"
+    },
+    {
+      "table": "wcwi",
+      "fieldName": "WHO1_PositiveMood",
+      "airtableValue": "3: 보통이다",
+      "formKey": "WHO1_PositiveMood"
+    },
+    {
+      "table": "wcwi",
+      "fieldName": "WHO1_PositiveMood",
+      "airtableValue": "4: 그렇다",
+      "formKey": "WHO1_PositiveMood"
+    },
+    {
+      "table": "wcwi",
+      "fieldName": "WHO1_PositiveMood",
+      "airtableValue": "5: 매우 그렇다",
+      "formKey": "WHO1_PositiveMood"
+    },
+    {
+      "table": "wcwi",
+      "fieldName": "WHO2_Calm",
+      "airtableValue": "1: 전혀 아니다",
+      "formKey": "WHO2_Calm"
+    },
+    {
+      "table": "wcwi",
+      "fieldName": "WHO2_Calm",
+      "airtableValue": "2: 아니다",
+      "formKey": "WHO2_Calm"
+    },
+    {
+      "table": "wcwi",
+      "fieldName": "WHO2_Calm",
+      "airtableValue": "3: 보통이다",
+      "formKey": "WHO2_Calm"
+    },
+    {
+      "table": "wcwi",
+      "fieldName": "WHO2_Calm",
+      "airtableValue": "4: 그렇다",
+      "formKey": "WHO2_Calm"
+    },
+    {
+      "table": "wcwi",
+      "fieldName": "WHO2_Calm",
+      "airtableValue": "5: 매우 그렇다",
+      "formKey": "WHO2_Calm"
+    },
+    {
+      "table": "wcwi",
+      "fieldName": "WHO3_Energy",
+      "airtableValue": "1: 전혀 아니다",
+      "formKey": "WHO3_Energy"
+    },
+    {
+      "table": "wcwi",
+      "fieldName": "WHO3_Energy",
+      "airtableValue": "2: 아니다",
+      "formKey": "WHO3_Energy"
+    },
+    {
+      "table": "wcwi",
+      "fieldName": "WHO3_Energy",
+      "airtableValue": "3: 보통이다",
+      "formKey": "WHO3_Energy"
+    },
+    {
+      "table": "wcwi",
+      "fieldName": "WHO3_Energy",
+      "airtableValue": "4: 그렇다",
+      "formKey": "WHO3_Energy"
+    },
+    {
+      "table": "wcwi",
+      "fieldName": "WHO3_Energy",
+      "airtableValue": "5: 매우 그렇다",
+      "formKey": "WHO3_Energy"
+    },
+    {
+      "table": "wcwi",
+      "fieldName": "WHO4_RestfulSleep",
+      "airtableValue": "1: 전혀 아니다",
+      "formKey": "WHO4_RestfulSleep"
+    },
+    {
+      "table": "wcwi",
+      "fieldName": "WHO4_RestfulSleep",
+      "airtableValue": "2: 아니다",
+      "formKey": "WHO4_RestfulSleep"
+    },
+    {
+      "table": "wcwi",
+      "fieldName": "WHO4_RestfulSleep",
+      "airtableValue": "3: 보통이다",
+      "formKey": "WHO4_RestfulSleep"
+    },
+    {
+      "table": "wcwi",
+      "fieldName": "WHO4_RestfulSleep",
+      "airtableValue": "4: 그렇다",
+      "formKey": "WHO4_RestfulSleep"
+    },
+    {
+      "table": "wcwi",
+      "fieldName": "WHO4_RestfulSleep",
+      "airtableValue": "5: 매우 그렇다",
+      "formKey": "WHO4_RestfulSleep"
+    },
+    {
+      "table": "wcwi",
+      "fieldName": "WHO5_MeaningfulDays",
+      "airtableValue": "1: 전혀 아니다",
+      "formKey": "WHO5_MeaningfulDays"
+    },
+    {
+      "table": "wcwi",
+      "fieldName": "WHO5_MeaningfulDays",
+      "airtableValue": "2: 아니다",
+      "formKey": "WHO5_MeaningfulDays"
+    },
+    {
+      "table": "wcwi",
+      "fieldName": "WHO5_MeaningfulDays",
+      "airtableValue": "3: 보통이다",
+      "formKey": "WHO5_MeaningfulDays"
+    },
+    {
+      "table": "wcwi",
+      "fieldName": "WHO5_MeaningfulDays",
+      "airtableValue": "4: 그렇다",
+      "formKey": "WHO5_MeaningfulDays"
+    },
+    {
+      "table": "wcwi",
+      "fieldName": "WHO5_MeaningfulDays",
+      "airtableValue": "5: 매우 그렇다",
+      "formKey": "WHO5_MeaningfulDays"
+    },
+    {
+      "table": "wcwi",
+      "fieldName": "RYF6_Autonomy",
+      "airtableValue": "1: 전혀 동의하지 않음",
+      "formKey": "RYF6_Autonomy"
+    },
+    {
+      "table": "wcwi",
+      "fieldName": "RYF6_Autonomy",
+      "airtableValue": "2: 동의하지 않음",
+      "formKey": "RYF6_Autonomy"
+    },
+    {
+      "table": "wcwi",
+      "fieldName": "RYF6_Autonomy",
+      "airtableValue": "3: 약간 동의하지 않음",
+      "formKey": "RYF6_Autonomy"
+    },
+    {
+      "table": "wcwi",
+      "fieldName": "RYF6_Autonomy",
+      "airtableValue": "4: 중립",
+      "formKey": "RYF6_Autonomy"
+    },
+    {
+      "table": "wcwi",
+      "fieldName": "RYF6_Autonomy",
+      "airtableValue": "5: 약간 동의함",
+      "formKey": "RYF6_Autonomy"
+    },
+    {
+      "table": "wcwi",
+      "fieldName": "RYF6_Autonomy",
+      "airtableValue": "6: 동의함",
+      "formKey": "RYF6_Autonomy"
+    },
+    {
+      "table": "wcwi",
+      "fieldName": "RYF6_Autonomy",
+      "airtableValue": "7: 매우 동의함",
+      "formKey": "RYF6_Autonomy"
+    },
+    {
+      "table": "wcwi",
+      "fieldName": "RYF7_EnvMastery",
+      "airtableValue": "1: 전혀 동의하지 않음",
+      "formKey": "RYF7_EnvMastery"
+    },
+    {
+      "table": "wcwi",
+      "fieldName": "RYF7_EnvMastery",
+      "airtableValue": "2: 동의하지 않음",
+      "formKey": "RYF7_EnvMastery"
+    },
+    {
+      "table": "wcwi",
+      "fieldName": "RYF7_EnvMastery",
+      "airtableValue": "3: 약간 동의하지 않음",
+      "formKey": "RYF7_EnvMastery"
+    },
+    {
+      "table": "wcwi",
+      "fieldName": "RYF7_EnvMastery",
+      "airtableValue": "4: 중립",
+      "formKey": "RYF7_EnvMastery"
+    },
+    {
+      "table": "wcwi",
+      "fieldName": "RYF7_EnvMastery",
+      "airtableValue": "5: 약간 동의함",
+      "formKey": "RYF7_EnvMastery"
+    },
+    {
+      "table": "wcwi",
+      "fieldName": "RYF7_EnvMastery",
+      "airtableValue": "6: 동의함",
+      "formKey": "RYF7_EnvMastery"
+    },
+    {
+      "table": "wcwi",
+      "fieldName": "RYF7_EnvMastery",
+      "airtableValue": "7: 매우 동의함",
+      "formKey": "RYF7_EnvMastery"
+    },
+    {
+      "table": "wcwi",
+      "fieldName": "RYF8_Growth",
+      "airtableValue": "1: 전혀 동의하지 않음",
+      "formKey": "RYF8_Growth"
+    },
+    {
+      "table": "wcwi",
+      "fieldName": "RYF8_Growth",
+      "airtableValue": "2: 동의하지 않음",
+      "formKey": "RYF8_Growth"
+    },
+    {
+      "table": "wcwi",
+      "fieldName": "RYF8_Growth",
+      "airtableValue": "3: 약간 동의하지 않음",
+      "formKey": "RYF8_Growth"
+    },
+    {
+      "table": "wcwi",
+      "fieldName": "RYF8_Growth",
+      "airtableValue": "4: 중립",
+      "formKey": "RYF8_Growth"
+    },
+    {
+      "table": "wcwi",
+      "fieldName": "RYF8_Growth",
+      "airtableValue": "5: 약간 동의함",
+      "formKey": "RYF8_Growth"
+    },
+    {
+      "table": "wcwi",
+      "fieldName": "RYF8_Growth",
+      "airtableValue": "6: 동의함",
+      "formKey": "RYF8_Growth"
+    },
+    {
+      "table": "wcwi",
+      "fieldName": "RYF8_Growth",
+      "airtableValue": "7: 매우 동의함",
+      "formKey": "RYF8_Growth"
+    },
+    {
+      "table": "wcwi",
+      "fieldName": "RYF9_Relations",
+      "airtableValue": "1: 전혀 동의하지 않음",
+      "formKey": "RYF9_Relations"
+    },
+    {
+      "table": "wcwi",
+      "fieldName": "RYF9_Relations",
+      "airtableValue": "2: 동의하지 않음",
+      "formKey": "RYF9_Relations"
+    },
+    {
+      "table": "wcwi",
+      "fieldName": "RYF9_Relations",
+      "airtableValue": "3: 약간 동의하지 않음",
+      "formKey": "RYF9_Relations"
+    },
+    {
+      "table": "wcwi",
+      "fieldName": "RYF9_Relations",
+      "airtableValue": "4: 중립",
+      "formKey": "RYF9_Relations"
+    },
+    {
+      "table": "wcwi",
+      "fieldName": "RYF9_Relations",
+      "airtableValue": "5: 약간 동의함",
+      "formKey": "RYF9_Relations"
+    },
+    {
+      "table": "wcwi",
+      "fieldName": "RYF9_Relations",
+      "airtableValue": "6: 동의함",
+      "formKey": "RYF9_Relations"
+    },
+    {
+      "table": "wcwi",
+      "fieldName": "RYF9_Relations",
+      "airtableValue": "7: 매우 동의함",
+      "formKey": "RYF9_Relations"
+    },
+    {
+      "table": "wcwi",
+      "fieldName": "RYF10_Purpose",
+      "airtableValue": "1: 전혀 동의하지 않음",
+      "formKey": "RYF10_Purpose"
+    },
+    {
+      "table": "wcwi",
+      "fieldName": "RYF10_Purpose",
+      "airtableValue": "2: 동의하지 않음",
+      "formKey": "RYF10_Purpose"
+    },
+    {
+      "table": "wcwi",
+      "fieldName": "RYF10_Purpose",
+      "airtableValue": "3: 약간 동의하지 않음",
+      "formKey": "RYF10_Purpose"
+    },
+    {
+      "table": "wcwi",
+      "fieldName": "RYF10_Purpose",
+      "airtableValue": "4: 중립",
+      "formKey": "RYF10_Purpose"
+    },
+    {
+      "table": "wcwi",
+      "fieldName": "RYF10_Purpose",
+      "airtableValue": "5: 약간 동의함",
+      "formKey": "RYF10_Purpose"
+    },
+    {
+      "table": "wcwi",
+      "fieldName": "RYF10_Purpose",
+      "airtableValue": "6: 동의함",
+      "formKey": "RYF10_Purpose"
+    },
+    {
+      "table": "wcwi",
+      "fieldName": "RYF10_Purpose",
+      "airtableValue": "7: 매우 동의함",
+      "formKey": "RYF10_Purpose"
+    },
+    {
+      "table": "wcwi",
+      "fieldName": "RYF11_SelfAcceptance",
+      "airtableValue": "1: 전혀 동의하지 않음",
+      "formKey": "RYF11_SelfAcceptance"
+    },
+    {
+      "table": "wcwi",
+      "fieldName": "RYF11_SelfAcceptance",
+      "airtableValue": "2: 동의하지 않음",
+      "formKey": "RYF11_SelfAcceptance"
+    },
+    {
+      "table": "wcwi",
+      "fieldName": "RYF11_SelfAcceptance",
+      "airtableValue": "3: 약간 동의하지 않음",
+      "formKey": "RYF11_SelfAcceptance"
+    },
+    {
+      "table": "wcwi",
+      "fieldName": "RYF11_SelfAcceptance",
+      "airtableValue": "4: 중립",
+      "formKey": "RYF11_SelfAcceptance"
+    },
+    {
+      "table": "wcwi",
+      "fieldName": "RYF11_SelfAcceptance",
+      "airtableValue": "5: 약간 동의함",
+      "formKey": "RYF11_SelfAcceptance"
+    },
+    {
+      "table": "wcwi",
+      "fieldName": "RYF11_SelfAcceptance",
+      "airtableValue": "6: 동의함",
+      "formKey": "RYF11_SelfAcceptance"
+    },
+    {
+      "table": "wcwi",
+      "fieldName": "RYF11_SelfAcceptance",
+      "airtableValue": "7: 매우 동의함",
+      "formKey": "RYF11_SelfAcceptance"
+    },
+    {
+      "table": "wcwi",
+      "fieldName": "CBI12_PhysicalFatigue",
+      "airtableValue": "0: 전혀 아니다",
+      "formKey": "CBI12_PhysicalFatigue"
+    },
+    {
+      "table": "wcwi",
+      "fieldName": "CBI12_PhysicalFatigue",
+      "airtableValue": "1: 거의 아니다",
+      "formKey": "CBI12_PhysicalFatigue"
+    },
+    {
+      "table": "wcwi",
+      "fieldName": "CBI12_PhysicalFatigue",
+      "airtableValue": "2: 보통이다",
+      "formKey": "CBI12_PhysicalFatigue"
+    },
+    {
+      "table": "wcwi",
+      "fieldName": "CBI12_PhysicalFatigue",
+      "airtableValue": "3: 그렇다",
+      "formKey": "CBI12_PhysicalFatigue"
+    },
+    {
+      "table": "wcwi",
+      "fieldName": "CBI12_PhysicalFatigue",
+      "airtableValue": "4: 항상 그렇다",
+      "formKey": "CBI12_PhysicalFatigue"
+    },
+    {
+      "table": "wcwi",
+      "fieldName": "CBI13_EmotionalExhaustion",
+      "airtableValue": "0: 전혀 아니다",
+      "formKey": "CBI13_EmotionalExhaustion"
+    },
+    {
+      "table": "wcwi",
+      "fieldName": "CBI13_EmotionalExhaustion",
+      "airtableValue": "1: 거의 아니다",
+      "formKey": "CBI13_EmotionalExhaustion"
+    },
+    {
+      "table": "wcwi",
+      "fieldName": "CBI13_EmotionalExhaustion",
+      "airtableValue": "2: 보통이다",
+      "formKey": "CBI13_EmotionalExhaustion"
+    },
+    {
+      "table": "wcwi",
+      "fieldName": "CBI13_EmotionalExhaustion",
+      "airtableValue": "3: 그렇다",
+      "formKey": "CBI13_EmotionalExhaustion"
+    },
+    {
+      "table": "wcwi",
+      "fieldName": "CBI13_EmotionalExhaustion",
+      "airtableValue": "4: 항상 그렇다",
+      "formKey": "CBI13_EmotionalExhaustion"
+    },
+    {
+      "table": "wcwi",
+      "fieldName": "CBI14_TiredBeforeWork",
+      "airtableValue": "0: 전혀 아니다",
+      "formKey": "CBI14_TiredBeforeWork"
+    },
+    {
+      "table": "wcwi",
+      "fieldName": "CBI14_TiredBeforeWork",
+      "airtableValue": "1: 거의 아니다",
+      "formKey": "CBI14_TiredBeforeWork"
+    },
+    {
+      "table": "wcwi",
+      "fieldName": "CBI14_TiredBeforeWork",
+      "airtableValue": "2: 보통이다",
+      "formKey": "CBI14_TiredBeforeWork"
+    },
+    {
+      "table": "wcwi",
+      "fieldName": "CBI14_TiredBeforeWork",
+      "airtableValue": "3: 그렇다",
+      "formKey": "CBI14_TiredBeforeWork"
+    },
+    {
+      "table": "wcwi",
+      "fieldName": "CBI14_TiredBeforeWork",
+      "airtableValue": "4: 항상 그렇다",
+      "formKey": "CBI14_TiredBeforeWork"
+    },
+    {
+      "table": "wcwi",
+      "fieldName": "CBI15_WorkDrainsMe",
+      "airtableValue": "0: 전혀 아니다",
+      "formKey": "CBI15_WorkDrainsMe"
+    },
+    {
+      "table": "wcwi",
+      "fieldName": "CBI15_WorkDrainsMe",
+      "airtableValue": "1: 거의 아니다",
+      "formKey": "CBI15_WorkDrainsMe"
+    },
+    {
+      "table": "wcwi",
+      "fieldName": "CBI15_WorkDrainsMe",
+      "airtableValue": "2: 보통이다",
+      "formKey": "CBI15_WorkDrainsMe"
+    },
+    {
+      "table": "wcwi",
+      "fieldName": "CBI15_WorkDrainsMe",
+      "airtableValue": "3: 그렇다",
+      "formKey": "CBI15_WorkDrainsMe"
+    },
+    {
+      "table": "wcwi",
+      "fieldName": "CBI15_WorkDrainsMe",
+      "airtableValue": "4: 항상 그렇다",
+      "formKey": "CBI15_WorkDrainsMe"
+    },
+    {
+      "table": "wcwi",
+      "fieldName": "CBI16_InteractionDrainsMe",
+      "airtableValue": "0: 전혀 아니다",
+      "formKey": "CBI16_InteractionDrainsMe"
+    },
+    {
+      "table": "wcwi",
+      "fieldName": "CBI16_InteractionDrainsMe",
+      "airtableValue": "1: 거의 아니다",
+      "formKey": "CBI16_InteractionDrainsMe"
+    },
+    {
+      "table": "wcwi",
+      "fieldName": "CBI16_InteractionDrainsMe",
+      "airtableValue": "2: 보통이다",
+      "formKey": "CBI16_InteractionDrainsMe"
+    },
+    {
+      "table": "wcwi",
+      "fieldName": "CBI16_InteractionDrainsMe",
+      "airtableValue": "3: 그렇다",
+      "formKey": "CBI16_InteractionDrainsMe"
+    },
+    {
+      "table": "wcwi",
+      "fieldName": "CBI16_InteractionDrainsMe",
+      "airtableValue": "4: 항상 그렇다",
+      "formKey": "CBI16_InteractionDrainsMe"
+    },
+    {
+      "table": "wcwi",
+      "fieldName": "NMQ17_PainSites_12m",
+      "airtableValue": "Neck",
+      "formKey": "NMQ17_PainSites_12m"
+    },
+    {
+      "table": "wcwi",
+      "fieldName": "NMQ17_PainSites_12m",
+      "airtableValue": "Shoulder",
+      "formKey": "NMQ17_PainSites_12m"
+    },
+    {
+      "table": "wcwi",
+      "fieldName": "NMQ17_PainSites_12m",
+      "airtableValue": "UpperBack",
+      "formKey": "NMQ17_PainSites_12m"
+    },
+    {
+      "table": "wcwi",
+      "fieldName": "NMQ17_PainSites_12m",
+      "airtableValue": "LowerBack",
+      "formKey": "NMQ17_PainSites_12m"
+    },
+    {
+      "table": "wcwi",
+      "fieldName": "NMQ17_PainSites_12m",
+      "airtableValue": "WristHand",
+      "formKey": "NMQ17_PainSites_12m"
+    },
+    {
+      "table": "wcwi",
+      "fieldName": "NMQ17_PainSites_12m",
+      "airtableValue": "Hip",
+      "formKey": "NMQ17_PainSites_12m"
+    },
+    {
+      "table": "wcwi",
+      "fieldName": "NMQ17_PainSites_12m",
+      "airtableValue": "KneeLeg",
+      "formKey": "NMQ17_PainSites_12m"
+    },
+    {
+      "table": "wcwi",
+      "fieldName": "NMQ17_PainSites_12m",
+      "airtableValue": "FootAnkle",
+      "formKey": "NMQ17_PainSites_12m"
+    },
+    {
+      "table": "wcwi",
+      "fieldName": "NMQ17_PainSites_12m",
+      "airtableValue": "Other",
+      "formKey": "NMQ17_PainSites_12m"
+    },
+    {
+      "table": "wcwi",
+      "fieldName": "SWLS20_IdealLife",
+      "airtableValue": "1: 전혀 동의하지 않음",
+      "formKey": "SWLS20_IdealLife"
+    },
+    {
+      "table": "wcwi",
+      "fieldName": "SWLS20_IdealLife",
+      "airtableValue": "2: 동의하지 않음",
+      "formKey": "SWLS20_IdealLife"
+    },
+    {
+      "table": "wcwi",
+      "fieldName": "SWLS20_IdealLife",
+      "airtableValue": "3: 약간 동의하지 않음",
+      "formKey": "SWLS20_IdealLife"
+    },
+    {
+      "table": "wcwi",
+      "fieldName": "SWLS20_IdealLife",
+      "airtableValue": "4: 중립",
+      "formKey": "SWLS20_IdealLife"
+    },
+    {
+      "table": "wcwi",
+      "fieldName": "SWLS20_IdealLife",
+      "airtableValue": "5: 약간 동의함",
+      "formKey": "SWLS20_IdealLife"
+    },
+    {
+      "table": "wcwi",
+      "fieldName": "SWLS20_IdealLife",
+      "airtableValue": "6: 동의함",
+      "formKey": "SWLS20_IdealLife"
+    },
+    {
+      "table": "wcwi",
+      "fieldName": "SWLS20_IdealLife",
+      "airtableValue": "7: 매우 동의함",
+      "formKey": "SWLS20_IdealLife"
+    },
+    {
+      "table": "wcwi",
+      "fieldName": "SWLS21_GoodConditions",
+      "airtableValue": "1: 전혀 동의하지 않음",
+      "formKey": "SWLS21_GoodConditions"
+    },
+    {
+      "table": "wcwi",
+      "fieldName": "SWLS21_GoodConditions",
+      "airtableValue": "2: 동의하지 않음",
+      "formKey": "SWLS21_GoodConditions"
+    },
+    {
+      "table": "wcwi",
+      "fieldName": "SWLS21_GoodConditions",
+      "airtableValue": "3: 약간 동의하지 않음",
+      "formKey": "SWLS21_GoodConditions"
+    },
+    {
+      "table": "wcwi",
+      "fieldName": "SWLS21_GoodConditions",
+      "airtableValue": "4: 중립",
+      "formKey": "SWLS21_GoodConditions"
+    },
+    {
+      "table": "wcwi",
+      "fieldName": "SWLS21_GoodConditions",
+      "airtableValue": "5: 약간 동의함",
+      "formKey": "SWLS21_GoodConditions"
+    },
+    {
+      "table": "wcwi",
+      "fieldName": "SWLS21_GoodConditions",
+      "airtableValue": "6: 동의함",
+      "formKey": "SWLS21_GoodConditions"
+    },
+    {
+      "table": "wcwi",
+      "fieldName": "SWLS21_GoodConditions",
+      "airtableValue": "7: 매우 동의함",
+      "formKey": "SWLS21_GoodConditions"
+    },
+    {
+      "table": "wcwi",
+      "fieldName": "SWLS22_Satisfied",
+      "airtableValue": "1: 전혀 동의하지 않음",
+      "formKey": "SWLS22_Satisfied"
+    },
+    {
+      "table": "wcwi",
+      "fieldName": "SWLS22_Satisfied",
+      "airtableValue": "2: 동의하지 않음",
+      "formKey": "SWLS22_Satisfied"
+    },
+    {
+      "table": "wcwi",
+      "fieldName": "SWLS22_Satisfied",
+      "airtableValue": "3: 약간 동의하지 않음",
+      "formKey": "SWLS22_Satisfied"
+    },
+    {
+      "table": "wcwi",
+      "fieldName": "SWLS22_Satisfied",
+      "airtableValue": "4: 중립",
+      "formKey": "SWLS22_Satisfied"
+    },
+    {
+      "table": "wcwi",
+      "fieldName": "SWLS22_Satisfied",
+      "airtableValue": "5: 약간 동의함",
+      "formKey": "SWLS22_Satisfied"
+    },
+    {
+      "table": "wcwi",
+      "fieldName": "SWLS22_Satisfied",
+      "airtableValue": "6: 동의함",
+      "formKey": "SWLS22_Satisfied"
+    },
+    {
+      "table": "wcwi",
+      "fieldName": "SWLS22_Satisfied",
+      "airtableValue": "7: 매우 동의함",
+      "formKey": "SWLS22_Satisfied"
+    },
+    {
+      "table": "wcwi",
+      "fieldName": "SWLS23_AchievedImportant",
+      "airtableValue": "1: 전혀 동의하지 않음",
+      "formKey": "SWLS23_AchievedImportant"
+    },
+    {
+      "table": "wcwi",
+      "fieldName": "SWLS23_AchievedImportant",
+      "airtableValue": "2: 동의하지 않음",
+      "formKey": "SWLS23_AchievedImportant"
+    },
+    {
+      "table": "wcwi",
+      "fieldName": "SWLS23_AchievedImportant",
+      "airtableValue": "3: 약간 동의하지 않음",
+      "formKey": "SWLS23_AchievedImportant"
+    },
+    {
+      "table": "wcwi",
+      "fieldName": "SWLS23_AchievedImportant",
+      "airtableValue": "4: 중립",
+      "formKey": "SWLS23_AchievedImportant"
+    },
+    {
+      "table": "wcwi",
+      "fieldName": "SWLS23_AchievedImportant",
+      "airtableValue": "5: 약간 동의함",
+      "formKey": "SWLS23_AchievedImportant"
+    },
+    {
+      "table": "wcwi",
+      "fieldName": "SWLS23_AchievedImportant",
+      "airtableValue": "6: 동의함",
+      "formKey": "SWLS23_AchievedImportant"
+    },
+    {
+      "table": "wcwi",
+      "fieldName": "SWLS23_AchievedImportant",
+      "airtableValue": "7: 매우 동의함",
+      "formKey": "SWLS23_AchievedImportant"
+    },
+    {
+      "table": "wcwi",
+      "fieldName": "SWLS24_ChangeLittle",
+      "airtableValue": "1: 전혀 동의하지 않음",
+      "formKey": "SWLS24_ChangeLittle"
+    },
+    {
+      "table": "wcwi",
+      "fieldName": "SWLS24_ChangeLittle",
+      "airtableValue": "2: 동의하지 않음",
+      "formKey": "SWLS24_ChangeLittle"
+    },
+    {
+      "table": "wcwi",
+      "fieldName": "SWLS24_ChangeLittle",
+      "airtableValue": "3: 약간 동의하지 않음",
+      "formKey": "SWLS24_ChangeLittle"
+    },
+    {
+      "table": "wcwi",
+      "fieldName": "SWLS24_ChangeLittle",
+      "airtableValue": "4: 중립",
+      "formKey": "SWLS24_ChangeLittle"
+    },
+    {
+      "table": "wcwi",
+      "fieldName": "SWLS24_ChangeLittle",
+      "airtableValue": "5: 약간 동의함",
+      "formKey": "SWLS24_ChangeLittle"
+    },
+    {
+      "table": "wcwi",
+      "fieldName": "SWLS24_ChangeLittle",
+      "airtableValue": "6: 동의함",
+      "formKey": "SWLS24_ChangeLittle"
+    },
+    {
+      "table": "wcwi",
+      "fieldName": "SWLS24_ChangeLittle",
+      "airtableValue": "7: 매우 동의함",
+      "formKey": "SWLS24_ChangeLittle"
+    },
+    {
+      "table": "wcwi",
+      "fieldName": "CBI_RiskTier",
+      "airtableValue": "High",
+      "formKey": "CBI_RiskTier"
+    },
+    {
+      "table": "wcwi",
+      "fieldName": "CBI_RiskTier",
+      "airtableValue": "Moderate",
+      "formKey": "CBI_RiskTier"
+    },
+    {
+      "table": "wcwi",
+      "fieldName": "CBI_RiskTier",
+      "airtableValue": "Low",
+      "formKey": "CBI_RiskTier"
+    },
+    {
+      "table": "wcwi",
+      "fieldName": "WCWI_Tier",
+      "airtableValue": "Excellent",
+      "formKey": "WCWI_Tier"
+    },
+    {
+      "table": "wcwi",
+      "fieldName": "WCWI_Tier",
+      "airtableValue": "Good",
+      "formKey": "WCWI_Tier"
+    },
+    {
+      "table": "wcwi",
+      "fieldName": "WCWI_Tier",
+      "airtableValue": "Watch",
+      "formKey": "WCWI_Tier"
+    },
+    {
+      "table": "wcwi",
+      "fieldName": "WCWI_Tier",
+      "airtableValue": "At Risk",
+      "formKey": "WCWI_Tier"
+    },
+    {
+      "table": "wcwi",
+      "fieldName": "WCWI_PrimaryIssue",
+      "airtableValue": "Burnout/Fatigue",
+      "formKey": "WCWI_PrimaryIssue"
+    },
+    {
+      "table": "wcwi",
+      "fieldName": "WCWI_PrimaryIssue",
+      "airtableValue": "Musculoskeletal",
+      "formKey": "WCWI_PrimaryIssue"
+    },
+    {
+      "table": "wcwi",
+      "fieldName": "WCWI_PrimaryIssue",
+      "airtableValue": "Mood/Well-being",
+      "formKey": "WCWI_PrimaryIssue"
+    },
+    {
+      "table": "wcwi",
+      "fieldName": "WCWI_PrimaryIssue",
+      "airtableValue": "Psychological Well-being",
+      "formKey": "WCWI_PrimaryIssue"
+    },
+    {
+      "table": "wcwi",
+      "fieldName": "WCWI_PrimaryIssue",
+      "airtableValue": "Life Satisfaction",
+      "formKey": "WCWI_PrimaryIssue"
+    }
+  ],
+  "C_typeMismatch": [],
+  "D_optionMismatch": [],
+  "E_autoFixable": [],
+  "F_manualOnly": [],
+  "C_similarAutoFixable": [],
+  "D_semanticConflictManualRequired": [],
+  "wcwiDiagnosis": null
+}

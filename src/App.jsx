@@ -214,12 +214,13 @@ export default function WellinkMVP() {
       4: "4 (그렇다)",
       5: "5 (매우 그렇다)",
     };
+    /** willingness_to_use_service: Airtable choices와 동일 (역스케일 1=매우있다 ~ 5=전혀없다) */
     const LIKERT_5_WILLINGNESS = {
-      1: "1 (매우 아니다)",
-      2: "2 (아니다)",
+      1: "1 (매우있다)",
+      2: "2 (있다)",
       3: "3 (보통이다)",
-      4: "4 (그렇다)",
-      5: "5 (매우 그렇다)",
+      4: "4 (별로없다)",
+      5: "5 (전혀없다)",
     };
     const LIKERT_KEYS = [
       "신체불편",

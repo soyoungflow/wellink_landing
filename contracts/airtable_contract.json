@@ -7,24 +7,23 @@
       "tableName": "Employee_Wellness_Market_Survey",
       "fields": [
         {
-          "fieldName": "response_id",
           "fieldId": "fldCZwQ0D0OrXxHdd",
-          "fieldType": "formula",
-          "required": false,
+          "fieldName": "response_id",
+          "type": "formula",
+          "choices": null,
           "readOnly": true
         },
         {
-          "fieldName": "Email",
           "fieldId": "fld9YPwyEUNwouwMy",
-          "fieldType": "singleLineText",
-          "required": false
+          "fieldName": "Email",
+          "type": "singleLineText",
+          "choices": null
         },
         {
-          "fieldName": "company_size",
           "fieldId": "fld5XMIaEcmBrAMFU",
-          "fieldType": "singleSelect",
-          "required": false,
-          "options": [
+          "fieldName": "company_size",
+          "type": "singleSelect",
+          "choices": [
             "10명 미만",
             "10~49명",
             "50~200명",
@@ -32,11 +31,10 @@
           ]
         },
         {
-          "fieldName": "job_type",
           "fieldId": "fldnhhgCtR13eYztS",
-          "fieldType": "singleSelect",
-          "required": false,
-          "options": [
+          "fieldName": "job_type",
+          "type": "singleSelect",
+          "choices": [
             "사무직",
             "연구/개발",
             "영업/마케팅",
@@ -45,22 +43,20 @@
           ]
         },
         {
-          "fieldName": "work_style",
           "fieldId": "fldPTUW9gy1L2WLxY",
-          "fieldType": "singleSelect",
-          "required": false,
-          "options": [
+          "fieldName": "work_style",
+          "type": "singleSelect",
+          "choices": [
             "전일 출근",
             "재택근무",
             "혼합형(출근+재택)"
           ]
         },
         {
-          "fieldName": "physical_discomfort_level",
           "fieldId": "fldNtoGzGNI71qAHK",
-          "fieldType": "singleSelect",
-          "required": false,
-          "options": [
+          "fieldName": "physical_discomfort_level",
+          "type": "singleSelect",
+          "choices": [
             "5 (매우 그렇다)",
             "4 (그렇다)",
             "3 (보통이다)",
@@ -69,11 +65,10 @@
           ]
         },
         {
-          "fieldName": "mental_stress_level",
           "fieldId": "fldSQkfUcepciBCRl",
-          "fieldType": "singleSelect",
-          "required": false,
-          "options": [
+          "fieldName": "mental_stress_level",
+          "type": "singleSelect",
+          "choices": [
             "5 (매우 그렇다)",
             "4 (그렇다)",
             "3 (보통이다)",
@@ -82,11 +77,10 @@
           ]
         },
         {
-          "fieldName": "burnout_experience",
           "fieldId": "fldYG3LdqFLsEHQXV",
-          "fieldType": "singleSelect",
-          "required": false,
-          "options": [
+          "fieldName": "burnout_experience",
+          "type": "singleSelect",
+          "choices": [
             "5 (매우 그렇다)",
             "4 (그렇다)",
             "3 (보통이다)",
@@ -95,11 +89,10 @@
           ]
         },
         {
-          "fieldName": "need_for_wellness_service",
           "fieldId": "fldHOb9Dy9E3BuSgX",
-          "fieldType": "singleSelect",
-          "required": false,
-          "options": [
+          "fieldName": "need_for_wellness_service",
+          "type": "singleSelect",
+          "choices": [
             "5 (매우 그렇다)",
             "4 (그렇다)",
             "3 (보통이다)",
@@ -108,11 +101,10 @@
           ]
         },
         {
-          "fieldName": "interest_in_short_program",
           "fieldId": "fld8WdQcHrNtkxPcd",
-          "fieldType": "singleSelect",
-          "required": false,
-          "options": [
+          "fieldName": "interest_in_short_program",
+          "type": "singleSelect",
+          "choices": [
             "5 (매우 그렇다)",
             "4 (그렇다)",
             "3 (보통이다)",
@@ -121,11 +113,10 @@
           ]
         },
         {
-          "fieldName": "willingness_to_use_service",
           "fieldId": "fldd1qMIuZf5lwEIF",
-          "fieldType": "singleSelect",
-          "required": false,
-          "options": [
+          "fieldName": "willingness_to_use_service",
+          "type": "singleSelect",
+          "choices": [
             "1 (매우있다)",
             "2 (있다)",
             "3 (보통이다)",
@@ -134,11 +125,10 @@
           ]
         },
         {
-          "fieldName": "preferred_program_type",
           "fieldId": "fld0YburJmcDlUFKO",
-          "fieldType": "multipleSelects",
-          "required": false,
-          "options": [
+          "fieldName": "preferred_program_type",
+          "type": "multipleSelects",
+          "choices": [
             "근골격계 스트레칭",
             "명상/호흡",
             "번아웃 관리",
@@ -148,11 +138,10 @@
           ]
         },
         {
-          "fieldName": "company_support_expectation",
           "fieldId": "fldCFN182M9EBopg6",
-          "fieldType": "singleSelect",
-          "required": false,
-          "options": [
+          "fieldName": "company_support_expectation",
+          "type": "singleSelect",
+          "choices": [
             "5 (매우 그렇다)",
             "4 (그렇다)",
             "3 (보통이다)",
@@ -161,24 +150,23 @@
           ]
         },
         {
-          "fieldName": "open_feedback",
           "fieldId": "fldA6O1OlgCTbgWV1",
-          "fieldType": "multilineText",
-          "required": false
+          "fieldName": "open_feedback",
+          "type": "multilineText",
+          "choices": null
         },
         {
-          "fieldName": "overall_wellness_need_score",
           "fieldId": "fldykEGAeCejUWZwF",
-          "fieldType": "formula",
-          "required": false,
+          "fieldName": "overall_wellness_need_score",
+          "type": "formula",
+          "choices": null,
           "readOnly": true
         },
         {
-          "fieldName": "payment_amount",
           "fieldId": "fldAobZto4HShKELJ",
-          "fieldType": "multipleSelects",
-          "required": false,
-          "options": [
+          "fieldName": "payment_amount",
+          "type": "multipleSelects",
+          "choices": [
             "10,000원 미만",
             "10,000~30,000원",
             "30,000~50,000원",
@@ -187,18 +175,17 @@
           ]
         },
         {
-          "fieldName": "created_time",
           "fieldId": "fldR0JYXilQmDAOuF",
-          "fieldType": "createdTime",
-          "required": false,
+          "fieldName": "created_time",
+          "type": "createdTime",
+          "choices": null,
           "readOnly": true
         },
         {
-          "fieldName": "source",
           "fieldId": "fldotPAGfsAFkXDmD",
-          "fieldType": "singleSelect",
-          "required": false,
-          "options": [
+          "fieldName": "source",
+          "type": "singleSelect",
+          "choices": [
             "내부 링크",
             "외부 캠페인",
             "직접 방문",
@@ -206,60 +193,81 @@
           ]
         },
         {
-          "fieldName": "AI_Feedback_Summary",
           "fieldId": "fldayRaTo9pUYkb4Q",
-          "fieldType": "aiText",
-          "required": false,
+          "fieldName": "AI_Feedback_Summary",
+          "type": "aiText",
+          "choices": null,
           "readOnly": true
         },
         {
-          "fieldName": "AI_Need_Category",
           "fieldId": "fldeNUN5uAAKJeZwA",
-          "fieldType": "aiText",
-          "required": false,
+          "fieldName": "AI_Need_Category",
+          "type": "aiText",
+          "choices": null,
           "readOnly": true
         },
         {
-          "fieldName": "Agreement",
           "fieldId": "fldUghbQIEgJzoRMY",
-          "fieldType": "singleSelect",
-          "required": false,
-          "options": [
+          "fieldName": "Agreement",
+          "type": "singleSelect",
+          "choices": [
             "네, 동의합니다."
           ]
         },
         {
-          "fieldName": "Created time",
           "fieldId": "fldTq5sfiEyr8uDWZ",
-          "fieldType": "createdTime",
-          "required": false,
+          "fieldName": "Created time",
+          "type": "createdTime",
+          "choices": null,
           "readOnly": true
         }
-      ]
+      ],
+      "byId": {
+        "fldCZwQ0D0OrXxHdd": "response_id",
+        "fld9YPwyEUNwouwMy": "Email",
+        "fld5XMIaEcmBrAMFU": "company_size",
+        "fldnhhgCtR13eYztS": "job_type",
+        "fldPTUW9gy1L2WLxY": "work_style",
+        "fldNtoGzGNI71qAHK": "physical_discomfort_level",
+        "fldSQkfUcepciBCRl": "mental_stress_level",
+        "fldYG3LdqFLsEHQXV": "burnout_experience",
+        "fldHOb9Dy9E3BuSgX": "need_for_wellness_service",
+        "fld8WdQcHrNtkxPcd": "interest_in_short_program",
+        "fldd1qMIuZf5lwEIF": "willingness_to_use_service",
+        "fld0YburJmcDlUFKO": "preferred_program_type",
+        "fldCFN182M9EBopg6": "company_support_expectation",
+        "fldA6O1OlgCTbgWV1": "open_feedback",
+        "fldykEGAeCejUWZwF": "overall_wellness_need_score",
+        "fldAobZto4HShKELJ": "payment_amount",
+        "fldR0JYXilQmDAOuF": "created_time",
+        "fldotPAGfsAFkXDmD": "source",
+        "fldayRaTo9pUYkb4Q": "AI_Feedback_Summary",
+        "fldeNUN5uAAKJeZwA": "AI_Need_Category",
+        "fldUghbQIEgJzoRMY": "Agreement",
+        "fldTq5sfiEyr8uDWZ": "Created time"
+      }
     },
     "manager": {
       "tableId": "tbl35QbAamOCRvaPk",
       "tableName": "Wellness Survey Company Responses",
       "fields": [
         {
-          "fieldName": "Email",
           "fieldId": "fldhtBwLt62iOF2nM",
-          "fieldType": "email",
-          "required": false
+          "fieldName": "Email",
+          "type": "email",
+          "choices": null
         },
         {
-          "fieldName": "Company",
           "fieldId": "fld7wkPlkf785F1q3",
-          "fieldType": "multipleRecordLinks",
-          "required": false,
-          "linkedTableId": "tblimni6my2OAdOi8"
+          "fieldName": "Company",
+          "type": "multipleRecordLinks",
+          "choices": null
         },
         {
-          "fieldName": "Company_size",
           "fieldId": "fldyJwqjFsqVgUQPN",
-          "fieldType": "singleSelect",
-          "required": false,
-          "options": [
+          "fieldName": "Company_size",
+          "type": "singleSelect",
+          "choices": [
             "10명 이하",
             "10-50명",
             "50-200명",
@@ -267,17 +275,16 @@
           ]
         },
         {
-          "fieldName": "Current_programs",
           "fieldId": "fldPka9AJFk4J8osa",
-          "fieldType": "multilineText",
-          "required": false
+          "fieldName": "Current_programs",
+          "type": "multilineText",
+          "choices": null
         },
         {
-          "fieldName": "Wellness_importance",
           "fieldId": "fldYHgiPj50BcSyde",
-          "fieldType": "multipleSelects",
-          "required": false,
-          "options": [
+          "fieldName": "Wellness_importance",
+          "type": "multipleSelects",
+          "choices": [
             "5 매우그렇다",
             "4 그렇다",
             "3 보통이다",
@@ -286,33 +293,31 @@
           ]
         },
         {
-          "fieldName": "Needed_services",
           "fieldId": "fldA550dWEG1ThiuH",
-          "fieldType": "multilineText",
-          "required": false
+          "fieldName": "Needed_services",
+          "type": "multilineText",
+          "choices": null
         },
         {
-          "fieldName": "Pain_points",
           "fieldId": "fldN02HQpcgxy1oI0",
-          "fieldType": "multilineText",
-          "required": false
+          "fieldName": "Pain_points",
+          "type": "multilineText",
+          "choices": null
         },
         {
-          "fieldName": "Adoption_interest",
           "fieldId": "fldXWrduSw1Xrqv5G",
-          "fieldType": "singleSelect",
-          "required": false,
-          "options": [
+          "fieldName": "Adoption_interest",
+          "type": "singleSelect",
+          "choices": [
             "있음",
             "없음"
           ]
         },
         {
-          "fieldName": "Required_features",
           "fieldId": "fld7MJL75o9wlHaHR",
-          "fieldType": "multipleSelects",
-          "required": false,
-          "options": [
+          "fieldName": "Required_features",
+          "type": "multipleSelects",
+          "choices": [
             "정신 건강 콘텐츠",
             "요가, 필라테스 등 운동 콘텐츠",
             "번아웃 평가 및 리포트",
@@ -321,156 +326,176 @@
           ]
         },
         {
-          "fieldName": "Other_features",
           "fieldId": "fldVUrjnEMzV5wx07",
-          "fieldType": "multilineText",
-          "required": false
+          "fieldName": "Other_features",
+          "type": "multilineText",
+          "choices": null
         },
         {
-          "fieldName": "Cheap_price_range",
           "fieldId": "fldkyJMTU1iknAUx4",
-          "fieldType": "singleSelect",
-          "required": false,
-          "options": [
+          "fieldName": "Cheap_price_range",
+          "type": "singleSelect",
+          "choices": [
             "인당 5천원 ~1만원",
             "인당 1~2만원",
             "인당 2~3만원"
           ]
         },
         {
-          "fieldName": "Reasonable_price",
           "fieldId": "fldRn89yzO4Rerd1S",
-          "fieldType": "multilineText",
-          "required": false
+          "fieldName": "Reasonable_price",
+          "type": "multilineText",
+          "choices": null
         },
         {
-          "fieldName": "Additional_comments",
           "fieldId": "fldCU0eH26UGHaMfx",
-          "fieldType": "multilineText",
-          "required": false
+          "fieldName": "Additional_comments",
+          "type": "multilineText",
+          "choices": null
         },
         {
-          "fieldName": "Created_time",
           "fieldId": "fldQjaLRrlrbqPQTF",
-          "fieldType": "createdTime",
-          "required": false,
+          "fieldName": "Created_time",
+          "type": "createdTime",
+          "choices": null,
           "readOnly": true
         },
         {
-          "fieldName": "Agreement",
           "fieldId": "fldadpR5XZQtavfBR",
-          "fieldType": "singleSelect",
-          "required": false,
-          "options": [
+          "fieldName": "Agreement",
+          "type": "singleSelect",
+          "choices": [
             "네,동의합니다."
           ]
         },
         {
-          "fieldName": "Service_Demand",
           "fieldId": "fldic1nV9mSlrGvwc",
-          "fieldType": "singleSelect",
-          "required": false,
-          "options": [
+          "fieldName": "Service_Demand",
+          "type": "singleSelect",
+          "choices": [
             "의향이 있다.",
             "의향이 없다. "
           ]
         },
         {
-          "fieldName": "Attachments",
           "fieldId": "fldoxPG8BLCdf0Cai",
-          "fieldType": "multipleAttachments",
-          "required": false
+          "fieldName": "Attachments",
+          "type": "multipleAttachments",
+          "choices": null
         }
-      ]
+      ],
+      "byId": {
+        "fldhtBwLt62iOF2nM": "Email",
+        "fld7wkPlkf785F1q3": "Company",
+        "fldyJwqjFsqVgUQPN": "Company_size",
+        "fldPka9AJFk4J8osa": "Current_programs",
+        "fldYHgiPj50BcSyde": "Wellness_importance",
+        "fldA550dWEG1ThiuH": "Needed_services",
+        "fldN02HQpcgxy1oI0": "Pain_points",
+        "fldXWrduSw1Xrqv5G": "Adoption_interest",
+        "fld7MJL75o9wlHaHR": "Required_features",
+        "fldVUrjnEMzV5wx07": "Other_features",
+        "fldkyJMTU1iknAUx4": "Cheap_price_range",
+        "fldRn89yzO4Rerd1S": "Reasonable_price",
+        "fldCU0eH26UGHaMfx": "Additional_comments",
+        "fldQjaLRrlrbqPQTF": "Created_time",
+        "fldadpR5XZQtavfBR": "Agreement",
+        "fldic1nV9mSlrGvwc": "Service_Demand",
+        "fldoxPG8BLCdf0Cai": "Attachments"
+      }
     },
     "mini": {
       "tableId": "tblyZs4j4JY11Sfg8",
       "tableName": "mini_responses",
       "fields": [
         {
-          "fieldName": "score",
           "fieldId": "fldxhpjb5uxaWEEtA",
-          "fieldType": "number",
-          "required": false
+          "fieldName": "score",
+          "type": "number",
+          "choices": null
         },
         {
-          "fieldName": "created_at",
           "fieldId": "fldZ2VkVQibgvcFAP",
-          "fieldType": "dateTime",
-          "required": false
+          "fieldName": "created_at",
+          "type": "dateTime",
+          "choices": null
         },
         {
-          "fieldName": "email",
           "fieldId": "fld5AdBN1G69JgENn",
-          "fieldType": "singleLineText",
-          "required": false
+          "fieldName": "email",
+          "type": "singleLineText",
+          "choices": null
         },
         {
-          "fieldName": "level",
           "fieldId": "fld2cMPErFKbKvI1Q",
-          "fieldType": "singleSelect",
-          "required": false,
-          "options": [
+          "fieldName": "level",
+          "type": "singleSelect",
+          "choices": [
             "양호",
             "보통",
             "주의"
           ]
         },
         {
-          "fieldName": "answers_json",
           "fieldId": "fldDxNOqOONZigtpw",
-          "fieldType": "multilineText",
-          "required": false
+          "fieldName": "answers_json",
+          "type": "multilineText",
+          "choices": null
         },
         {
-          "fieldName": "source",
           "fieldId": "fld5sosIYxFU2Jy3s",
-          "fieldType": "singleSelect",
-          "required": false,
-          "options": [
+          "fieldName": "source",
+          "type": "singleSelect",
+          "choices": [
             "web",
             "app"
           ]
         },
         {
-          "fieldName": "utm",
           "fieldId": "fld1kVqqIRvDr2str",
-          "fieldType": "singleLineText",
-          "required": false
+          "fieldName": "utm",
+          "type": "singleLineText",
+          "choices": null
         }
-      ]
+      ],
+      "byId": {
+        "fldxhpjb5uxaWEEtA": "score",
+        "fldZ2VkVQibgvcFAP": "created_at",
+        "fld5AdBN1G69JgENn": "email",
+        "fld2cMPErFKbKvI1Q": "level",
+        "fldDxNOqOONZigtpw": "answers_json",
+        "fld5sosIYxFU2Jy3s": "source",
+        "fld1kVqqIRvDr2str": "utm"
+      }
     },
     "wcwi": {
       "tableId": "tbl8skWY7TdWU0de8",
       "tableName": "Assessments",
       "fields": [
         {
-          "fieldName": "Assessment_ID",
           "fieldId": "fldOAP3WHTB6oHkoP",
-          "fieldType": "autoNumber",
-          "required": false,
+          "fieldName": "Assessment_ID",
+          "type": "autoNumber",
+          "choices": null,
           "readOnly": true
         },
         {
-          "fieldName": "Participant_ID",
           "fieldId": "fldsuG2dFtkk0rFEz",
-          "fieldType": "multipleRecordLinks",
-          "required": false,
-          "linkedTableId": "tblOmUHjXLZ8GXstO"
+          "fieldName": "Participant_ID",
+          "type": "multipleRecordLinks",
+          "choices": null
         },
         {
-          "fieldName": "Program_ID",
           "fieldId": "fldhG2h3NauFf66Db",
-          "fieldType": "multipleRecordLinks",
-          "required": false,
-          "linkedTableId": "tblAK75NtrsufVhyK"
+          "fieldName": "Program_ID",
+          "type": "multipleRecordLinks",
+          "choices": null
         },
         {
-          "fieldName": "WHO1_PositiveMood",
           "fieldId": "fldne4LTzXtyY3dPP",
-          "fieldType": "singleSelect",
-          "required": false,
-          "options": [
+          "fieldName": "WHO1_PositiveMood",
+          "type": "singleSelect",
+          "choices": [
             "1: 전혀 아니다",
             "2: 아니다",
             "3: 보통이다",
@@ -479,11 +504,10 @@
           ]
         },
         {
-          "fieldName": "WHO2_Calm",
           "fieldId": "fldRiFiDH7HDHRkAT",
-          "fieldType": "singleSelect",
-          "required": false,
-          "options": [
+          "fieldName": "WHO2_Calm",
+          "type": "singleSelect",
+          "choices": [
             "1: 전혀 아니다",
             "2: 아니다",
             "3: 보통이다",
@@ -492,11 +516,10 @@
           ]
         },
         {
-          "fieldName": "WHO3_Energy",
           "fieldId": "fldRkpUeeBUbt3omL",
-          "fieldType": "singleSelect",
-          "required": false,
-          "options": [
+          "fieldName": "WHO3_Energy",
+          "type": "singleSelect",
+          "choices": [
             "1: 전혀 아니다",
             "2: 아니다",
             "3: 보통이다",
@@ -505,11 +528,10 @@
           ]
         },
         {
-          "fieldName": "WHO4_RestfulSleep",
           "fieldId": "fldv1C1IfJCRTP1RT",
-          "fieldType": "singleSelect",
-          "required": false,
-          "options": [
+          "fieldName": "WHO4_RestfulSleep",
+          "type": "singleSelect",
+          "choices": [
             "1: 전혀 아니다",
             "2: 아니다",
             "3: 보통이다",
@@ -518,11 +540,10 @@
           ]
         },
         {
-          "fieldName": "WHO5_MeaningfulDays",
           "fieldId": "fldnCQji2UEvwzYWs",
-          "fieldType": "singleSelect",
-          "required": false,
-          "options": [
+          "fieldName": "WHO5_MeaningfulDays",
+          "type": "singleSelect",
+          "choices": [
             "1: 전혀 아니다",
             "2: 아니다",
             "3: 보통이다",
@@ -531,11 +552,10 @@
           ]
         },
         {
-          "fieldName": "RYF6_Autonomy",
           "fieldId": "fldfawDMss0ouL0bk",
-          "fieldType": "singleSelect",
-          "required": false,
-          "options": [
+          "fieldName": "RYF6_Autonomy",
+          "type": "singleSelect",
+          "choices": [
             "1: 전혀 동의하지 않음",
             "2: 동의하지 않음",
             "3: 약간 동의하지 않음",
@@ -546,11 +566,10 @@
           ]
         },
         {
-          "fieldName": "RYF7_EnvMastery",
           "fieldId": "fldn8gzwzNPH3eWCn",
-          "fieldType": "singleSelect",
-          "required": false,
-          "options": [
+          "fieldName": "RYF7_EnvMastery",
+          "type": "singleSelect",
+          "choices": [
             "1: 전혀 동의하지 않음",
             "2: 동의하지 않음",
             "3: 약간 동의하지 않음",
@@ -561,11 +580,10 @@
           ]
         },
         {
-          "fieldName": "RYF8_Growth",
           "fieldId": "fldusWlRYkgodcORe",
-          "fieldType": "singleSelect",
-          "required": false,
-          "options": [
+          "fieldName": "RYF8_Growth",
+          "type": "singleSelect",
+          "choices": [
             "1: 전혀 동의하지 않음",
             "2: 동의하지 않음",
             "3: 약간 동의하지 않음",
@@ -576,11 +594,10 @@
           ]
         },
         {
-          "fieldName": "RYF9_Relations",
           "fieldId": "fldWseIPvBu2XBADR",
-          "fieldType": "singleSelect",
-          "required": false,
-          "options": [
+          "fieldName": "RYF9_Relations",
+          "type": "singleSelect",
+          "choices": [
             "1: 전혀 동의하지 않음",
             "2: 동의하지 않음",
             "3: 약간 동의하지 않음",
@@ -591,11 +608,10 @@
           ]
         },
         {
-          "fieldName": "RYF10_Purpose",
           "fieldId": "fldxM93hZ2QPlxN5S",
-          "fieldType": "singleSelect",
-          "required": false,
-          "options": [
+          "fieldName": "RYF10_Purpose",
+          "type": "singleSelect",
+          "choices": [
             "1: 전혀 동의하지 않음",
             "2: 동의하지 않음",
             "3: 약간 동의하지 않음",
@@ -606,11 +622,10 @@
           ]
         },
         {
-          "fieldName": "RYF11_SelfAcceptance",
           "fieldId": "fldWSshu8ec2neWI9",
-          "fieldType": "singleSelect",
-          "required": false,
-          "options": [
+          "fieldName": "RYF11_SelfAcceptance",
+          "type": "singleSelect",
+          "choices": [
             "1: 전혀 동의하지 않음",
             "2: 동의하지 않음",
             "3: 약간 동의하지 않음",
@@ -621,11 +636,10 @@
           ]
         },
         {
-          "fieldName": "CBI12_PhysicalFatigue",
           "fieldId": "fldG44pdDaaslsRB6",
-          "fieldType": "singleSelect",
-          "required": false,
-          "options": [
+          "fieldName": "CBI12_PhysicalFatigue",
+          "type": "singleSelect",
+          "choices": [
             "0: 전혀 아니다",
             "1: 거의 아니다",
             "2: 보통이다",
@@ -634,11 +648,10 @@
           ]
         },
         {
-          "fieldName": "CBI13_EmotionalExhaustion",
           "fieldId": "fld84SCv0kouPShB9",
-          "fieldType": "singleSelect",
-          "required": false,
-          "options": [
+          "fieldName": "CBI13_EmotionalExhaustion",
+          "type": "singleSelect",
+          "choices": [
             "0: 전혀 아니다",
             "1: 거의 아니다",
             "2: 보통이다",
@@ -647,11 +660,10 @@
           ]
         },
         {
-          "fieldName": "CBI14_TiredBeforeWork",
           "fieldId": "fldtUHnZALxxZdMmn",
-          "fieldType": "singleSelect",
-          "required": false,
-          "options": [
+          "fieldName": "CBI14_TiredBeforeWork",
+          "type": "singleSelect",
+          "choices": [
             "0: 전혀 아니다",
             "1: 거의 아니다",
             "2: 보통이다",
@@ -660,11 +672,10 @@
           ]
         },
         {
-          "fieldName": "CBI15_WorkDrainsMe",
           "fieldId": "fldPTvWbPa6ST4JCW",
-          "fieldType": "singleSelect",
-          "required": false,
-          "options": [
+          "fieldName": "CBI15_WorkDrainsMe",
+          "type": "singleSelect",
+          "choices": [
             "0: 전혀 아니다",
             "1: 거의 아니다",
             "2: 보통이다",
@@ -673,11 +684,10 @@
           ]
         },
         {
-          "fieldName": "CBI16_InteractionDrainsMe",
           "fieldId": "fldBxhEpgKWXvyWhu",
-          "fieldType": "singleSelect",
-          "required": false,
-          "options": [
+          "fieldName": "CBI16_InteractionDrainsMe",
+          "type": "singleSelect",
+          "choices": [
             "0: 전혀 아니다",
             "1: 거의 아니다",
             "2: 보통이다",
@@ -686,11 +696,10 @@
           ]
         },
         {
-          "fieldName": "NMQ17_PainSites_12m",
           "fieldId": "fldVOdE6txdzrKIMU",
-          "fieldType": "multipleSelects",
-          "required": false,
-          "options": [
+          "fieldName": "NMQ17_PainSites_12m",
+          "type": "multipleSelects",
+          "choices": [
             "Neck",
             "Shoulder",
             "UpperBack",
@@ -703,23 +712,22 @@
           ]
         },
         {
-          "fieldName": "NMQ18_Pain_7d",
           "fieldId": "fldCng6JgSFrcmN9U",
-          "fieldType": "checkbox",
-          "required": false
+          "fieldName": "NMQ18_Pain_7d",
+          "type": "checkbox",
+          "choices": null
         },
         {
-          "fieldName": "NMQ19_LimitedActivity",
           "fieldId": "fldJ73z3VNr6GY8uk",
-          "fieldType": "checkbox",
-          "required": false
+          "fieldName": "NMQ19_LimitedActivity",
+          "type": "checkbox",
+          "choices": null
         },
         {
-          "fieldName": "SWLS20_IdealLife",
           "fieldId": "fld1uE40P09pgEicf",
-          "fieldType": "singleSelect",
-          "required": false,
-          "options": [
+          "fieldName": "SWLS20_IdealLife",
+          "type": "singleSelect",
+          "choices": [
             "1: 전혀 동의하지 않음",
             "2: 동의하지 않음",
             "3: 약간 동의하지 않음",
@@ -730,11 +738,10 @@
           ]
         },
         {
-          "fieldName": "SWLS21_GoodConditions",
           "fieldId": "fldu6zQNbM8EriUnT",
-          "fieldType": "singleSelect",
-          "required": false,
-          "options": [
+          "fieldName": "SWLS21_GoodConditions",
+          "type": "singleSelect",
+          "choices": [
             "1: 전혀 동의하지 않음",
             "2: 동의하지 않음",
             "3: 약간 동의하지 않음",
@@ -745,11 +752,10 @@
           ]
         },
         {
-          "fieldName": "SWLS22_Satisfied",
           "fieldId": "fld9oPsqCaAJPj1wP",
-          "fieldType": "singleSelect",
-          "required": false,
-          "options": [
+          "fieldName": "SWLS22_Satisfied",
+          "type": "singleSelect",
+          "choices": [
             "1: 전혀 동의하지 않음",
             "2: 동의하지 않음",
             "3: 약간 동의하지 않음",
@@ -760,11 +766,10 @@
           ]
         },
         {
-          "fieldName": "SWLS23_AchievedImportant",
           "fieldId": "fld6QJJudbBHaqGaR",
-          "fieldType": "singleSelect",
-          "required": false,
-          "options": [
+          "fieldName": "SWLS23_AchievedImportant",
+          "type": "singleSelect",
+          "choices": [
             "1: 전혀 동의하지 않음",
             "2: 동의하지 않음",
             "3: 약간 동의하지 않음",
@@ -775,11 +780,10 @@
           ]
         },
         {
-          "fieldName": "SWLS24_ChangeLittle",
           "fieldId": "fldkCklZa50K68VOm",
-          "fieldType": "singleSelect",
-          "required": false,
-          "options": [
+          "fieldName": "SWLS24_ChangeLittle",
+          "type": "singleSelect",
+          "choices": [
             "1: 전혀 동의하지 않음",
             "2: 동의하지 않음",
             "3: 약간 동의하지 않음",
@@ -790,70 +794,68 @@
           ]
         },
         {
-          "fieldName": "S_WHO5_0_100",
           "fieldId": "flddMf0nbipPDrZv9",
-          "fieldType": "number",
-          "required": false
+          "fieldName": "S_WHO5_0_100",
+          "type": "number",
+          "choices": null
         },
         {
-          "fieldName": "S_Ryff_0_100",
           "fieldId": "fldYEHeouS37B8Eur",
-          "fieldType": "number",
-          "required": false
+          "fieldName": "S_Ryff_0_100",
+          "type": "number",
+          "choices": null
         },
         {
-          "fieldName": "S_CBI_0_100",
           "fieldId": "fldPcdZGahYBhmp3C",
-          "fieldType": "number",
-          "required": false
+          "fieldName": "S_CBI_0_100",
+          "type": "number",
+          "choices": null
         },
         {
-          "fieldName": "S_CBI_Health_0_100",
           "fieldId": "fldNdTvdKC6CwRADh",
-          "fieldType": "number",
-          "required": false
+          "fieldName": "S_CBI_Health_0_100",
+          "type": "number",
+          "choices": null
         },
         {
-          "fieldName": "S_NMQ_Risk_0_100",
           "fieldId": "fldN10hC4GlVWOxu8",
-          "fieldType": "number",
-          "required": false
+          "fieldName": "S_NMQ_Risk_0_100",
+          "type": "number",
+          "choices": null
         },
         {
-          "fieldName": "S_NMQ_Health_0_100",
           "fieldId": "fld7Dq7Z0RWHQU7n9",
-          "fieldType": "number",
-          "required": false
+          "fieldName": "S_NMQ_Health_0_100",
+          "type": "number",
+          "choices": null
         },
         {
-          "fieldName": "S_SWLS_0_100",
           "fieldId": "fldGH1kZ0r0fCMJ4s",
-          "fieldType": "number",
-          "required": false
+          "fieldName": "S_SWLS_0_100",
+          "type": "number",
+          "choices": null
         },
         {
-          "fieldName": "WCWI_Total_0_100",
           "fieldId": "fld0zB2jboYOo9jgu",
-          "fieldType": "number",
-          "required": false
+          "fieldName": "WCWI_Total_0_100",
+          "type": "number",
+          "choices": null
         },
         {
-          "fieldName": "CBI_RiskTier",
           "fieldId": "fldoADrBNvxOuT1au",
-          "fieldType": "singleSelect",
-          "required": false,
-          "options": [
+          "fieldName": "CBI_RiskTier",
+          "type": "singleSelect",
+          "choices": [
             "High",
             "Moderate",
             "Low"
           ]
         },
         {
-          "fieldName": "WCWI_Tier",
           "fieldId": "fldPQs5ojYryn9bEU",
-          "fieldType": "singleSelect",
-          "required": false,
-          "options": [
+          "fieldName": "WCWI_Tier",
+          "type": "singleSelect",
+          "choices": [
             "Excellent",
             "Good",
             "Watch",
@@ -861,11 +863,10 @@
           ]
         },
         {
-          "fieldName": "WCWI_PrimaryIssue",
           "fieldId": "fldxwe1RuRLeRnOex",
-          "fieldType": "singleSelect",
-          "required": false,
-          "options": [
+          "fieldName": "WCWI_PrimaryIssue",
+          "type": "singleSelect",
+          "choices": [
             "Burnout/Fatigue",
             "Musculoskeletal",
             "Mood/Well-being",
@@ -874,26 +875,69 @@
           ]
         },
         {
-          "fieldName": "Assessment_Notes",
           "fieldId": "fldJ8GjzdVJz9OMkZ",
-          "fieldType": "aiText",
-          "required": false,
+          "fieldName": "Assessment_Notes",
+          "type": "aiText",
+          "choices": null,
           "readOnly": true
         },
         {
-          "fieldName": "Created time",
           "fieldId": "fldEbrtc2IJ1cSDNh",
-          "fieldType": "createdTime",
-          "required": false,
+          "fieldName": "Created time",
+          "type": "createdTime",
+          "choices": null,
           "readOnly": true
         },
         {
-          "fieldName": "이메일",
           "fieldId": "flddCKoLMZxYnVxym",
-          "fieldType": "email",
-          "required": false
+          "fieldName": "이메일",
+          "type": "email",
+          "choices": null
         }
-      ]
+      ],
+      "byId": {
+        "fldOAP3WHTB6oHkoP": "Assessment_ID",
+        "fldsuG2dFtkk0rFEz": "Participant_ID",
+        "fldhG2h3NauFf66Db": "Program_ID",
+        "fldne4LTzXtyY3dPP": "WHO1_PositiveMood",
+        "fldRiFiDH7HDHRkAT": "WHO2_Calm",
+        "fldRkpUeeBUbt3omL": "WHO3_Energy",
+        "fldv1C1IfJCRTP1RT": "WHO4_RestfulSleep",
+        "fldnCQji2UEvwzYWs": "WHO5_MeaningfulDays",
+        "fldfawDMss0ouL0bk": "RYF6_Autonomy",
+        "fldn8gzwzNPH3eWCn": "RYF7_EnvMastery",
+        "fldusWlRYkgodcORe": "RYF8_Growth",
+        "fldWseIPvBu2XBADR": "RYF9_Relations",
+        "fldxM93hZ2QPlxN5S": "RYF10_Purpose",
+        "fldWSshu8ec2neWI9": "RYF11_SelfAcceptance",
+        "fldG44pdDaaslsRB6": "CBI12_PhysicalFatigue",
+        "fld84SCv0kouPShB9": "CBI13_EmotionalExhaustion",
+        "fldtUHnZALxxZdMmn": "CBI14_TiredBeforeWork",
+        "fldPTvWbPa6ST4JCW": "CBI15_WorkDrainsMe",
+        "fldBxhEpgKWXvyWhu": "CBI16_InteractionDrainsMe",
+        "fldVOdE6txdzrKIMU": "NMQ17_PainSites_12m",
+        "fldCng6JgSFrcmN9U": "NMQ18_Pain_7d",
+        "fldJ73z3VNr6GY8uk": "NMQ19_LimitedActivity",
+        "fld1uE40P09pgEicf": "SWLS20_IdealLife",
+        "fldu6zQNbM8EriUnT": "SWLS21_GoodConditions",
+        "fld9oPsqCaAJPj1wP": "SWLS22_Satisfied",
+        "fld6QJJudbBHaqGaR": "SWLS23_AchievedImportant",
+        "fldkCklZa50K68VOm": "SWLS24_ChangeLittle",
+        "flddMf0nbipPDrZv9": "S_WHO5_0_100",
+        "fldYEHeouS37B8Eur": "S_Ryff_0_100",
+        "fldPcdZGahYBhmp3C": "S_CBI_0_100",
+        "fldNdTvdKC6CwRADh": "S_CBI_Health_0_100",
+        "fldN10hC4GlVWOxu8": "S_NMQ_Risk_0_100",
+        "fld7Dq7Z0RWHQU7n9": "S_NMQ_Health_0_100",
+        "fldGH1kZ0r0fCMJ4s": "S_SWLS_0_100",
+        "fld0zB2jboYOo9jgu": "WCWI_Total_0_100",
+        "fldoADrBNvxOuT1au": "CBI_RiskTier",
+        "fldPQs5ojYryn9bEU": "WCWI_Tier",
+        "fldxwe1RuRLeRnOex": "WCWI_PrimaryIssue",
+        "fldJ8GjzdVJz9OMkZ": "Assessment_Notes",
+        "fldEbrtc2IJ1cSDNh": "Created time",
+        "flddCKoLMZxYnVxym": "이메일"
+      }
     }
   }
 }

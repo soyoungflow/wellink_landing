@@ -256,22 +256,6 @@ export default function LandingView({ fadeIn, transition, scrollToRole, onSelect
         </p>
       </section>
 
-      {/* FAQ - 혹시 이런 걱정이 있으신가요? */}
-      <section style={{ padding: "clamp(40px, 8vw, 60px) clamp(16px, 4vw, 24px)", background: COLORS.cream, width: "100%", maxWidth: "100%" }}>
-        <div style={{ width: "100%", maxWidth: "min(100%, 800px)", margin: "0 auto" }}>
-          <h2 style={{ textAlign: "center", fontSize: "clamp(22px, 3.5vw, 28px)", fontWeight: 800, color: COLORS.charcoal, marginBottom: 32 }}>
-            혹시 이런 걱정이 있으신가요?
-          </h2>
-          <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
-            {FAQ_CONCERN_ITEMS.map((item, i) => (
-              <div key={i} style={{ background: COLORS.white, borderRadius: 16, padding: "20px 24px", border: "1px solid rgba(0,0,0,0.06)" }}>
-                <div style={{ fontSize: "clamp(14px, 1.875vw, 15px)", fontWeight: 700, color: COLORS.charcoal, marginBottom: 8 }}>{item.q}</div>
-                <div style={{ fontSize: "clamp(13px, 1.75vw, 14px)", color: COLORS.warmGray, lineHeight: 1.7 }}>{item.a}</div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
 
       {/* 3단계 프로세스 */}
       <section style={{ padding: "clamp(40px, 8vw, 60px) clamp(16px, 4vw, 24px)", background: COLORS.white, width: "100%", maxWidth: "100%" }}>
@@ -364,6 +348,24 @@ export default function LandingView({ fadeIn, transition, scrollToRole, onSelect
           </div>
         </div>
       </section>
+
+            {/* FAQ - 혹시 이런 걱정이 있으신가요? */}
+            <section style={{ padding: "clamp(40px, 8vw, 60px) clamp(16px, 4vw, 24px)", background: COLORS.cream, width: "100%", maxWidth: "100%" }}>
+        <div style={{ width: "100%", maxWidth: "min(100%, 800px)", margin: "0 auto" }}>
+          <h2 style={{ textAlign: "center", fontSize: "clamp(22px, 3.5vw, 28px)", fontWeight: 800, color: COLORS.charcoal, marginBottom: 32 }}>
+            혹시 이런 걱정이 있으신가요?
+          </h2>
+          <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+            {FAQ_CONCERN_ITEMS.map((item, i) => (
+              <div key={i} style={{ background: COLORS.white, borderRadius: 16, padding: "20px 24px", border: "1px solid rgba(0,0,0,0.06)" }}>
+                <div style={{ fontSize: "clamp(14px, 1.875vw, 15px)", fontWeight: 700, color: COLORS.charcoal, marginBottom: 8 }}>{item.q}</div>
+                <div style={{ fontSize: "clamp(13px, 1.75vw, 14px)", color: COLORS.warmGray, lineHeight: 1.7 }}>{item.a}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
 
       {/* 추천 대상 */}
       <section style={{ padding: "clamp(40px, 8vw, 60px) clamp(16px, 4vw, 24px)", background: COLORS.white, width: "100%", maxWidth: "100%" }}>
