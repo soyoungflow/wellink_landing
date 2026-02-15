@@ -209,16 +209,16 @@ export function FullConsentForm({ scores, fullAnswers, bodyParts, onSubmitDone }
 export function FullResult({ scores, transition, onGoHome }) {
   const [showShareModal, setShowShareModal] = useState(false);
   const burnoutRisk = toInt(clamp0to100(scores?.burnout ?? 0));
-  const burnoutForChart = toInt(clamp0to100(100 - burnoutRisk));
+  const burnoutHealth = toInt(clamp0to100(100 - burnoutRisk));
   if (import.meta.env.DEV) {
-    const burnoutSum = burnoutRisk + burnoutForChart;
+    const burnoutSum = burnoutRisk + burnoutHealth;
     if (Math.abs(burnoutSum - 100) > 1) {
-      console.warn("[WCWI chart burnout inversion mismatch]", { burnoutRisk, burnoutForChart, burnoutSum });
+      console.warn("[WCWI chart burnout inversion mismatch]", { burnoutRisk, burnoutHealth, burnoutSum });
     }
   }
   const chartScores = {
     ...scores,
-    burnout: burnoutForChart,
+    burnout: burnoutHealth,
   };
 
   return (
@@ -258,9 +258,12 @@ export function FullResult({ scores, transition, onGoHome }) {
           <div style={{ fontSize: "clamp(11px, 1.5vw, 12px)", color: COLORS.warmGray, marginBottom: 10 }}>
             번아웃(위험)은 원점수로 표시되며, 차트는 역표시(100-위험)됩니다.
           </div>
+          <div style={{ fontSize: "clamp(12px, 1.625vw, 13px)", color: COLORS.coral, fontWeight: 600, marginBottom: 10 }}>
+            번아웃 위험 {burnoutRisk}점
+          </div>
           <GaugeBar value={scores.mental} color="#7B9E87" label="🧠 정신적 웰빙" delay={300} />
           <GaugeBar value={scores.psychological} color="#9B7EC8" label="💜 심리적 웰빙" delay={500} />
-          <GaugeBar value={burnoutRisk} color="#E8725C" label="🔥 번아웃(위험)" delay={700} />
+          <GaugeBar value={burnoutHealth} color="#E8725C" label="🔥 번아웃(건강지표)" delay={700} />
           <GaugeBar value={scores.physical} color="#5BAEB7" label="🏃 신체 건강" delay={900} />
           <GaugeBar value={scores.satisfaction} color="#C4A265" label="⭐ 삶의 만족도" delay={1100} />
         </div>
