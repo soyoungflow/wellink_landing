@@ -208,10 +208,17 @@ export function FullConsentForm({ scores, fullAnswers, bodyParts, onSubmitDone }
 /** 전체 WCWI 결과 화면 (제출 완료 후에만 표시) */
 export function FullResult({ scores, transition, onGoHome }) {
   const [showShareModal, setShowShareModal] = useState(false);
-  const burnoutHealth = toInt(clamp0to100(100 - (scores?.burnout ?? 0)));
+  const burnoutRisk = toInt(clamp0to100(scores?.burnout ?? 0));
+  const burnoutForChart = toInt(clamp0to100(100 - burnoutRisk));
+  if (import.meta.env.DEV) {
+    const burnoutSum = burnoutRisk + burnoutForChart;
+    if (Math.abs(burnoutSum - 100) > 1) {
+      console.warn("[WCWI chart burnout inversion mismatch]", { burnoutRisk, burnoutForChart, burnoutSum });
+    }
+  }
   const chartScores = {
     ...scores,
-    burnout: burnoutHealth,
+    burnout: burnoutForChart,
   };
 
   return (
@@ -222,7 +229,7 @@ export function FullResult({ scores, transition, onGoHome }) {
       <style>{FULL_STYLES}</style>
       <div style={{ width: "100%", maxWidth: "min(100%, 800px)", margin: "0 auto", padding: "0 clamp(16px, 4vw, 24px)" }}>
         <div style={{ textAlign: "center", marginBottom: 32, animation: "fadeUp 0.5s ease-out" }}>
-          <div style={{ fontSize: "clamp(12px, 1.625vw, 13px)", color: COLORS.warmGray, marginBottom: 8 }}>WCWI 종합 점수</div>
+          <div style={{ fontSize: "clamp(12px, 1.625vw, 13px)", color: COLORS.warmGray, marginBottom: 8 }}>WCWI 종합 점수 (웰니스 기준)</div>
           <div style={{
             fontSize: "clamp(56px, 10vw, 80px)", fontWeight: 900, color: COLORS.sage,
             fontFamily: "'Playfair Display', serif", lineHeight: 1,
@@ -238,8 +245,7 @@ export function FullResult({ scores, transition, onGoHome }) {
           boxShadow: "0 8px 30px rgba(0,0,0,0.04)",
           animation: "fadeUp 0.5s ease-out 0.1s both",
         }}>
-          {/* 차트는 모든 축이 높을수록 좋도록 burnout을 건강값(100-risk)으로 전달 */}
-          {/* 라벨은 필요 시 "번아웃(회복)" 또는 "번아웃(건강)"으로 변경 가능 */}
+          {/* 차트는 모든 축이 높을수록 좋도록 burnout 위험값을 역변환해 전달 */}
           <RadarChart scores={chartScores} />
         </div>
 
@@ -249,9 +255,12 @@ export function FullResult({ scores, transition, onGoHome }) {
           animation: "fadeUp 0.5s ease-out 0.2s both",
         }}>
           <h3 style={{ fontSize: "clamp(14px, 2vw, 16px)", fontWeight: 700, color: COLORS.charcoal, marginBottom: 20 }}>영역별 상세</h3>
+          <div style={{ fontSize: "clamp(11px, 1.5vw, 12px)", color: COLORS.warmGray, marginBottom: 10 }}>
+            번아웃(위험)은 원점수로 표시되며, 차트는 역표시(100-위험)됩니다.
+          </div>
           <GaugeBar value={scores.mental} color="#7B9E87" label="🧠 정신적 웰빙" delay={300} />
           <GaugeBar value={scores.psychological} color="#9B7EC8" label="💜 심리적 웰빙" delay={500} />
-          <GaugeBar value={burnoutHealth} color="#E8725C" label="🔥 번아웃(회복)" delay={700} />
+          <GaugeBar value={burnoutRisk} color="#E8725C" label="🔥 번아웃(위험)" delay={700} />
           <GaugeBar value={scores.physical} color="#5BAEB7" label="🏃 신체 건강" delay={900} />
           <GaugeBar value={scores.satisfaction} color="#C4A265" label="⭐ 삶의 만족도" delay={1100} />
         </div>
@@ -277,7 +286,7 @@ export function FullResult({ scores, transition, onGoHome }) {
           {scores.mental < 60 && (
             <div style={{ padding: 16, background: COLORS.sagePale, borderRadius: 14, marginBottom: 10, borderLeft: `4px solid ${COLORS.sage}` }}>
               <div style={{ fontSize: "clamp(13px, 1.75vw, 14px)", fontWeight: 600, color: COLORS.sage, marginBottom: 4 }}>정신 건강 챙기기</div>
-              <div style={{ fontSize: "clamp(12px, 1.625vw, 13px)", color: COLORS.warmGray }}>수면 위생 개선과 짧은 산책으로 활력을 되찾으세요.</div>
+              <div style={{ fontSize: "clamp(12px, 1.625vw, 13px)", color: COLORS.warmGray }}>수면 개선과 짧은 산책으로 활력을 되찾으세요.</div>
             </div>
           )}
           {scores.total >= 70 && (
