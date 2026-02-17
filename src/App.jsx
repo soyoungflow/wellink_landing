@@ -3,6 +3,9 @@ import { saveToAirtable } from "./api/airtable";
 import { normalizePayload, validatePayload } from "./api/airtableNormalize";
 import { WCWI_QUESTIONS, MINI_QUESTIONS } from "./constants/questions";
 import { calculateMiniScore, calculateFullScores } from "./utils/scoreUtils";
+import { validateIntegrity } from "./utils/integrityValidator";
+import { runAdvancedAnalysis } from "./utils/advancedScoring";
+import { getCharacter } from "./constants/characters";
 import {
   LandingView,
   MiniResult,
@@ -34,6 +37,11 @@ export default function WellinkMVP() {
   const [bodyParts, setBodyParts] = useState([]);
   const [showResults, setShowResults] = useState(false);
   const [wcwiSubmitted, setWcwiSubmitted] = useState(false);
+
+  // 응답 시간 추적 (무결성 검증용)
+  const assessmentStartTime = useRef(null);
+  // 고급 분석 결과 저장
+  const [analysisResult, setAnalysisResult] = useState(null);
 
   // 리드 캡처 (진입 경로: mini | full | employee | manager)
   const [leadCaptureSource, setLeadCaptureSource] = useState("mini");
@@ -92,6 +100,26 @@ export default function WellinkMVP() {
       setMgrConsent(false);
     }
     transition(key);
+  };
+
+  /** WCWI 시작 시 타이머 기록 */
+  const startAssessmentTimer = () => {
+    assessmentStartTime.current = Date.now();
+  };
+
+  /** WCWI 결과 계산 + 무결성 검증 + 고급 분석 + 캐릭터 매칭 */
+  const computeFullAnalysis = (answers, parts) => {
+    const scores = calculateFullScores(answers, parts);
+    const questionCount = Object.values(WCWI_QUESTIONS).reduce((a, s) => a + s.questions.length, 0);
+    const elapsedMs = assessmentStartTime.current ? Date.now() - assessmentStartTime.current : questionCount * 5000;
+
+    const integrity = validateIntegrity({ answers, scores, elapsedMs, questionCount });
+    const advanced = runAdvancedAnalysis({ scores });
+    const character = getCharacter(scores);
+
+    const result = { scores, integrity, advanced, character };
+    setAnalysisResult(result);
+    return result;
   };
 
   const sectionKeys = Object.keys(WCWI_QUESTIONS);
@@ -153,7 +181,9 @@ export default function WellinkMVP() {
 
   if (currentView === "full") {
     if (showResults) {
-      const scores = calculateFullScores(fullAnswers, bodyParts);
+      // 결과 분석이 아직 없으면 계산
+      const analysis = analysisResult || computeFullAnalysis(fullAnswers, bodyParts);
+      const { scores } = analysis;
       if (!wcwiSubmitted) {
         return (
           <FullConsentForm
@@ -167,6 +197,7 @@ export default function WellinkMVP() {
       return (
         <FullResult
           scores={scores}
+          analysis={analysis}
           transition={transition}
           onGoHome={() => {
             setShowResults(false);
@@ -175,6 +206,7 @@ export default function WellinkMVP() {
             setFullSection(0);
             setFullStep(0);
             setBodyParts([]);
+            setAnalysisResult(null);
             transition("landing");
           }}
         />
@@ -194,7 +226,11 @@ export default function WellinkMVP() {
         setFullStep={setFullStep}
         setFullSection={setFullSection}
         setBodyParts={setBodyParts}
-        setShowResults={setShowResults}
+        setShowResults={(val) => {
+          if (val) computeFullAnalysis(fullAnswers, bodyParts);
+          setShowResults(val);
+        }}
+        onStartAssessment={startAssessmentTimer}
         transition={transition}
       />
     );

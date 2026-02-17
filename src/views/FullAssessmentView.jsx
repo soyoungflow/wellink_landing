@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { WCWI_QUESTIONS, BODY_PARTS } from "../constants/questions";
 import { COLORS } from "../constants/theme";
 import { AnimatedNumber, RadarChart, GaugeBar } from "../components";
 import { saveToAirtable } from "../api/airtable";
 import { buildAssessmentFields, clamp0to100, toInt } from "../../contracts/wcwiFieldMap.js";
+import { CHARACTER_INTERACTIONS, INDICATOR_ORDER, INDICATOR_LABELS } from "../constants/characters";
 
 const FULL_STYLES = `@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;900&family=Playfair+Display:wght@400;700&display=swap');
   @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
@@ -206,8 +207,9 @@ export function FullConsentForm({ scores, fullAnswers, bodyParts, onSubmitDone }
 }
 
 /** 전체 WCWI 결과 화면 (제출 완료 후에만 표시) */
-export function FullResult({ scores, transition, onGoHome }) {
+export function FullResult({ scores, analysis, transition, onGoHome }) {
   const [showShareModal, setShowShareModal] = useState(false);
+  const [interactionIdx, setInteractionIdx] = useState(0);
   const burnoutRisk = toInt(clamp0to100(scores?.burnout ?? 0));
   const burnoutHealth = toInt(clamp0to100(100 - burnoutRisk));
   if (import.meta.env.DEV) {
@@ -221,6 +223,22 @@ export function FullResult({ scores, transition, onGoHome }) {
     burnout: burnoutHealth,
   };
 
+  // 캐릭터 & 분석 데이터
+  const character = analysis?.character;
+  const integrity = analysis?.integrity;
+  const advanced = analysis?.advanced;
+  const interactions = character ? (CHARACTER_INTERACTIONS[character.code] || []) : [];
+  const programs = advanced?.programs || [];
+  const careTarget = advanced?.careTarget;
+  const interactionEffect = advanced?.interactionEffect;
+
+  // 캐릭터 클릭 시 다음 상호작용 메시지
+  const handleCharacterClick = () => {
+    if (interactions.length > 0) {
+      setInteractionIdx((prev) => (prev + 1) % interactions.length);
+    }
+  };
+
   return (
     <div style={{
       fontFamily: "'Noto Sans KR', sans-serif", minHeight: "100vh",
@@ -228,7 +246,128 @@ export function FullResult({ scores, transition, onGoHome }) {
     }}>
       <style>{FULL_STYLES}</style>
       <div style={{ width: "100%", maxWidth: "min(100%, 800px)", margin: "0 auto", padding: "0 clamp(16px, 4vw, 24px)" }}>
-        <div style={{ textAlign: "center", marginBottom: 32, animation: "fadeUp 0.5s ease-out" }}>
+
+        {/* ===== 캐릭터 카드 (가장 먼저 보여줌) ===== */}
+        {character && (
+          <div
+            onClick={handleCharacterClick}
+            style={{
+              background: `linear-gradient(135deg, ${character.tier.bgColor}, ${COLORS.white})`,
+              borderRadius: 28, padding: "clamp(28px, 5vw, 40px)", marginBottom: 24,
+              boxShadow: "0 12px 40px rgba(0,0,0,0.08)", cursor: "pointer",
+              animation: "fadeUp 0.6s ease-out", textAlign: "center",
+              border: `2px solid ${character.tier.color}20`,
+              position: "relative", overflow: "hidden",
+            }}
+          >
+            {/* 신뢰도 배지 */}
+            {integrity && (
+              <div style={{
+                position: "absolute", top: 16, right: 16,
+                padding: "4px 10px", borderRadius: 20,
+                background: integrity.reliable ? "#E8F5E9" : "#FFF3E0",
+                fontSize: "clamp(10px, 1.25vw, 11px)", fontWeight: 600,
+                color: integrity.reliable ? "#4CAF50" : "#FF9800",
+              }}>
+                신뢰도 {integrity.overallReliability}%
+              </div>
+            )}
+
+            <div style={{ fontSize: "clamp(60px, 12vw, 90px)", marginBottom: 12 }}>{character.icon}</div>
+            <div style={{
+              display: "inline-block", padding: "6px 16px", borderRadius: 20,
+              background: `${character.tier.color}15`, color: character.tier.color,
+              fontSize: "clamp(11px, 1.5vw, 12px)", fontWeight: 700, marginBottom: 12,
+              letterSpacing: 2,
+            }}>
+              {character.code}
+            </div>
+            <h2 style={{
+              fontSize: "clamp(22px, 3.5vw, 28px)", fontWeight: 900,
+              color: COLORS.charcoal, marginBottom: 8, lineHeight: 1.3,
+            }}>
+              {character.name}
+            </h2>
+            <p style={{
+              fontSize: "clamp(14px, 2vw, 16px)", color: COLORS.warmGray,
+              lineHeight: 1.6, marginBottom: 16,
+            }}>
+              {character.description}
+            </p>
+
+            {/* 캐릭터 상호작용 말풍선 */}
+            {interactions.length > 0 && (
+              <div style={{
+                background: COLORS.white, borderRadius: 16, padding: "14px 20px",
+                fontSize: "clamp(13px, 1.75vw, 14px)", color: COLORS.charcoal,
+                lineHeight: 1.6, boxShadow: "0 2px 12px rgba(0,0,0,0.06)",
+                transition: "all 0.3s ease",
+              }}>
+                "{interactions[interactionIdx]}"
+                <div style={{
+                  fontSize: "clamp(10px, 1.25vw, 11px)", color: COLORS.warmGray,
+                  marginTop: 6,
+                }}>
+                  클릭하여 다음 메시지 ({interactionIdx + 1}/{interactions.length})
+                </div>
+              </div>
+            )}
+
+            {/* 위험 등급 뱃지 */}
+            <div style={{
+              marginTop: 16, display: "inline-block", padding: "8px 20px", borderRadius: 20,
+              background: character.tier.color, color: "#fff",
+              fontSize: "clamp(12px, 1.625vw, 13px)", fontWeight: 700,
+            }}>
+              {character.tier.label}
+            </div>
+          </div>
+        )}
+
+        {/* ===== 5개 지표 코드 시각화 ===== */}
+        {character && (
+          <div style={{
+            background: COLORS.white, borderRadius: 24, padding: "clamp(20px, 3.5vw, 28px)",
+            marginBottom: 24, boxShadow: "0 8px 30px rgba(0,0,0,0.04)",
+            animation: "fadeUp 0.5s ease-out 0.05s both",
+          }}>
+            <h3 style={{ fontSize: "clamp(14px, 2vw, 16px)", fontWeight: 700, color: COLORS.charcoal, marginBottom: 16 }}>5대 지표 분석</h3>
+            <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+              {INDICATOR_ORDER.map((key, i) => {
+                const ind = INDICATOR_LABELS[key];
+                const code = character.code[i];
+                const isHigh = code === ind.high;
+                const healthScore = key === "burnout" ? (100 - (scores[key] ?? 0)) : (scores[key] ?? 0);
+                return (
+                  <div key={key} style={{
+                    display: "flex", alignItems: "center", gap: 12, padding: "10px 14px",
+                    borderRadius: 14, background: isHigh ? "#E8F5E9" : "#FFF3E0",
+                  }}>
+                    <div style={{
+                      width: 36, height: 36, borderRadius: "50%", display: "flex",
+                      alignItems: "center", justifyContent: "center", fontWeight: 900,
+                      fontSize: 16, color: "#fff",
+                      background: isHigh ? "#4CAF50" : "#FF9800",
+                    }}>
+                      {code}
+                    </div>
+                    <div style={{ flex: 1 }}>
+                      <div style={{ fontSize: "clamp(13px, 1.75vw, 14px)", fontWeight: 600, color: COLORS.charcoal }}>
+                        {ind.label}: {isHigh ? ind.highName : ind.lowName}
+                      </div>
+                      <div style={{ fontSize: "clamp(11px, 1.375vw, 12px)", color: COLORS.warmGray }}>
+                        {healthScore}점
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        )}
+
+        {/* ===== WCWI 종합 점수 ===== */}
+        <div style={{ textAlign: "center", marginBottom: 32, animation: "fadeUp 0.5s ease-out 0.1s both" }}>
           <div style={{ fontSize: "clamp(12px, 1.625vw, 13px)", color: COLORS.warmGray, marginBottom: 8 }}>WCWI 종합 점수 (웰니스 기준)</div>
           <div style={{
             fontSize: "clamp(56px, 10vw, 80px)", fontWeight: 900, color: COLORS.sage,
@@ -239,16 +378,17 @@ export function FullResult({ scores, transition, onGoHome }) {
           <div style={{ fontSize: "clamp(13px, 1.75vw, 14px)", color: COLORS.warmGray, marginTop: 8 }}>/ 100점</div>
         </div>
 
+        {/* ===== 레이더 차트 ===== */}
         <div style={{
           background: COLORS.white, borderRadius: 24, padding: "clamp(24px, 4vw, 32px)",
           marginBottom: 24, display: "flex", justifyContent: "center", width: "100%",
           boxShadow: "0 8px 30px rgba(0,0,0,0.04)",
-          animation: "fadeUp 0.5s ease-out 0.1s both",
+          animation: "fadeUp 0.5s ease-out 0.15s both",
         }}>
-          {/* 차트는 모든 축이 높을수록 좋도록 burnout 위험값을 역변환해 전달 */}
           <RadarChart scores={chartScores} />
         </div>
 
+        {/* ===== 영역별 상세 ===== */}
         <div style={{
           background: COLORS.white, borderRadius: 24, padding: 28,
           marginBottom: 24, boxShadow: "0 8px 30px rgba(0,0,0,0.04)",
@@ -268,38 +408,146 @@ export function FullResult({ scores, transition, onGoHome }) {
           <GaugeBar value={scores.satisfaction} color="#C4A265" label="⭐ 삶의 만족도" delay={1100} />
         </div>
 
-        <div style={{
-          background: COLORS.white, borderRadius: 24, padding: 28,
-          marginBottom: 24, boxShadow: "0 8px 30px rgba(0,0,0,0.04)",
-          animation: "fadeUp 0.5s ease-out 0.3s both",
-        }}>
-          <h3 style={{ fontSize: "clamp(14px, 2vw, 16px)", fontWeight: 700, color: COLORS.charcoal, marginBottom: 16 }}>💡 맞춤 추천</h3>
-          {scores.burnout > 40 && (
-            <div style={{ padding: 16, background: "#FFF5F3", borderRadius: 14, marginBottom: 10, borderLeft: `4px solid ${COLORS.coral}` }}>
-              <div style={{ fontSize: "clamp(13px, 1.75vw, 14px)", fontWeight: 600, color: COLORS.coral, marginBottom: 4 }}>번아웃 관리 필요</div>
-              <div style={{ fontSize: "clamp(12px, 1.625vw, 13px)", color: COLORS.warmGray }}>2분 호흡법과 마음챙김 명상으로 정서적 에너지를 회복하세요.</div>
+        {/* ===== 복합 위험 분석 (Interaction Effect) ===== */}
+        {interactionEffect && interactionEffect.compoundRisks.length > 0 && (
+          <div style={{
+            background: COLORS.white, borderRadius: 24, padding: 28,
+            marginBottom: 24, boxShadow: "0 8px 30px rgba(0,0,0,0.04)",
+            animation: "fadeUp 0.5s ease-out 0.25s both",
+            border: `2px solid ${COLORS.coral}20`,
+          }}>
+            <h3 style={{ fontSize: "clamp(14px, 2vw, 16px)", fontWeight: 700, color: COLORS.coral, marginBottom: 16 }}>
+              복합 위험 분석
+            </h3>
+            <div style={{
+              fontSize: "clamp(12px, 1.625vw, 13px)", color: COLORS.warmGray, marginBottom: 16,
+            }}>
+              위험 가중치: x{interactionEffect.riskMultiplier.toFixed(1)} | 복합 위험도: {interactionEffect.interactionScore}점
             </div>
-          )}
-          {scores.physical < 60 && (
-            <div style={{ padding: 16, background: "#F0F8FA", borderRadius: 14, marginBottom: 10, borderLeft: "4px solid #5BAEB7" }}>
-              <div style={{ fontSize: "clamp(13px, 1.75vw, 14px)", fontWeight: 600, color: "#5BAEB7", marginBottom: 4 }}>근골격계 관리 권장</div>
-              <div style={{ fontSize: "clamp(12px, 1.625vw, 13px)", color: COLORS.warmGray }}>사무실 필라테스 5분 루틴으로 통증을 예방하세요.</div>
-            </div>
-          )}
-          {scores.mental < 60 && (
-            <div style={{ padding: 16, background: COLORS.sagePale, borderRadius: 14, marginBottom: 10, borderLeft: `4px solid ${COLORS.sage}` }}>
-              <div style={{ fontSize: "clamp(13px, 1.75vw, 14px)", fontWeight: 600, color: COLORS.sage, marginBottom: 4 }}>정신 건강 챙기기</div>
-              <div style={{ fontSize: "clamp(12px, 1.625vw, 13px)", color: COLORS.warmGray }}>수면 개선과 짧은 산책으로 활력을 되찾으세요.</div>
-            </div>
-          )}
-          {scores.total >= 70 && (
-            <div style={{ padding: 16, background: COLORS.sagePale, borderRadius: 14, borderLeft: `4px solid ${COLORS.sage}` }}>
-              <div style={{ fontSize: "clamp(13px, 1.75vw, 14px)", fontWeight: 600, color: COLORS.sage, marginBottom: 4 }}>전반적으로 양호합니다 ✅</div>
-              <div style={{ fontSize: "clamp(12px, 1.625vw, 13px)", color: COLORS.warmGray }}>현재 상태를 유지하면서 정기적인 체크인을 해보세요.</div>
-            </div>
-          )}
-        </div>
+            {interactionEffect.compoundRisks.map((risk, i) => (
+              <div key={i} style={{
+                padding: 14, background: "#FFF5F3", borderRadius: 14, marginBottom: 8,
+                borderLeft: `4px solid ${COLORS.coral}`,
+              }}>
+                <div style={{ fontSize: "clamp(13px, 1.75vw, 14px)", fontWeight: 600, color: COLORS.coral, marginBottom: 4 }}>
+                  {risk.label} (x{risk.multiplier})
+                </div>
+                <div style={{ fontSize: "clamp(12px, 1.625vw, 13px)", color: COLORS.warmGray }}>
+                  {risk.description}
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
 
+        {/* ===== 케어 레벨 & 프로그램 추천 ===== */}
+        {careTarget && (
+          <div style={{
+            background: COLORS.white, borderRadius: 24, padding: 28,
+            marginBottom: 24, boxShadow: "0 8px 30px rgba(0,0,0,0.04)",
+            animation: "fadeUp 0.5s ease-out 0.3s both",
+          }}>
+            <h3 style={{ fontSize: "clamp(14px, 2vw, 16px)", fontWeight: 700, color: COLORS.charcoal, marginBottom: 16 }}>
+              케어 레벨
+            </h3>
+            <div style={{
+              display: "inline-block", padding: "8px 20px", borderRadius: 20,
+              background: careTarget.careLevelInfo.color, color: "#fff",
+              fontSize: "clamp(13px, 1.75vw, 14px)", fontWeight: 700, marginBottom: 12,
+            }}>
+              {careTarget.careLevelInfo.label}
+            </div>
+            <p style={{ fontSize: "clamp(12px, 1.625vw, 13px)", color: COLORS.warmGray, marginBottom: 16 }}>
+              {careTarget.careLevelInfo.description}
+            </p>
+
+            {careTarget.carePriority.length > 0 && (
+              <div style={{ marginBottom: 16 }}>
+                <div style={{ fontSize: "clamp(12px, 1.625vw, 13px)", fontWeight: 600, color: COLORS.charcoal, marginBottom: 8 }}>
+                  우선 관리 영역:
+                </div>
+                <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
+                  {careTarget.carePriority.map((p, i) => (
+                    <span key={i} style={{
+                      padding: "4px 12px", borderRadius: 12,
+                      background: `${careTarget.careLevelInfo.color}15`,
+                      color: careTarget.careLevelInfo.color,
+                      fontSize: "clamp(11px, 1.5vw, 12px)", fontWeight: 600,
+                    }}>
+                      {p}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* ===== 맞춤 웰니스 프로그램 추천 ===== */}
+        {programs.length > 0 && (
+          <div style={{
+            background: COLORS.white, borderRadius: 24, padding: 28,
+            marginBottom: 24, boxShadow: "0 8px 30px rgba(0,0,0,0.04)",
+            animation: "fadeUp 0.5s ease-out 0.35s both",
+          }}>
+            <h3 style={{ fontSize: "clamp(14px, 2vw, 16px)", fontWeight: 700, color: COLORS.charcoal, marginBottom: 16 }}>
+              맞춤 웰니스 프로그램
+            </h3>
+            {programs.map((prog, i) => {
+              const priorityColors = { 1: COLORS.coral, 2: "#FF9800", 3: COLORS.sage };
+              const pColor = priorityColors[prog.priority] || COLORS.warmGray;
+              return (
+                <div key={i} style={{
+                  padding: 14, borderRadius: 14, marginBottom: 8,
+                  background: `${pColor}08`, borderLeft: `4px solid ${pColor}`,
+                }}>
+                  <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 4 }}>
+                    <span style={{
+                      padding: "2px 8px", borderRadius: 8, fontSize: "clamp(10px, 1.25vw, 11px)",
+                      fontWeight: 700, background: `${pColor}20`, color: pColor,
+                    }}>
+                      {prog.category}
+                    </span>
+                    <span style={{ fontSize: "clamp(13px, 1.75vw, 14px)", fontWeight: 600, color: COLORS.charcoal }}>
+                      {prog.name}
+                    </span>
+                  </div>
+                  <div style={{ fontSize: "clamp(12px, 1.625vw, 13px)", color: COLORS.warmGray }}>
+                    {prog.reason}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        )}
+
+        {/* ===== 신뢰도 경고 (낮을 때만) ===== */}
+        {integrity && !integrity.reliable && (
+          <div style={{
+            background: "#FFF8E1", borderRadius: 24, padding: 28,
+            marginBottom: 24, boxShadow: "0 8px 30px rgba(0,0,0,0.04)",
+            animation: "fadeUp 0.5s ease-out 0.4s both",
+            border: "2px solid #FFE082",
+          }}>
+            <h3 style={{ fontSize: "clamp(14px, 2vw, 16px)", fontWeight: 700, color: "#F57F17", marginBottom: 12 }}>
+              응답 신뢰도 알림
+            </h3>
+            <p style={{ fontSize: "clamp(12px, 1.625vw, 13px)", color: COLORS.warmGray, marginBottom: 12 }}>
+              {integrity.recommendation}
+            </p>
+            {integrity.flags.length > 0 && (
+              <ul style={{ margin: 0, paddingLeft: 20 }}>
+                {integrity.flags.map((f, i) => (
+                  <li key={i} style={{ fontSize: "clamp(11px, 1.5vw, 12px)", color: "#F57F17", marginBottom: 4 }}>
+                    {f}
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+        )}
+
+        {/* ===== 하단 버튼 ===== */}
         <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
           <button
             onClick={() => transition("lead", { leadCaptureSource: "full" })}
@@ -353,8 +601,16 @@ export function FullQuestions({
   setFullSection,
   setBodyParts,
   setShowResults,
+  onStartAssessment,
   transition,
 }) {
+  // 첫 문항 진입 시 타이머 시작
+  useEffect(() => {
+    if (fullSection === 0 && fullStep === 0 && onStartAssessment) {
+      onStartAssessment();
+    }
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
   const currentQuestionNumber = sectionKeys
     .slice(0, fullSection)
     .reduce((sum, key) => sum + WCWI_QUESTIONS[key].questions.length, 0) + fullStep + 1;
