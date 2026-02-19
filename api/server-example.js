@@ -45,7 +45,7 @@ app.post("/api/airtable", async (req, res) => {
       return res.status(400).json({ error: { message: "table과 fields가 필요합니다." } });
     }
 
-    const allowed = ["employee", "manager", "wcwi"];
+    const allowed = ["employee", "manager", "wcwi", "mini"];
     if (!allowed.includes(table)) {
       return res.status(400).json({ error: { message: `유효하지 않은 테이블: ${table}` } });
     }
@@ -74,7 +74,7 @@ app.post("/api/airtable", async (req, res) => {
   }
 });
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
   console.log(`서버가 포트 ${PORT}에서 실행 중입니다.`);
 });
