@@ -60,7 +60,7 @@ const SCHEMA = {
         options: ["내부 링크", "외부 캠페인", "직접 방문", "기타"],
         default: "기타",
       },
-      Agreement: { options: ["예,동의합니다."], default: "예,동의합니다." },
+      Agreement: { options: ["네, 동의합니다."], default: "네, 동의합니다." },
     },
     multipleSelects: {
       preferred_program_type: [
@@ -94,10 +94,11 @@ const SCHEMA = {
         options: ["인당 5천원 ~1만원", "인당 1~2만원", "인당 2~3만원"],
         default: "인당 1~2만원",
       },
+      Agreement: { options: ["네,동의합니다."], default: "네,동의합니다." },
     },
     multipleSelects: {
       Required_features: [
-        "정신건강 콘텐츠",
+        "정신 건강 콘텐츠",
         "요가, 필라테스 등 운동 콘텐츠",
         "번아웃 평가 및 리포트",
         "데이터 분석 및 대시보드",

@@ -57,9 +57,10 @@ export default function LeadCaptureView({ leadCaptureSource = "mini", email, set
 
     let raw = {};
     if (table === "mini") {
+      // source="web" to distinguish lead capture records from actual mini assessments (which default to "app")
       raw = {
         created_at: new Date().toISOString(),
-        source: "app",
+        source: "web",
         email: email || "",
         answers_json: JSON.stringify({
           email: email || "",

@@ -239,11 +239,6 @@ export function MiniQuestions({
 
       <div style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center", padding: "clamp(16px, 4vw, 24px)", width: "100%" }}>
         <div key={miniStep} style={{ width: "100%", maxWidth: "min(100%, 700px)", animation: "fadeUp 0.4s ease-out" }}>
-          <div style={{
-            display: "inline-block", padding: "4px clamp(12px, 1.75vw, 14px)", borderRadius: 12,
-            background: `${q.color}15`, fontSize: "clamp(11px, 1.5vw, 12px)", fontWeight: 600,
-            color: q.color, marginBottom: 16,
-          }}>{q.area}</div>
           <h2 style={{ fontSize: "clamp(18px, 2.75vw, 22px)", fontWeight: 700, color: COLORS.charcoal, lineHeight: 1.5, marginBottom: 32 }}>
             {q.text}
           </h2>

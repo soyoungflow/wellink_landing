@@ -280,6 +280,9 @@ export default function WellinkMVP() {
         }
         mappedFields["Email"] = empEmail;
       }
+      if (empConsent) {
+        mappedFields["Agreement"] = "네, 동의합니다.";
+      }
       try {
         const normalized = normalizePayload("employee", mappedFields);
         const validation = validatePayload("employee", normalized);
@@ -341,6 +344,8 @@ export default function WellinkMVP() {
         "저렴의심가격": "Cheap_price_range",
         "합리적가격": "Reasonable_price",
         "추가의견": "Additional_comments",
+        // TODO: "기타" 선택 시 상세 입력 UI 추가 후 Other_features 매핑 활성화
+        // "기타상세": "Other_features",
       };
       const mappedFields = {};
       Object.keys(mgrAnswers).forEach((key) => {
@@ -360,6 +365,9 @@ export default function WellinkMVP() {
           return;
         }
         mappedFields["Email"] = mgrEmail;
+      }
+      if (mgrConsent) {
+        mappedFields["Agreement"] = "네,동의합니다.";
       }
       try {
         const normalized = normalizePayload("manager", mappedFields);

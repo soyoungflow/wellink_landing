@@ -262,8 +262,8 @@ export function FullResult({ scores, transition, onGoHome }) {
             번아웃 위험 {burnoutRisk}점
           </div>
           <GaugeBar value={scores.mental} color="#7B9E87" label="🧠 정신적 웰빙" delay={300} />
-          <GaugeBar value={scores.psychological} color="#9B7EC8" label="💜 심리적 웰빙" delay={500} />
-          <GaugeBar value={burnoutHealth} color="#E8725C" label="🔥 번아웃(건강지표)" delay={700} />
+          <GaugeBar value={scores.psychological} color="#9B7EC8" label="심리적 웰빙" delay={500} />
+          <GaugeBar value={burnoutHealth} color="#E8725C" label="번아웃(건강지표)" delay={700} />
           <GaugeBar value={scores.physical} color="#5BAEB7" label="🏃 신체 건강" delay={900} />
           <GaugeBar value={scores.satisfaction} color="#C4A265" label="⭐ 삶의 만족도" delay={1100} />
         </div>
@@ -409,14 +409,6 @@ export function FullQuestions({
 
       <div style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center", padding: "clamp(16px, 4vw, 24px)", width: "100%" }}>
         <div key={`${fullSection}-${fullStep}`} style={{ width: "100%", maxWidth: "min(100%, 700px)", animation: "fadeUp 0.4s ease-out" }}>
-          <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 16 }}>
-            <span style={{ fontSize: "clamp(18px, 2.5vw, 20px)" }}>{currentSection.icon}</span>
-            <span style={{
-              padding: "4px clamp(10px, 1.5vw, 12px)", borderRadius: 12, fontSize: "clamp(11px, 1.5vw, 12px)", fontWeight: 600,
-              background: `${currentSection.color}15`, color: currentSection.color,
-            }}>{currentSection.title}</span>
-          </div>
-
           <h2 style={{ fontSize: "clamp(18px, 2.5vw, 20px)", fontWeight: 700, color: COLORS.charcoal, lineHeight: 1.5, marginBottom: 28 }}>
             {currentQ.text}
           </h2>

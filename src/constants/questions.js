@@ -17,7 +17,7 @@ export const WCWI_QUESTIONS = {
   },
   psychological: {
     title: "심리적 웰빙",
-    icon: "💜",
+    icon: "",
     color: "#9B7EC8",
     questions: [
       { id: "p1", text: "나는 내 결정을 스스로 내리는 편이다", scale: 7 },
@@ -30,7 +30,7 @@ export const WCWI_QUESTIONS = {
   },
   burnout: {
     title: "번아웃/피로",
-    icon: "🔥",
+    icon: "",
     color: "#E8725C",
     questions: [
       { id: "b1", text: "육체적으로 지쳐있다고 느끼는 빈도는?", scale: 5, reversed: true },

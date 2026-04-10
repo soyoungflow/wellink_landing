@@ -39,7 +39,9 @@ export const WCWI_ANSWER_FIELD_IDS = {
   s5: "fldkCklZa50K68VOm",
 };
 
-/** 한국어 부위명 → Airtable NMQ17 choices (영문) */
+// TODO: Airtable NMQ17_PainSites_12m에 "Elbow" choice 추가 후 팔꿈치를 "Elbow"로 변경 (현재 "Other"로 정보 손실)
+/** 한국어 부위명 → Airtable NMQ17 choices (영문). TODO: "Elbow" choice 추가 후 팔꿈치 매핑 변경 (현재 "Other"로 정보 손실) */
+// TODO: Airtable NMQ17_PainSites_12m에 "Elbow" choice 추가 후 팔꿈치 매핑을 "Elbow"로 변경
 export const BODY_PART_TO_NMQ = {
   목: "Neck",
   어깨: "Shoulder",
@@ -97,9 +99,10 @@ export const WCWI_COMMON_FIELD_IDS = {
   email: "flddCKoLMZxYnVxym",
   tier: "fldPQs5ojYryn9bEU",
   primaryIssue: "fldxwe1RuRLeRnOex",
-  consentAgreed: "Consent_Agreed",
-  consentVersion: "Consent_Version",
-  nmqRiskTier: "NMQ_RiskTier",
+  // TODO: Airtable Assessments 테이블에 Consent_Agreed(checkbox), Consent_Version(text) 필드 생성 후 실제 fieldId로 교체
+  // consentAgreed: "fldXXX",
+  // consentVersion: "fldXXX",
+  nmqRiskTier: "fldoADrBNvxOuT1au",
 };
 
 /** 점수 필드 resolver (정책: burnout은 risk score, 높을수록 위험) */
@@ -323,9 +326,9 @@ export function buildAssessmentFields({ answers = {}, email, scores = {}, tiers 
   const validatedTier = validateSingleSelect(WCWI_COMMON_FIELD_IDS.tier, tierValue, validationErrors);
   if (validatedTier !== INVALID) setFieldValue(fieldsById, WCWI_COMMON_FIELD_IDS.tier, validatedTier);
 
-  // Consent fields (submission-time defaults)
-  setFieldValue(fieldsById, WCWI_COMMON_FIELD_IDS.consentAgreed, true);
-  setFieldValue(fieldsById, WCWI_COMMON_FIELD_IDS.consentVersion, "v1_2026-02-15");
+  // TODO: Consent fields — Airtable Assessments 테이블에 Consent_Agreed(checkbox), Consent_Version(text) 필드 생성 후 활성화
+  // setFieldValue(fieldsById, WCWI_COMMON_FIELD_IDS.consentAgreed, true);
+  // setFieldValue(fieldsById, WCWI_COMMON_FIELD_IDS.consentVersion, "v1_2026-02-15");
 
   // Developer-safety check:
   // If both CBI Risk/Health are present, they must sum to 100 (allow ±1 for rounding).
